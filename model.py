@@ -30,7 +30,7 @@ class Friendship(db.Model):
 
 	friendship_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	user1_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-	friends_with_user2_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+	friends_user_id = db.Column(db.Integer, nullable=False)
 	food_shared = db.Column(db.Integer, db.ForeignKey('foods.food_id'), nullable=True)
 
 	user = db.relationship("User",
@@ -53,11 +53,20 @@ class Food(db.Model):
 	food_id  = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	food_name = db.Column(db.String(64), nullable=False)
 	food_description = db.Column(db.Text, nullable=True)
+	#include user_id once loggin is being tracked.
 
 	def __repr__(self):
 		"""A helpful representation of the food"""
 
 		return "Food food_id: %s food_name: %s>" % (self.food_id, self.food_name)
+
+	@classmethod
+	def add_food(cls, title, description):
+		"""Insert a new food listing into the database"""
+		food = cls(food_name=title, food_description=description)
+		print food
+		db.session.add(food)
+		db.session.commit()
 
 class Message(db.Model):
 	"""Messages sent within Make Less Mush"""
@@ -65,8 +74,8 @@ class Message(db.Model):
 	__tablename__ = 'messages'
 
 	message_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-	user1_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-	user2_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+	sender_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+	receiver_user_id = db.Column(db.Integer, nullable=False)
 	message_sent = db.Column(db.Text, nullable=False)
 
 	user = db.relationship("User", 

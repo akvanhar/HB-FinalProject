@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Make Less Mush</h1>
+
+{% for message in get_flashed_messages() %}
+	{{message}}
+{% endfor %}
+
+<h2>Post a new listing</h2>
+	<form action='/postlisting' method='post'>
+		<label>Title:
+			<input type='text' name='title'>
+		</label>
+		<br>
+		<label>Description:<br>
+			<textarea name='description' rows='10' cols='50' placeholder='Please include: ingredients, texture, quantity and when it was made.'></textarea>
+		</label>
+		<br>
+		<input type='submit' value='create listing'>
+	</form>
+
+<h2>Mush listings</h2>
+<p><a href='/listings'>View all</a></p>
+
+{% endblock %}

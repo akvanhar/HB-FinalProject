@@ -19,7 +19,26 @@ app.jinja_env.undefined = StrictUndefined
 def home():
 	"""homepage"""
 
-	return render_template('home.html')
+	return render_template('index.html')
+
+@app.route('/postlisting', methods=['POST'])
+def postlisting():
+	"""Handles a new listing being submitted"""
+
+	flash('Your listing has been successfully posted!')
+
+	title = request.form.get('title')
+	description = request.form.get('description')
+
+	Food.add_food(title, description)
+
+	return redirect('/')
+
+@app.route('/listings')
+def listings():
+	"""Lists all the food postings"""
+
+	return render_template('listings.html')
 
 ###########################
 
