@@ -5,6 +5,8 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
+from model import connect_to_db, User, Relationship
+
 app = Flask(__name__)
 
 #Required to use Flask sessions and the debug toolbar:
@@ -23,11 +25,11 @@ def home():
 
 if __name__ == "__main__":
 	#Set debug to true to have the toolbar extension run.
-	app.debug = true
+	app.debug = True
 
 	connect_to_db(app)
 
 	#Use the debug toolbar.
 	DebugToolbarExtension(app)
 
-	app.run
+	app.run()
