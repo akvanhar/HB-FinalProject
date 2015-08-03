@@ -36,9 +36,11 @@ def postlisting():
 
 @app.route('/listings')
 def listings():
-	"""Lists all the food postings"""
+	"""Lists all the food listings"""
 
-	return render_template('listings.html')
+	foods = Food.query.all()
+
+	return render_template('listings.html', foods=foods)
 
 ###########################
 
