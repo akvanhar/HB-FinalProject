@@ -23,23 +23,26 @@ class User(db.Model):
 
 		return "<User user_id: %s email: %s>" % (self.user_id, self.email)
 
-class Relationship(db.Model):
+class Friendship(db.Model):
 	"""Keep track of relationship between users"""
 
-	__tablename__ = 'relationships'
+	__tablename__ = 'friendships'
 
-	relationship_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+	friendship_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	user1_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
 	friends_with_user2_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
 	food_shared = db.Column(db.Integer, db.ForeignKey('foods.food_id'), nullable=True)
 
 	user = db.relationship("User",
-						    backref=db.backref("relationships", order_by=relationship_id))
+						    backref=db.backref("friendships", order_by=friendship_id))
+
+	food = db.relationship("Food",
+						    backref=db.backref("friendships", order_by=friendship_id))
 
 	def __repr__(self):
 		"""A helpful representation of the relationship"""
 
-		return "Relationship between User1_id: %s and User2_id: %s>" % (self.user1_id, 
+		return "Friendship between User1_id: %s and User2_id: %s>" % (self.user1_id, 
 																	    self.friends_with_user2_id)
 
 class Food(db.Model):
@@ -49,7 +52,7 @@ class Food(db.Model):
 
 	food_id  = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	food_name = db.Column(db.String(64), nullable=False)
-	food_description = db.Column(db.text, nullable=True)
+	food_description = db.Column(db.Text, nullable=True)
 
 	def __repr__(self):
 		"""A helpful representation of the food"""
@@ -62,14 +65,17 @@ class Message(db.Model):
 	__tablename__ = 'messages'
 
 	message_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-	user1_id = db.Column(db.Integer, ForeignKey('users.user_id'), nullable=False)
-	user2_id = db.Column(db.Integer, ForeignKey('users.user_id'), nullable=False)
-	message_sent = db.Column(db.text, nullable=False)
+	user1_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+	user2_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+	message_sent = db.Column(db.Text, nullable=False)
+
+	user = db.relationship("User", 
+						    backref=db.backref("messages", order_by=message_id))
 
 	def __repr__(self):
-	"""A helpful representation of the message"""
+		"""A helpful representation of the message"""
 
-	return "Message id: %s User1_id: %s, User2_id>" % (self.message_id, self.user1_id, self.user2_id)
+		return "Message id: %s User1_id: %s, User2_id>" % (self.message_id, self.user1_id, self.user2_id)
 	
 
 ################################################################################
