@@ -2,6 +2,8 @@
 {% block content %}
 
 <h2>Messages to you:</h2>
+{% if user_messages %}
+
 
 <table>
 	<thead>
@@ -19,5 +21,10 @@
 		{% endfor %}
 	</tbody>
 </table>
+
+{% else %}
+	<p>Sorry. You have no messages.</p>
+
+{% endif %}
 
 {% endblock %}
