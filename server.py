@@ -44,6 +44,41 @@ def login_portal():
 		flash('Login unsuccessful. Please try again')
 		return redirect('/login')
 
+@app.route('/logbutton')
+def logbutton():
+    """You get here if you click the login/logout button from any page other than login/signup"""
+    if 'user_id' in session:
+        del session['user_id']
+        flash("Logout successful!") 
+    return redirect("/login")
+
+@app.route('/signup')
+def signup():
+	"""Allows a user to signup for Make Less Mush"""
+
+	return render_template('signup.html')
+
+@app.route('/signup_portal', methods=['POST'])
+def signup_portal():
+	"""Handles the signup form"""
+
+	email = request.form.get('email')
+	password = request.form.get('password')
+	fname = request.form.get('fname')
+	lname = request.form.get('lname')
+
+	User.add_user(email, password, fname, lname)
+
+	#What if they don't fill out the form properly???
+
+	#automatically sign in user after account creation
+	user = User.query.filter_by(email=email, password=password).first()
+	user_id = user.user_id
+	session['user_id'] = user_id
+	flash('Account successfully created. Welcome to Make Less Mush!')
+
+	return redirect('/')
+
 @app.route('/postlisting', methods=['POST'])
 def postlisting():
 	"""Handles a new listing being submitted"""

@@ -6,6 +6,15 @@
 	</title>
 </head>
 <body>
+	<a href='/'><input type='button' value='Home'></a>
+	<a href='/listings'><input type='button' value='Listings'></a>
+	<a href='/messages'><input type='button' value='Messages'></a>
+	{% if 'user_id' in session %}
+		<a href='/logbutton'><input type='button' value='Logout'></a>
+    {% else %}
+    	<a href='/logbutton'><input type='button' value='Login'></a>
+    {% endif %}
+
 	{% block content %}
 		put your content here.
 	{% endblock %}

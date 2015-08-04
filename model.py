@@ -23,6 +23,13 @@ class User(db.Model):
 
 		return "<User user_id: %s email: %s>" % (self.user_id, self.email)
 
+	@classmethod
+	def add_user(cls, email, password, fname, lname):
+		"""Insert a new user into the users table"""
+		user = cls(email=email, password=password, fname=fname, lname=lname)
+		db.session.add(user)
+		db.session.commit()
+
 class Friendship(db.Model):
 	"""Keep track of relationship between users"""
 
@@ -62,9 +69,8 @@ class Food(db.Model):
 
 	@classmethod
 	def add_food(cls, title, description):
-		"""Insert a new food listing into the database"""
+		"""Insert a new food listing into the foods table"""
 		food = cls(title=title, description=description)
-		print food
 		db.session.add(food)
 		db.session.commit()
 
