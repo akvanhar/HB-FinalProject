@@ -15,8 +15,8 @@ class User(db.Model):
 	user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	email = db.Column(db.String(64), nullable=False)
 	password = db.Column(db.String(64), nullable=False)
-	user_fname = db.Column(db.String(64), nullable=False)
-	user_lname = db.Column(db.String(64), nullable=True)
+	fname = db.Column(db.String(64), nullable=False)
+	lname = db.Column(db.String(64), nullable=True)
 
 	def __repr__(self):
 		"""A helpful representation of the user"""
@@ -51,19 +51,19 @@ class Food(db.Model):
 	__tablename__ = 'foods'
 
 	food_id  = db.Column(db.Integer, autoincrement=True, primary_key=True)
-	food_name = db.Column(db.String(64), nullable=False)
-	food_description = db.Column(db.Text, nullable=True)
+	title = db.Column(db.String(64), nullable=False)
+	description = db.Column(db.Text, nullable=True)
 	#include user_id once loggin is being tracked.
 
 	def __repr__(self):
 		"""A helpful representation of the food"""
 
-		return "Food food_id: %s food_name: %s>" % (self.food_id, self.food_name)
+		return "<Food food_id: %s title: %s>" % (self.food_id, self.title)
 
 	@classmethod
 	def add_food(cls, title, description):
 		"""Insert a new food listing into the database"""
-		food = cls(food_name=title, food_description=description)
+		food = cls(title=title, description=description)
 		print food
 		db.session.add(food)
 		db.session.commit()

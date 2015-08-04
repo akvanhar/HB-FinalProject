@@ -11,10 +11,13 @@
 	<tbody>
 		{% for food_listing in foods %}
 			<tr>
-				<td>{{food_listing.food_name}}</td>
-				<td>{{food_listing.food_description}}</td>
+				<td><a href="/listings/{{food_listing.food_id}}">
+                    {{food_listing.title}}
+                	</a>
+                </td>
+				<td>{{food_listing.description}}</td>
 			</tr>
 		{% endfor %}
 	</tbody>
-
+</table>
 {% endblock %}

@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+	<title>Make Less Mush</title>
+</head>
+<body>
+	<h1>Welcome to Make Less Mush</h1>
+	<h4>Please sign in:</h4>
+
+	{% for message in get_flashed_messages() %}
+	{{message}}
+	{% endfor %}
+	<br>
+	<br>
+	<form action='login_portal' method='post'>
+		<label>Email: 
+			<input type='email' name='email' placeholder='username@email.com'>
+		</label>
+		<br>
+		<br>
+		<label>Password: 
+			<input type='password' name='password'>
+		</label>
+		<input type='submit' value='Login'>
+	</form>
+</body>
+</html>
