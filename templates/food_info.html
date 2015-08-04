@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
+	
 	<h2>Listing for: </h2><h3>{{ food_listing.title }}</h3>
 	<p>Description: {{ food_listing.description }}</p>
-	<p>Contact: if interested</p>
+	<p>Posting user: {{ food_listing.user.fname }} {{ food_listing.user.lname }}</p>
+	<h5>Interested? Send {{ food_listing.user.fname }} a message:</h5>
+	
+	<form action='/send_message', method='post'>
+		<input type='hidden' name='posting_user' value='{{ food_listing.user.user_id }}'>
+		<textarea name='message' rows='10' cols='50' placeholder="Please include your preferred method of contact, when you can pick up the food, what you're interested in swapping."></textarea>
+		<br>
+		<input type='submit' value='Send Message'>
+	</form>
+
 {% endblock %}

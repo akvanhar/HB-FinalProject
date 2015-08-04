@@ -60,7 +60,10 @@ class Food(db.Model):
 	food_id  = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	title = db.Column(db.String(64), nullable=False)
 	description = db.Column(db.Text, nullable=True)
-	#include user_id once loggin is being tracked.
+	user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+
+	user = db.relationship("User", 
+						   backref=db.backref("foods", order_by=food_id))
 
 	def __repr__(self):
 		"""A helpful representation of the food"""
@@ -68,9 +71,9 @@ class Food(db.Model):
 		return "<Food food_id: %s title: %s>" % (self.food_id, self.title)
 
 	@classmethod
-	def add_food(cls, title, description):
+	def add_food(cls, title, description, user_id):
 		"""Insert a new food listing into the foods table"""
-		food = cls(title=title, description=description)
+		food = cls(title=title, description=description, user_id=user_id)
 		db.session.add(food)
 		db.session.commit()
 
@@ -91,6 +94,15 @@ class Message(db.Model):
 		"""A helpful representation of the message"""
 
 		return "Message id: %s User1_id: %s, User2_id>" % (self.message_id, self.user1_id, self.user2_id)
+
+	@classmethod
+	def add_message(cls, sender_user_id, receiver_user_id, message_sent):
+		"""Insert a new message into the messages table"""
+		message = cls(sender_user_id=sender_user_id, 
+					  receiver_user_id=receiver_user_id, 
+					  message_sent=message_sent)
+		db.session.add(message)
+		db.session.commit()
 	
 
 ################################################################################

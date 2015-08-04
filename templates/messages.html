@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Messages to you:</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>Message From:</th>
+			<th>Message</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for message in user_messages %}
+			<tr>
+				<td>{{message.user.fname}} {{message.user.lname}}</td>
+				<td>{{message.message_sent}}</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

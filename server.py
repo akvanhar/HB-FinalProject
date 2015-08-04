@@ -87,8 +87,9 @@ def postlisting():
 
 	title = request.form.get('title')
 	description = request.form.get('description')
+	user_id = session['user_id']
 
-	Food.add_food(title, description)
+	Food.add_food(title, description, user_id)
 
 	return redirect('/')
 
@@ -109,7 +110,34 @@ def food_info(food_id):
 
     return render_template('food_info.html', food_listing=food_listing)
 
-###########################
+@app.route('/messages')
+def messages():
+	"""Displays messages for that specific user"""
+
+	current_user_id = session['user_id']
+	current_user = User.query.get(current_user_id)
+	user_messages = Message.query.filter_by(receiver_user_id=current_user_id).all()
+
+	return render_template('messages.html', user_messages=user_messages)
+
+@app.route('/send_message', methods=['POST'])
+def send_message():
+	"""Handles sending a message to a specific user"""
+
+	message = request.form.get('message')
+	print "message", message
+	current_user_id = session['user_id']
+	print "current_user_id", current_user_id
+	posting_user = request.form.get('posting_user')
+	print "posting_user", posting_user
+
+	Message.add_message(current_user_id, posting_user, message)
+
+	flash('Your message has been sent.')
+
+	return redirect('/')
+
+################################################################################
 
 if __name__ == "__main__":
 	#Set debug to true to have the toolbar extension run.
