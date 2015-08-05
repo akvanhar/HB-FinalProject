@@ -4,18 +4,20 @@
 <table>
 	<thead>
 		<tr>
+			<th>Date posted</th>
 			<th>Title</th>
 			<th>Description</th>
 		</tr>
 	</thead>
 	<tbody>
-		{% for food_listing in foods %}
+		{% for food in foods %}
 			<tr>
-				<td><a href="/listings/{{food_listing.food_id}}">
-                    {{food_listing.title}}
+				<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
+				<td><a href="/listings/{{ food.food_id }}">
+                    {{ food.title }}
                 	</a>
                 </td>
-				<td>{{food_listing.description}}</td>
+				<td>{{ food.description }}</td>
 			</tr>
 		{% endfor %}
 	</tbody>

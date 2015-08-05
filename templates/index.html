@@ -20,7 +20,32 @@
 		<input type='submit' value='create listing'>
 	</form>
 
-<h2>Mush listings</h2>
+<h2>Most recent listings:</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>Date posted</th>
+			<th>Title</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for food in recent_listings %}
+			<tr>
+				<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
+				<td><a href="/listings/{{ food.food_id }}">
+                    {{ food.title }}
+                	</a>
+                </td>
+				<td>{{ food.description }}</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+
+
 <p><a href='/listings'>View all</a></p>
 
 {% endblock %}

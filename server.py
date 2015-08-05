@@ -5,6 +5,10 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
+from datetime import datetime
+
+from sqlalchemy import desc
+
 from model import connect_to_db, User, Friendship, Food, Message
 
 app = Flask(__name__)
@@ -19,7 +23,11 @@ app.jinja_env.undefined = StrictUndefined
 def home():
 	"""homepage"""
 
-	return render_template('index.html')
+	recent_listings = Food.query.order_by(desc('post_date')).limit(5).all()
+
+	print recent_listings
+
+	return render_template('index.html', recent_listings=recent_listings)
 
 @app.route('/login')
 def login():
@@ -69,8 +77,6 @@ def signup_portal():
 
 	User.add_user(email, password, fname, lname)
 
-	#What if they don't fill out the form properly???
-
 	#automatically sign in user after account creation
 	user = User.query.filter_by(email=email, password=password).first()
 	user_id = user.user_id
@@ -97,8 +103,8 @@ def postlisting():
 def listings():
 	"""Lists all the food listings"""
 
-	foods = Food.query.all()
-
+	foods = Food.query.order_by(desc('post_date')).all()
+	
 	return render_template('listings.html', foods=foods)
 
 @app.route('/listings/<int:food_id>')
@@ -116,7 +122,7 @@ def messages():
 
 	current_user_id = session['user_id']
 	current_user = User.query.get(current_user_id)
-	user_messages = Message.query.filter_by(receiver_user_id=current_user_id).all()
+	user_messages = Message.query.filter_by(receiver_id=current_user_id).all()
 
 	return render_template('messages.html', user_messages=user_messages)
 
@@ -125,11 +131,8 @@ def send_message():
 	"""Handles sending a message to a specific user"""
 
 	message = request.form.get('message')
-	print "message", message
 	current_user_id = session['user_id']
-	print "current_user_id", current_user_id
 	posting_user = request.form.get('posting_user')
-	print "posting_user", posting_user
 
 	Message.add_message(current_user_id, posting_user, message)
 
@@ -146,6 +149,6 @@ if __name__ == "__main__":
 	connect_to_db(app)
 
 	#Use the debug toolbar.
-	DebugToolbarExtension(app)
+	# DebugToolbarExtension(app)
 
 	app.run()

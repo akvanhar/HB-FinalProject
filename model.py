@@ -1,6 +1,7 @@
 """Models and database functions for Make Less Mush"""
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -61,6 +62,7 @@ class Food(db.Model):
 	title = db.Column(db.String(64), nullable=False)
 	description = db.Column(db.Text, nullable=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+	post_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
 	user = db.relationship("User", 
 						   backref=db.backref("foods", order_by=food_id))
@@ -83,8 +85,8 @@ class Message(db.Model):
 	__tablename__ = 'messages'
 
 	message_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-	sender_user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-	receiver_user_id = db.Column(db.Integer, nullable=False)
+	sender_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+	receiver_id = db.Column(db.Integer, nullable=False)
 	message_sent = db.Column(db.Text, nullable=False)
 
 	user = db.relationship("User", 
@@ -93,13 +95,14 @@ class Message(db.Model):
 	def __repr__(self):
 		"""A helpful representation of the message"""
 
-		return "Message id: %s User1_id: %s, User2_id>" % (self.message_id, self.user1_id, self.user2_id)
+		return "Message id: %s sender_id: %s, receiver_id: %s>" % (self.message_id, self.sender_id, 
+															self.receiver_id)
 
 	@classmethod
-	def add_message(cls, sender_user_id, receiver_user_id, message_sent):
+	def add_message(cls, sender_id, receiver_id, message_sent):
 		"""Insert a new message into the messages table"""
-		message = cls(sender_user_id=sender_user_id, 
-					  receiver_user_id=receiver_user_id, 
+		message = cls(sender_id=sender_id, 
+					  receiver_user_id=receiver_id, 
 					  message_sent=message_sent)
 		db.session.add(message)
 		db.session.commit()
