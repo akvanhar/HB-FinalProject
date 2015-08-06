@@ -18,6 +18,7 @@
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       testAPI();
+      sendIdToServer();
 
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -84,21 +85,27 @@
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
-
-
-      //make a fake javascript form
-     	var form = document.createElement('form');
-     	var user_id_element = document.createElement('input');
-     	
-     	form.method = "POST";
-    	form.action = "/login_portal";
-
-    	user_id_element.value=response.userID;
-    	console.log('response.userID: ' + response.name);
-
     });
   }
 
+  function sendIdToServer() {
+  	FB.api('/me', function(response) {
+  		var form = document.createElement('form');
+    	var user_id_element = document.createElement('input');
+      
+	    form.method = "POST";
+	    form.action = "/facebook_login_portal";
+
+	    user_id_element.value=response.id;
+	    console.log('response id: ' + response.id);
+	    user_id_element.name='fbUserId';
+	    form.appendChild(user_id_element);
+
+	    document.body.appendChild(form);
+
+	    form.submit();
+  });
+  }
 
 </script>
 

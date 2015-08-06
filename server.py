@@ -50,6 +50,14 @@ def login_portal():
 		flash('Login unsuccessful. Please try again')
 		return redirect('/login')
 
+@app.route('/facebook_login_portal', methods=['POST'])
+def facebook_login():
+	"""Handles the login from the facebook login button)"""
+	
+	fb_user_id = request.form.get('fbUserId')
+
+	return redirect('/')
+
 @app.route('/logbutton')
 def logbutton():
     """You get here if you click the login/logout button from any page other than login/signup"""
