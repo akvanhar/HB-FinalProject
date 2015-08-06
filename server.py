@@ -55,6 +55,10 @@ def facebook_login():
 	"""Handles the login from the facebook login button)"""
 	
 	fb_user_id = request.form.get('fbUserId')
+	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
+
+	if fb_user:
+		return redirect('/')
 
 	return redirect('/')
 
