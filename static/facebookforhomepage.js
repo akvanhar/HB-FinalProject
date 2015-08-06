@@ -8,9 +8,7 @@
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      // testAPI();
-      getUserDetails(response.authResponse.userID);
-      submit_info_to_server(response);
+      console.log("user is logged in. We're at the homepage")
 
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -69,47 +67,4 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-    });
-  }
 
-function submit_info_to_server(response) {
-      var form = document.createElement('form');
-      var user_id_element = document.createElement('input');
-      
-      form.method = "POST";
-      form.action = "/facebook_login_portal";
-
-      user_id_element.value = response.authResponse.userID;
-      console.log('response id: ' + response.authResponse.userID);
-      console.log(response);
-      user_id_element.name = 'fbUserId';
-
-      form.appendChild(user_id_element);
-      document.body.appendChild(form);
-
-      debugger;
-      form.submit();
-}
-
-function getUserDetails(user_id) {
-    console.log('Hi Alyson. This is your function!');
-
-    FB.api('/'+user_id+"", function (response) {
-      console.log("Now we're inside the api part")
-      if (response && !response.error) {
-        console.log("USER DETAILS: ")
-        console.log(response.email);
-        console.log(response.first_name);
-        console.log(response.last_name);
-      }
-    });
-  }

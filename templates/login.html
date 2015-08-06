@@ -8,18 +8,29 @@
 <script src="/static/facebooklogin.js"></script>
 
 <!-- login button triggers FB.login function when clicked -->
-<fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState();">
-</fb:login-button>
 
-<div id="status">
-</div>
 
 	<h1>Welcome to Make Less Mush</h1>
+
 	<h4>Please sign in:</h4>
+
 	{% for message in get_flashed_messages() %}
 	{{message}}
 	<br>
 	{% endfor %}
+
+	<fb:login-button size='large' 
+		 		 autologoutlink = 'true' 
+		 		 scope="public_profile,email,user_friends" 
+		 		 onlogin="checkLoginState();">
+	</fb:login-button>
+
+
+	<div id="status"></div>
+	<br>
+
+	<h2>or</h2>
+
 	<form action='login_portal' method='post'>
 		<label>Email: 
 			<input type='email' name='email' placeholder='username@email.com'>
@@ -30,8 +41,8 @@
 		</label>
 		<input type='submit' value='Login'>
 	</form>
-	<a href='/signup'>Not a user? Click here to sign up!</a>
 	<br>
+	<a href='/signup'>Not a user? Click here to sign up!</a>
 
 </body>
 </html>
