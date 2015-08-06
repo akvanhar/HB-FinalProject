@@ -88,6 +88,8 @@ class Message(db.Model):
 	sender_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
 	receiver_id = db.Column(db.Integer, nullable=False)
 	message_sent = db.Column(db.Text, nullable=False)
+	read_status = db.Column(db.Boolean, default=0, nullable=False) #0 = not read.
+	datetime_sent = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
 	user = db.relationship("User", 
 						    backref=db.backref("messages", order_by=message_id))
@@ -102,7 +104,7 @@ class Message(db.Model):
 	def add_message(cls, sender_id, receiver_id, message_sent):
 		"""Insert a new message into the messages table"""
 		message = cls(sender_id=sender_id, 
-					  receiver_user_id=receiver_id, 
+					  receiver_id=receiver_id, 
 					  message_sent=message_sent)
 		db.session.add(message)
 		db.session.commit()

@@ -25,8 +25,6 @@ def home():
 
 	recent_listings = Food.query.order_by(desc('post_date')).limit(5).all()
 
-	print recent_listings
-
 	return render_template('index.html', recent_listings=recent_listings)
 
 @app.route('/login')
@@ -121,10 +119,11 @@ def messages():
 	"""Displays messages for that specific user"""
 
 	current_user_id = session['user_id']
-	current_user = User.query.get(current_user_id)
-	user_messages = Message.query.filter_by(receiver_id=current_user_id).all()
+	user_messages = Message.query.filter_by(receiver_id=current_user_id)
+	user_messages_by_date = user_messages.order_by(desc('datetime_sent'))
+	user_messages_by_status = user_messages.order_by('read_status').all()
 
-	return render_template('messages.html', user_messages=user_messages)
+	return render_template('messages.html', user_messages=user_messages_by_status)
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
@@ -139,6 +138,11 @@ def send_message():
 	flash('Your message has been sent.')
 
 	return redirect('/')
+
+@app.route('/change-read-status', methods=['POST'])
+def change_read_status():
+
+	return 'Hi Alyson'
 
 ################################################################################
 
