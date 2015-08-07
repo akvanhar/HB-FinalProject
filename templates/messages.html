@@ -31,17 +31,4 @@
 
 {% endif %}
 
-<script src="https://code.jquery.com/jquery.js"></script>
-<script>
-//How can I use the jinja person from up there in this function??
-	function changeReadStatus(evt) {
-		console.log('im in the function');
-		$.post('/change-read-status', {}, function (response) {
-			$('#message_{{ message.message_id }}').css('font-weight', 'normal');
-		});
-	}
-
-	$('#message_{{ message.message_id }}').on('click', changeReadStatus);
-</script>
-
 {% endblock %}
