@@ -15,7 +15,7 @@ class User(db.Model):
 
 	user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	email = db.Column(db.String(64), nullable=False)
-	password = db.Column(db.String(64), nullable=False)
+	password = db.Column(db.String(64), nullable=True)
 	fname = db.Column(db.String(64), nullable=False)
 	lname = db.Column(db.String(64), nullable=True)
 	fb_id = db.Column(db.String(64), nullable=True, default=None)
@@ -26,7 +26,7 @@ class User(db.Model):
 		return "<User user_id: %s email: %s>" % (self.user_id, self.email)
 
 	@classmethod
-	def add_user(cls, email, password, fname, lname, fb_id=None):
+	def add_user(cls, email, fname, lname, password=None, fb_id=None):
 		"""Insert a new user into the users table"""
 		user = cls(email=email, password=password, fname=fname, lname=lname, fb_id=fb_id)
 		db.session.add(user)

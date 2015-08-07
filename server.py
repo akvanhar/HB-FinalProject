@@ -41,6 +41,8 @@ def login_portal():
 	password = request.form.get('password')
 	user = User.query.filter_by(email=email, password=password).first()
 
+	print 'user: ', user
+
 	if user:
 		user_id = user.user_id
 		session['user_id'] = user_id
@@ -57,8 +59,20 @@ def facebook_login():
 	fb_user_id = request.form.get('fbUserId')
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
 
+	print "Here we are on the server side."
+	print "fb_user_id", fb_user_id
+	print 'fb_user', fb_user
+
 	if fb_user:
+		user_id = user.user_id
+		session['user_id'] = user_id
+		flash('Login successful!')
 		return redirect('/')
+	else:
+
+		User.add_user(email, fname, lname, fb_id=fb_user_id)
+
+		email, password, fname, lname
 
 	return redirect('/')
 
@@ -85,7 +99,7 @@ def signup_portal():
 	fname = request.form.get('fname')
 	lname = request.form.get('lname')
 
-	User.add_user(email, password, fname, lname)
+	User.add_user(email, fname, lname, password)
 
 	#automatically sign in user after account creation
 	user = User.query.filter_by(email=email, password=password).first()
