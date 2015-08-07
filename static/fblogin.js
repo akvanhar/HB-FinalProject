@@ -1,63 +1,71 @@
 //Facebook initialize.
 
-function getUserDetails() {
-	console.log("We're in getUserDetails")
-	debugger;
- 	FB.api('/me', {fields: ['last_name', 'first_name', 'email', 'id']}, function(response) {
- 		console.log(response);
- 		var fname = response.first_name;
- 		console.log(fname);
- 		var lname = response.last_name;
- 		console.log(lname);
- 		var email = response.email;
- 		console.log(email);
- 		var fbUserId = response.id;
- 		console.log(fbUserId);
-
- 		return [fbUserId, fname, lname, email];
- 	})
+function submitUserDetails(accessToken) {
+	//make a FB api call and return an object of user details.
+ 	FB.api('/me', 
+ 			{fields: ['last_name', 'first_name', 'email', 'id']}, 
+ 			function (response) {
+ 		
+	 		var userDetails = {
+	 			fname: response.first_name,
+	 			lname: response.last_name,
+	 			email: response.email,
+	 			fbUserId: response.id
+	 		}
+	 		submitInfoToServer(accessToken, userDetails);
+ 			});
  }
 
-function submit_info_to_server(accessToken, userDetails) {
+function submitInfoToServer(accessToken, userDetails) {
       //takes the access token, and a userdetails list as input, submits a form to the server.
-      //userDetails in the following list: [fbUserId, fname, lname, email]
+      //userDetails is an object with fname, lname, email and fbUserId
+
+      console.log('SUBMIT INFO TO SERVER');
+      console.log('ACCESSTOKEN');
+      console.log(accessToken);
+
+      //create form elements
       var form = document.createElement('form');
-      var user_id_element = document.createElement('input');
-      var user_fname_element = document.createElement('input');
-      var user_lname_element = document.createElement('input');
-      var user_email_element = document.createElement('input');
+      var userIdElement = document.createElement('input');
+      var userFnameElement = document.createElement('input');
+      var userLnameElement = document.createElement('input');
+      var userEmailElement = document.createElement('input');
+      var currentAccessToken = document.createElement('input');
 
-      //get details from fb api in the form of a list
-      //
+      //put everything all together
 
-      var fbUserId = userDetails[0];
-      var fname = userDetails[1];
-      var lname = userDetails[2];
-      var email = userDetails[3];
+      var fbUserId = userDetails.fbUserId;
+      var fname = userDetails.fname;
+      var lname = userDetails.lname;
+      var email = userDetails.email;
+      var accessToken = accessToken;
       
       form.method = "POST";
       form.action = "/facebook_login_portal";
 
       
       //set element values
-      user_id_element.value = fbUserId;
-      user_fname_element.value = fname;
-      user_lname_element.value = lname;
-      user_email_element.value = email;
+      userIdElement.value = fbUserId;
+      userFnameElement.value = fname;
+      userLnameElement.value = lname;
+      userEmailElement.value = email;
+      currentAccessToken.value = accessToken;
 
       //set element names
-      user_id_element.name = 'fbUserId';
-      user_fname_element.name = 'fbfname';
-      user_lname_element.name = 'fblname';
-      user_email_element.name = 'fbemail';
+      userIdElement.name = 'fbUserId';
+      userFnameElement.name = 'fbFname';
+      userLnameElement.name = 'fbLname';
+      userEmailElement.name = 'fbEmail';
+      currentAccessToken.name = 'accessToken';
 
-      form.appendChild(user_id_element);
+      form.appendChild(userIdElement);
+      form.appendChild(userFnameElement);
+      form.appendChild(userLnameElement);
+      form.appendChild(userEmailElement);
+      form.appendChild(currentAccessToken);
 
       document.body.appendChild(form);
 
-      
-      alert('About to submit!')
-      debugger;
       form.submit();
   }
 
@@ -70,8 +78,8 @@ function statusChangeCallback(response) {
     	//User is connected to both MLM and FB. 
     	//Collect the access token.
     	var accessToken = response.authResponse.accessToken;
-    	var userDetails = getUserDetails;
-    	submit_info_to_server(accessToken, userDetails);
+
+    	submitUserDetails(accessToken);
 
     } else if (response.status === 'not_authorized') {
       // User is connected to FB, but not MLM
