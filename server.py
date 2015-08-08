@@ -57,24 +57,35 @@ def facebook_login():
 	"""Handles the login from the facebook login button)"""
 	
 	fb_user_id = request.form.get('fbUserId')
+	fb_fname = request.form.get('fbFname')
+	fb_lname = request.form.get('fbLname')
+	fb_email = request.form.get('fbEmail')
+	current_acces_token = request.form.get('accessToken')
+
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
 
 	print "Here we are on the server side."
-	print "fb_user_id", fb_user_id
-	print 'fb_user', fb_user
 
 	if fb_user:
-		user_id = user.user_id
+		print "you're already a user"
+		user_id = User.user_id
+		print 'user id: ', user_id
 		session['user_id'] = user_id
+		print 'session 1: ', session
+		session['current_acces_token'] = current_acces_token
+		print 'session 2: ', session
 		flash('Login successful!')
 		return redirect('/')
 	else:
-
-		User.add_user(email, fname, lname, fb_id=fb_user_id)
-
-		email, password, fname, lname
-
-	return redirect('/')
+		# add the user to the database
+		User.add_user(fb_email, fb_fname, fb_lname, fb_user_id)
+		#access that user's information, add it to the session
+		fb_user = User.query.filter_by(fb_id=fb_user_id).first()
+		user_id = User.user_id
+		session['user_id'] = user_id
+		session['current_acces_token'] = current_acces_token
+		flash('Thanks for creating an account with Make Less Mush')
+		return redirect('/')
 
 @app.route('/logbutton')
 def logbutton():
