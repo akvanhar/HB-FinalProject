@@ -63,30 +63,29 @@ def facebook_login():
 	current_acces_token = request.form.get('accessToken')
 
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
-	print fb_user
-
-	print "Here we are on the server side."
 
 	if fb_user:
-		print "you're already a user"
+		# User has previously logged into MLM
 		user_id = fb_user.user_id
-		print 'fbuser id: ', user_id
 		session['user_id'] = user_id
-		print 'session 1: ', session
 		session['current_acces_token'] = current_acces_token
-		print 'session 2: ', session
+		
 		flash('Login successful!')
+
 		return redirect('/')
 	else:
+		# First time for user logging into MLM
 		# add the user to the database
-		print "are we in the else?"
 		User.add_user(email=fb_email, fname=fb_fname, lname=fb_lname, fb_id=fb_user_id)
 		#access that user's information, add it to the session
 		fb_user = User.query.filter_by(fb_id=fb_user_id).first()
-		user_id = User.user_id
+		user_id = fb_user.user_id
+		
 		session['user_id'] = user_id
 		session['current_acces_token'] = current_acces_token
+		
 		flash('Thanks for creating an account with Make Less Mush')
+		
 		return redirect('/')
 
 @app.route('/logbutton')
@@ -121,6 +120,12 @@ def signup_portal():
 	flash('Account successfully created. Welcome to Make Less Mush!')
 
 	return redirect('/')
+
+@app.route('/fblogout_portal')
+def logout_portal():
+	"""Handles logout of MLM"""
+
+	return redirect('/login')
 
 @app.route('/postlisting', methods=['POST'])
 def postlisting():

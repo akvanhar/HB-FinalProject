@@ -1,10 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
-<script src="/static/facebookforhomepage.js"></script>
+<!-- facebook initialization -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=478449745662319";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
 
+	function logout() {
+		FB.logout(function(response) {
+  			// user is now logged out
+  			console.log(response)
+  			var form = document.createElement('form');
 
-<fb:login-button size = 'large' length = 'long' autologoutlink = 'true' onlogin = 'testAPI()'></fb:login-button>
-<div id="status"></div>
+  			form.method = "POST";
+    		form.action = "/fblogout_portal";
+
+    		document.body.appendChild(form);
+
+      		form.submit();
+		});
+	}
+
+</script>
+<!-- end facebook magic -->
+
+<div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" scope='public_profile,email,user_friends'></div>
 
 <h1>Make Less Mush</h1>
 
