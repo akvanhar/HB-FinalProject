@@ -63,13 +63,14 @@ def facebook_login():
 	current_acces_token = request.form.get('accessToken')
 
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
+	print fb_user
 
 	print "Here we are on the server side."
 
 	if fb_user:
 		print "you're already a user"
-		user_id = User.user_id
-		print 'user id: ', user_id
+		user_id = fb_user.user_id
+		print 'fbuser id: ', user_id
 		session['user_id'] = user_id
 		print 'session 1: ', session
 		session['current_acces_token'] = current_acces_token
@@ -78,7 +79,8 @@ def facebook_login():
 		return redirect('/')
 	else:
 		# add the user to the database
-		User.add_user(fb_email, fb_fname, fb_lname, fb_user_id)
+		print "are we in the else?"
+		User.add_user(email=fb_email, fname=fb_fname, lname=fb_lname, fb_id=fb_user_id)
 		#access that user's information, add it to the session
 		fb_user = User.query.filter_by(fb_id=fb_user_id).first()
 		user_id = User.user_id
