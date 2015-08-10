@@ -9,7 +9,7 @@ from datetime import datetime
 
 from sqlalchemy import desc
 
-from model import connect_to_db, User, Friendship, Food, Message
+from model import connect_to_db, User, Friendship, Food, Message, Allergen
 
 app = Flask(__name__)
 
@@ -135,13 +135,23 @@ def logout_portal():
 def postlisting():
 	"""Handles a new listing being submitted"""
 
-	flash('Your listing has been successfully posted!')
-
 	title = request.form.get('title')
+	texture = request.form.get('texture')
+	datemade = request.form.get('datemade')
+	quantity = request.form.get('quantity')
+	freshfrozen = request.form.get('freshfrozen')
 	description = request.form.get('description')
+	allergens = request.form.getlist('allergens')
 	user_id = session['user_id']
 
-	Food.add_food(title, description, user_id)
+	print "texture: ", texture
+
+	allergen = Allergen.add_allergen(allergens)
+	allergen_id = allergen.allergen_id
+
+	Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id)
+
+	flash('Your listing has been successfully posted!')
 
 	return redirect('/')
 

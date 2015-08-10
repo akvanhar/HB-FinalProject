@@ -61,7 +61,12 @@ class Food(db.Model):
 
 	food_id  = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	title = db.Column(db.String(64), nullable=False)
+	texture = db.Column(db.String(64), nullable=True)
+	datemade = db.Column(db.DateTime, nullable=True)
+	quantity = db.Column(db.Integer, nullable=True)
+	freshfrozen = db.Column(db.String(64), nullable=True)
 	description = db.Column(db.Text, nullable=True)
+	allergen_id = db.Column(db.Integer, db.ForeignKey('allergens.allergen_id'), nullable=False)
 	user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
 	post_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
@@ -73,12 +78,91 @@ class Food(db.Model):
 
 		return "<Food food_id: %s title: %s>" % (self.food_id, self.title)
 
+		# title, texture, datemade, quantity, freshfrozen, description, allergens, user_id
+
 	@classmethod
-	def add_food(cls, title, description, user_id):
+	def add_food(cls, title, texture, datemade, quantity,
+				 freshfrozen, description, allergen_id, user_id):
 		"""Insert a new food listing into the foods table"""
-		food = cls(title=title, description=description, user_id=user_id)
+
+		datemade = datetime.strptime(datemade, "%Y-%m-%d")
+
+		food = cls(title=title, texture=texture, 
+				   datemade=datemade, quantity=quantity, 
+				   freshfrozen=freshfrozen, description=description, 
+				   allergen_id=allergen_id, user_id=user_id)
 		db.session.add(food)
 		db.session.commit()
+
+class Allergen(db.Model):
+	"""Allergens for a specific food listing. All are boolean values. 0 is not present."""
+
+	__tablename__ = 'allergens'
+
+	allergen_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+	eggs = db.Column(db.Boolean, default=0, nullable=False)
+	dairy = db.Column(db.Boolean, default=0, nullable=False)
+	wheat = db.Column(db.Boolean, default=0, nullable=False)
+	peanuts = db.Column(db.Boolean, default=0, nullable=False)
+	treenuts = db.Column(db.Boolean, default=0, nullable=False)
+	soy = db.Column(db.Boolean, default=0, nullable=False)
+	fish = db.Column(db.Boolean, default=0, nullable=False)
+	shellfish = db.Column(db.Boolean, default=0, nullable=False)
+
+	def __repr__(self):
+		"""A helpful representation of the Allergens"""
+
+		return "<Allergens allergen_id: %s" % (self.allergen_id)
+
+	@classmethod
+	def add_allergen(cls, allergen_list):
+		"""Takes a list of specified allergens, inserts a new allergen listing 
+			into the allergens table, returns an allergens obejct"""
+		if "eggs" in allergen_list:
+				eggs = 1
+		else:
+			eggs = 0
+		if "dairy" in allergen_list:
+				dairy = 1
+		else:
+			dairy = 0
+		if "wheat" in allergen_list:
+				wheat = 1
+		else:
+			wheat = 0
+		if "peanuts" in allergen_list:
+				peanuts = 1
+		else:
+			peanuts = 0
+		if "soy" in allergen_list:
+				soy = 1
+		else:
+			soy = 0
+		if "treenuts" in allergen_list:
+				treenuts = 1
+		else:
+			treenuts = 0
+		if "fish" in allergen_list:
+				fish = 1
+		else:
+			fish = 0
+		if "shellfish" in allergen_list:
+				shellfish = 1
+		else:
+			shellfish = 0
+
+		allergen = cls(eggs=eggs,
+					   dairy=dairy,
+					   wheat=wheat,
+					   peanuts=peanuts,
+					   treenuts=treenuts,
+					   soy=soy,
+					   fish=fish,
+					   shellfish=shellfish)
+		db.session.add(allergen)
+		db.session.commit()
+
+		return allergen
 
 class Message(db.Model):
 	"""Messages sent within Make Less Mush"""
