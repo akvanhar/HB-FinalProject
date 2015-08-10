@@ -11,6 +11,7 @@
 	}(document, 'script', 'facebook-jssdk'));
 
 	function logout() {
+		console.log('hey! Logout!')
 		FB.logout(function(response) {
   			// user is now logged out
   			console.log(response)
@@ -24,7 +25,7 @@
       		form.submit();
 		});
 	}
-
+	// figure out how to run the logout function on clicking the logout button
 </script>
 <!-- end facebook magic -->
 

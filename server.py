@@ -91,9 +91,13 @@ def facebook_login():
 @app.route('/logbutton')
 def logbutton():
     """You get here if you click the login/logout button from any page other than login/signup"""
+    
     if 'user_id' in session:
         del session['user_id']
-        flash("Logout successful!") 
+    if 'current_acces_token' in session:
+    	del session['current_acces_token']
+    flash("Logout successful!") 
+
     return redirect("/login")
 
 @app.route('/signup')
