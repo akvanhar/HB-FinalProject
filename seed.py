@@ -24,9 +24,20 @@ def load_listings():
         allergen = Allergen.add_allergen(allergen_list)
         Food.add_food(title, texture, datemade, quantity,
                  freshfrozen, description, allergen.allergen_id, user_id)
+
+def load_messages():
+    """Load messages from samplemessages into database"""
+
+    messages_file = open('sampledata/samplemessages')
+
+    for line in messages_file:
+        line = line.rstrip()
+        sender_id, receiver_id, message_sent = line.split("|")
+        Message.add_message(sender_id, receiver_id, message_sent)
         
 if __name__ == "__main__":
     connect_to_db(app)
 
     # load_users()
-    load_listings()
+    # load_listings()
+    load_messages()
