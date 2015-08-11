@@ -96,10 +96,11 @@ def logbutton():
     
     if 'user_id' in session:
         del session['user_id']
+        flash("Logout successful!")
     if 'current_acces_token' in session:
     	del session['current_acces_token']
-    flash("Logout successful!") 
-
+    	flash("You have logged out of Facebook")
+     
     return redirect("/login")
 
 @app.route('/signup')

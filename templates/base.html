@@ -12,16 +12,30 @@
 	</style>
 	<script src="https://code.jquery.com/jquery.js"></script>
 </head>
-<body>
-	<a href='/'><input type='button' value='Home'></a>
-	<a href='/listings'><input type='button' value='Listings'></a>
-	<a href='/messages'><input type='button' value='Messages'></a>
-	{% if 'user_id' in session %}
-		<a href='/logbutton'><input type='button' value='Logout'></a>
-    {% else %}
-    	<a href='/logbutton'><input type='button' value='Login'></a>
-    {% endif %}
 
+<body>
+	<script src='/static/facebookplay.js'></script
+
+	<div id="fb-root"></div>
+
+	<a href='/'>
+		<button>Home</button>
+	</a>
+	<a href='/listings'>
+		<button>Listings</button>
+	</a>
+	<a href='/messages'>
+		<button>Messages</button>
+	</a>
+	{% if 'user_id' in session %}
+		<a href='/logbutton'>
+			<button onclick="myFacebookLogout">Logout</button>
+		</a>
+    {% else %}
+    	<a href='/logbutton'>
+    		<button>Login</button>
+    	</a>
+    {% endif %}
 
 	{% block content %}
 		put your content here.

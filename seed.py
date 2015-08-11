@@ -8,7 +8,7 @@ from datetime import datetime
 def load_users():
     """Load users from sampleusers into database."""
 
-    user_file = open('sampledata/sampleusers')
+    user_file = open('sampledata/sampleusers.txt')
     
     for line in user_file:
         email, password, fname, lname, fbid = line.split("|")
@@ -17,7 +17,7 @@ def load_users():
 def load_listings():
     """Load listings from samplelistings into database"""
 
-    listings_file = open('sampledata/samplelistings')
+    listings_file = open('sampledata/samplelistings.txt')
 
     for line in listings_file:
         title, texture, datemade, quantity, freshfrozen, description, allergen_list, user_id = line.split("|")
@@ -28,7 +28,7 @@ def load_listings():
 def load_messages():
     """Load messages from samplemessages into database"""
 
-    messages_file = open('sampledata/samplemessages')
+    messages_file = open('sampledata/samplemessages.txt')
 
     for line in messages_file:
         line = line.rstrip()
