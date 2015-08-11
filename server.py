@@ -11,6 +11,8 @@ from sqlalchemy import desc
 
 from model import connect_to_db, User, Friendship, Food, Message, Allergen
 
+from titlecase import titlecase
+
 app = Flask(__name__)
 
 #Required to use Flask sessions and the debug toolbar:
@@ -136,6 +138,7 @@ def postlisting():
 	"""Handles a new listing being submitted"""
 
 	title = request.form.get('title')
+	title = titlecase(title)
 	texture = request.form.get('texture')
 	datemade = request.form.get('datemade')
 	quantity = request.form.get('quantity')
@@ -144,7 +147,7 @@ def postlisting():
 	allergens = request.form.getlist('allergens')
 	user_id = session['user_id']
 
-	print "texture: ", texture
+	print "title: ", title
 
 	allergen = Allergen.add_allergen(allergens)
 	allergen_id = allergen.allergen_id
