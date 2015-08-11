@@ -101,6 +101,8 @@ class Food(db.Model):
 				 freshfrozen, description, active=1):
 		"""updates a listing in the foods table"""
 
+		datemade = datetime.strptime(datemade, "%Y-%m-%d")
+
 		this_food = Food.query.get(food_id)
 		this_food.title = title
 		this_food.texture = texture

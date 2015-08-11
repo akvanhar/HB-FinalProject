@@ -255,12 +255,12 @@ def update_listing():
 		else:
 			active = 1
 
-		this_allergen = Allergen.query.get('allergen_id')
-		print "LOOK HERE", allergen_id
-		this_allergen.Allergen.update_allergen(allergen_id, allergen_list)
+		this_allergen = Allergen.query.get(allergen_id)
+		print "LOOK HERE", this_allergen
+		this_allergen.update_allergen(allergen_id, allergen_list)
 
-		this_food = Food.query.get('food_id')
-		this_food.Food.update_food(food_id, title, texture, datemade, quantity,
+		this_food = Food.query.get(food_id)
+		this_food.update_food(food_id, title, texture, datemade, quantity,
 				 freshfrozen, description, active)
 	
 		flash('Your listing has been successfully updated!')
