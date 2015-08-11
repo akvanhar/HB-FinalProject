@@ -1,4 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<h2>Listings for {{ user.fname }} {{ user.lname }}</h2>
+<table>
+	<thead>
+		<tr>
+			<th></th>
+			<th>Date posted</th>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for food in user_listings %}
+			<tr>
+				<td>
+					<a href="/listings/edit/{{food.food_id}}">edit/view</a>
+				</td>
+				<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
+				<td>{{ food.title }}</td>
+				<td>{{ food.description }}</td>
+				{% if food.active == 1 %}
+					<td>Active</td>
+				{% else %}
+					<td>Not active</td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
 {% endblock %}

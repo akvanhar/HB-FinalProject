@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Listing for: </h2><h3>{{ food_listing.title }}</h3>
+	<p>Texture: {{ food_listing.texture }}</p>
+	<p>Date made: {{ food_listing.datemade }}</p>
+	<p>Quantity: {{ food_listing.quantity }}</p>
+	<p>Fresh or frozen: {{ food_listing.freshfrozen }}</p>
+	<p>Description: {{ food_listing.description }}</p>
+	<p>Allergens: 
+		<ul>
+		{% for allergen in allergens %}
+			<li>{{ allergen }}</li>
+		{% endfor %}
+		</ul>
+	</p>
+	<p>Date posted: {{ food_listing.post_date.strftime("%b %d, %Y") }}</p>
+	<button>Deactivate listing</button>
+
+{% endblock %}

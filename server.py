@@ -210,8 +210,44 @@ def user_listings():
 		#show user's listings.
 		user_id = session['user_id']
 		user_listings = Food.query.filter_by(user_id=user_id).all()
+		user = User.query.get(user_id)
 
-		return render_template('mylistings.html', user_listings=user_listings)
+		return render_template('mylistings.html', user_listings=user_listings, user=user)
+
+@app.route('/listings/edit/<int:food_id>')
+def edit_food(food_id):
+	"""Display information about a specific food listing and allows the user to edit it."""
+
+	if 'user_id' not in session:
+		#user must be logged in to edit listings
+		flash('Please login to edit your listings')
+		return redirect('/login')
+	else:
+		#show user listing and allow them to make changes.
+		food_listing = Food.query.get(food_id)
+		allergen = Allergen.query.get(food_listing.allergen_id)
+		
+		#Creates a list of the allergens in the listed food
+		allergens = []
+		if allergen.eggs == 1:
+			allergens.append('Eggs')
+		if allergen.dairy == 1:
+			allergens.append('Dairy')
+		if allergen.peanuts == 1:
+			allergens.append('Peanuts')
+		if allergen.soy == 1:
+			allergens.append('Soy')
+		if allergen.treenuts == 1:
+			allergens.append('Treenuts')
+		if allergen.fish == 1:
+			allergens.append('Fish')
+		if allergen.shellfish == 1:
+			allergens.append('Shellfish')
+
+		#if there are no allergens, say so.
+		if allergens == []:
+			allergens.append('None')
+		return render_template('editfood.html', food_listing=food_listing, allergens=allergens)
 
 @app.route('/messages')
 def messages():

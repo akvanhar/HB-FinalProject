@@ -69,7 +69,10 @@ class Food(db.Model):
 	allergen_id = db.Column(db.Integer, db.ForeignKey('allergens.allergen_id'), nullable=False)
 	user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
 	post_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
+	active = db.Column(db.Boolean, nullable=False, default=1) #1 indicates that the item is active
 
+	allergen = db.relationship("Allergen",
+								backref=db.backref("foods", order_by=food_id))
 	user = db.relationship("User", 
 						   backref=db.backref("foods", order_by=food_id))
 
@@ -213,3 +216,6 @@ if __name__ == "__main__":
 	from server import app
 	connect_to_db(app)
 	print "Connected to DB."
+
+	# create all tables on running this file.
+	db.create_all()
