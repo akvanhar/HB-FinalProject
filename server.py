@@ -123,7 +123,9 @@ def signup_portal():
 	email = request.form.get('email')
 	password = request.form.get('password')
 	fname = request.form.get('fname')
+	fname = titlecase(fname)
 	lname = request.form.get('lname')
+	lname = titlecase(lname)
 
 	User.add_user(email, fname, lname, password)
 
@@ -160,8 +162,6 @@ def postlisting():
 		description = request.form.get('description')
 		allergens = request.form.getlist('allergens')
 		user_id = session['user_id']
-
-		print "title: ", title
 
 		allergen = Allergen.add_allergen(allergens)
 		allergen_id = allergen.allergen_id
@@ -225,29 +225,47 @@ def edit_food(food_id):
 	else:
 		#show user listing and allow them to make changes.
 		food_listing = Food.query.get(food_id)
-		allergen = Allergen.query.get(food_listing.allergen_id)
-		
-		#Creates a list of the allergens in the listed food
-		allergens = []
-		if allergen.eggs == 1:
-			allergens.append('Eggs')
-		if allergen.dairy == 1:
-			allergens.append('Dairy')
-		if allergen.peanuts == 1:
-			allergens.append('Peanuts')
-		if allergen.soy == 1:
-			allergens.append('Soy')
-		if allergen.treenuts == 1:
-			allergens.append('Treenuts')
-		if allergen.fish == 1:
-			allergens.append('Fish')
-		if allergen.shellfish == 1:
-			allergens.append('Shellfish')
 
-		#if there are no allergens, say so.
-		if allergens == []:
-			allergens.append('None')
-		return render_template('editfood.html', food_listing=food_listing, allergens=allergens)
+		return render_template('editfood.html', food_listing=food_listing)
+
+@app.route('/updatelisting', methods=['POST'])
+def update_listing():
+	"""Update an existing listing in the database"""
+
+	if 'user_id' not in session:
+		#users who are not logged in cannot post a new listing
+		flash('Please login to update a Make Less Mush listing')
+		return redirect('/login')
+	else:
+		title = request.form.get('title')
+		title = titlecase(title)
+		texture = request.form.get('texture')
+		datemade = request.form.get('datemade')
+		quantity = request.form.get('quantity')
+		freshfrozen = request.form.get('freshfrozen')
+		description = request.form.get('description')
+		allergen_list = request.form.getlist('allergens')
+		user_id = session['user_id']
+		food_id = request.form.get('food_id')
+		deactivate = request.form.get('deactivate')
+		allergen_id = request.form.get('allergen_id')
+
+		if deactivate:
+			active = 0
+		else:
+			active = 1
+
+		this_allergen = Allergen.query.get('allergen_id')
+		print "LOOK HERE", allergen_id
+		this_allergen.Allergen.update_allergen(allergen_id, allergen_list)
+
+		this_food = Food.query.get('food_id')
+		this_food.Food.update_food(food_id, title, texture, datemade, quantity,
+				 freshfrozen, description, active)
+	
+		flash('Your listing has been successfully updated!')
+
+	return redirect('/mylistings')
 
 @app.route('/messages')
 def messages():

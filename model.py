@@ -97,6 +97,21 @@ class Food(db.Model):
 		db.session.add(food)
 		db.session.commit()
 
+	def update_food(self, food_id, title, texture, datemade, quantity,
+				 freshfrozen, description, active=1):
+		"""updates a listing in the foods table"""
+
+		this_food = Food.query.get(food_id)
+		this_food.title = title
+		this_food.texture = texture
+		this_food.datemade = datemade
+		this_food.quantity = quantity
+		this_food.freshfrozen = freshfrozen
+		this_food.description = description
+		this_food.active = active
+
+		db.session.commit()
+
 class Allergen(db.Model):
 	"""Allergens for a specific food listing. All are boolean values. 0 is not present."""
 
@@ -166,6 +181,53 @@ class Allergen(db.Model):
 		db.session.commit()
 
 		return allergen
+
+	def update_allergen(self, allergen_id, allergen_list):
+		"""updates an allergen"""
+		if "eggs" in allergen_list:
+			eggs = 1
+		else:
+			eggs = 0
+		if "dairy" in allergen_list:
+			dairy = 1
+		else:
+			dairy = 0
+		if "wheat" in allergen_list:
+			wheat = 1
+		else:
+			wheat = 0
+		if "peanuts" in allergen_list:
+			peanuts = 1
+		else:
+			peanuts = 0
+		if "soy" in allergen_list:
+			soy = 1
+		else:
+			soy = 0
+		if "treenuts" in allergen_list:
+			treenuts = 1
+		else:
+			treenuts = 0
+		if "fish" in allergen_list:
+			fish = 1
+		else:
+			fish = 0
+		if "shellfish" in allergen_list:
+			shellfish = 1
+		else:
+			shellfish = 0
+
+		this_allergen = Allergen.query.get(allergen_id)
+		this_allergen.eggs = eggs
+		this_allergen.dairy = dairy
+		this_allergen.wheat = wheat
+		this_allergen.peanuts = peanuts
+		this_allergen.soy = soy
+		this_allergen.treenuts = treenuts
+		this_allergen.fish = fish
+		this_allergen.shellfish = shellfish
+
+		db.session.commit()
 
 class Message(db.Model):
 	"""Messages sent within Make Less Mush"""
