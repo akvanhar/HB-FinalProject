@@ -198,6 +198,21 @@ def food_info(food_id):
 
     	return render_template('food_info.html', food_listing=food_listing)
 
+@app.route('/mylistings')
+def user_listings():
+	"""Shows a list of all of that particular user's listings"""
+
+	if 'user_id' not in session:
+		#users who are not logged in cannot view their own listings
+		flash('Please login to view your listings')
+		return redirect('/login')
+	else:
+		#show user's listings.
+		user_id = session['user_id']
+		user_listings = Food.query.filter_by(user_id=user_id).all()
+
+		return render_template('mylistings.html', user_listings=user_listings)
+
 @app.route('/messages')
 def messages():
 	"""Displays messages for that specific user"""
