@@ -34,8 +34,9 @@ function myFacebookLogin() {
       FB.login(function(){}, {scope: 'publish_actions'});
     }
 
+//myFacebookLogout is never used atm.
 function myFacebookLogout() {
   FB.logout(function(response) {
   // user is now logged out
-});
+  });
 }

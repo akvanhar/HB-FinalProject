@@ -1,4 +1,5 @@
 """Make Less Mush"""
+import os
 
 from jinja2 import StrictUndefined
 
@@ -16,7 +17,7 @@ from titlecase import titlecase
 app = Flask(__name__)
 
 #Required to use Flask sessions and the debug toolbar:
-app.secret_key = "abc123"
+app.secret_key = os.environ['FLASK_SECRET_KEY']
 
 #Set this in order to raise Jinja errors.
 app.jinja_env.undefined = StrictUndefined
@@ -64,10 +65,16 @@ def facebook_login():
 	fb_email = request.form.get('fbEmail')
 	current_acces_token = request.form.get('accessToken')
 
+	print "fb_user_id: ", fb_user_id
+
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
+
+	print "fb_user: ", fb_user
+
 
 	if fb_user:
 		# User has previously logged into MLM
+		print "Hi. You're already a user."
 		user_id = fb_user.user_id
 		session['user_id'] = user_id
 		session['current_acces_token'] = current_acces_token
@@ -131,6 +138,7 @@ def signup_portal():
 @app.route('/fblogout_portal')
 def logout_portal():
 	"""Handles logout of MLM"""
+	# FIXTHIS
 
 	return redirect('/login')
 
@@ -138,71 +146,99 @@ def logout_portal():
 def postlisting():
 	"""Handles a new listing being submitted"""
 
-	title = request.form.get('title')
-	title = titlecase(title)
-	texture = request.form.get('texture')
-	datemade = request.form.get('datemade')
-	quantity = request.form.get('quantity')
-	freshfrozen = request.form.get('freshfrozen')
-	description = request.form.get('description')
-	allergens = request.form.getlist('allergens')
-	user_id = session['user_id']
+	if 'user_id' not in session:
+		#users who are not logged in cannot post a new listing
+		flash('Please login to post a Make Less Mush listing')
+		return redirect('/login')
+	else:
+		title = request.form.get('title')
+		title = titlecase(title)
+		texture = request.form.get('texture')
+		datemade = request.form.get('datemade')
+		quantity = request.form.get('quantity')
+		freshfrozen = request.form.get('freshfrozen')
+		description = request.form.get('description')
+		allergens = request.form.getlist('allergens')
+		user_id = session['user_id']
 
-	print "title: ", title
+		print "title: ", title
 
-	allergen = Allergen.add_allergen(allergens)
-	allergen_id = allergen.allergen_id
+		allergen = Allergen.add_allergen(allergens)
+		allergen_id = allergen.allergen_id
 
-	Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id)
+		Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id)
 
-	flash('Your listing has been successfully posted!')
+		flash('Your listing has been successfully posted!')
 
-	return redirect('/')
+		return redirect('/')
 
 @app.route('/listings')
 def listings():
 	"""Lists all the food listings"""
 
-	foods = Food.query.order_by(desc('post_date')).all()
-	
-	return render_template('listings.html', foods=foods)
+	if 'user_id' not in session:
+		#users who are not logged in cannot view complete list of listings
+		flash('Please login to view the complete list of Make Less Mush listings.')
+		return redirect('/login')
+	else:
+		foods = Food.query.order_by(desc('post_date')).all()
+		return render_template('listings.html', foods=foods)
 
 @app.route('/listings/<int:food_id>')
 def food_info(food_id):
     """Display information about a specific food listing"""
 
-    food_listing = Food.query.get(food_id)
-    print food_listing
+    if 'user_id' not in session:
+    	#users who are not logged in cannot view listings details
+    	flash('Please login to view the details of that particular listing')
+    	return redirect('/login')
+    else:
+    	#get specific listing from db.
+    	food_listing = Food.query.get(food_id)
 
-    return render_template('food_info.html', food_listing=food_listing)
+    	return render_template('food_info.html', food_listing=food_listing)
 
 @app.route('/messages')
 def messages():
 	"""Displays messages for that specific user"""
 
-	current_user_id = session['user_id']
-	user_messages = Message.query.filter_by(receiver_id=current_user_id)
-	user_messages_by_date = user_messages.order_by(desc('datetime_sent'))
-	user_messages_by_status = user_messages.order_by('read_status').all()
+	if 'user_id' not in session:
+		#users who are not logged in cannot view their messages.
+		flash('Please login to view your messages.')
+		return redirect('/login')
+	else:
+		#Get the messages for that particular user.
+		current_user_id = session['user_id']
+		user_messages = Message.query.filter_by(receiver_id=current_user_id)
+		user_messages_by_date = user_messages.order_by(desc('datetime_sent'))
+		user_messages_by_status = user_messages.order_by('read_status').all()
 
-	return render_template('messages.html', user_messages=user_messages_by_status)
+		return render_template('messages.html', user_messages=user_messages_by_status)
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
 	"""Handles sending a message to a specific user"""
 
-	message = request.form.get('message')
-	current_user_id = session['user_id']
-	posting_user = request.form.get('posting_user')
+	if 'user_id' not in session:
+		#users who are not logged in cannot send messages.
+		flash('Please login to send a message.')
+		return redirect('/login')
+	else:
+		#create a message field in the db.
+		message = request.form.get('message')
+		current_user_id = session['user_id']
+		posting_user = request.form.get('posting_user')
 
-	Message.add_message(current_user_id, posting_user, message)
+		Message.add_message(current_user_id, posting_user, message)
 
-	flash('Your message has been sent.')
+		flash('Your message has been sent.')
 
-	return redirect('/')
+		return redirect('/')
 
 @app.route('/change-read-status', methods=['POST'])
 def change_read_status():
+	"""change read status of a message"""
+	#FIXTHIS
 
 	return 'Hi Alyson'
 

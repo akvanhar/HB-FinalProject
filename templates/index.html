@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-<!-- <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" scope='public_profile,email,user_friends'></div>
- -->
 <h1>Make Less Mush</h1>
 
 {% for message in get_flashed_messages() %}
 	{{message}}
 {% endfor %}
+
+{% if 'user_id' not in session %}
+	<h3>Don't forget to login before posting or checking out the Make Less Mush listings!</h3>
+{% endif %}
 
 <h2>Post a new listing</h2>
 	<form action='/postlisting' method='post'>

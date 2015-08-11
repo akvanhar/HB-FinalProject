@@ -2,3 +2,4 @@ env
 *.pyc
 mush.db
 journal.txt
+secrets.sh

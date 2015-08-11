@@ -107,9 +107,9 @@ window.fbAsyncInit = function() {
   });
 
   // 	//Now check to see which of the three login statuses is present for the user
-  //   FB.getLoginStatus(function(response) {
-  //   statusChangeCallback(response);
-  // });
+    FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
 };
 
 // Load the SDK asynchronously

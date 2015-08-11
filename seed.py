@@ -12,6 +12,7 @@ def load_users():
     
     for line in user_file:
         email, password, fname, lname, fbid = line.split("|")
+        fbid = int(fbid)
         User.add_user(email, fname, lname, password, fbid)
 
 def load_listings():
@@ -38,6 +39,6 @@ def load_messages():
 if __name__ == "__main__":
     connect_to_db(app)
 
-    # load_users()
+    load_users()
     # load_listings()
-    load_messages()
+    # load_messages()
