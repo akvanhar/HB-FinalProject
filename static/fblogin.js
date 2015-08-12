@@ -1,6 +1,6 @@
 //Facebook initialize.
 
-function submitUserDetails(accessToken) {
+function collectUserDetails(accessToken) {
 	//make a FB api call and return an object of user details.
  	FB.api('/me', 
  			{fields: ['last_name', 'first_name', 'email', 'id']}, 
@@ -12,17 +12,34 @@ function submitUserDetails(accessToken) {
 	 			email: response.email,
 	 			fbUserId: response.id
 	 		}
-	 		submitInfoToServer(accessToken, userDetails);
+	 		collectUserFriends(accessToken, userDetails);
  			});
  }
 
-function submitInfoToServer(accessToken, userDetails) {
+function collectUserFriends(accessToken, userDetails) {
+    FB.api('/me/friends',
+      function (response) {
+        // if (response && !response.error) {
+        //   friendsids = []
+        //   for (var i = 0; i < response.data.length; i++) {
+        //     friendsids.push(response.id)
+        //   }
+          console.log("In the get my friends function")
+          console.log(response.data)
+          var this_response = response;
+        }
+      
+      submitInfoToServer(accessToken, userDetails, this_response);
+      });
+}
+
+function submitInfoToServer(accessToken, userDetails, this_response) {
       //takes the access token, and a userdetails list as input, submits a form to the server.
       //userDetails is an object with fname, lname, email and fbUserId
 
       console.log('SUBMIT INFO TO SERVER');
-      console.log('ACCESSTOKEN');
-      console.log(accessToken);
+      console.log('response from friends call');
+      console.log(this_response.data);
 
       //create form elements
       var form = document.createElement('form');
@@ -30,6 +47,7 @@ function submitInfoToServer(accessToken, userDetails) {
       var userFnameElement = document.createElement('input');
       var userLnameElement = document.createElement('input');
       var userEmailElement = document.createElement('input');
+      var userFriendsElement = document.createElement('input');
       var currentAccessToken = document.createElement('input');
 
       //put everything all together
@@ -39,6 +57,7 @@ function submitInfoToServer(accessToken, userDetails) {
       var lname = userDetails.lname;
       var email = userDetails.email;
       var accessToken = accessToken;
+      var userfriends = userDetails.friends;
       
       form.method = "POST";
       form.action = "/facebook_login_portal";
@@ -65,7 +84,8 @@ function submitInfoToServer(accessToken, userDetails) {
       form.appendChild(currentAccessToken);
 
       document.body.appendChild(form);
-
+      debugger;
+      alert('STOP');
       form.submit();
   }
 
@@ -79,7 +99,7 @@ function statusChangeCallback(response) {
     	//Collect the access token.
     	var accessToken = response.authResponse.accessToken;
 
-    	submitUserDetails(accessToken);
+    	collectUserDetails(accessToken);
 
     } else if (response.status === 'not_authorized') {
       // User is connected to FB, but not MLM
