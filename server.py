@@ -26,7 +26,7 @@ app.jinja_env.undefined = StrictUndefined
 def home():
 	"""homepage"""
 
-	recent_listings = Food.query.order_by(desc('post_date')).limit(5).all()
+	recent_listings = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
 
 	return render_template('index.html', recent_listings=recent_listings)
 
@@ -181,7 +181,7 @@ def listings():
 		flash('Please login to view the complete list of Make Less Mush listings.')
 		return redirect('/login')
 	else:
-		foods = Food.query.order_by(desc('post_date')).all()
+		foods = Food.query.filter_by(active=1).order_by(desc('post_date')).all()
 		return render_template('listings.html', foods=foods)
 
 @app.route('/listings/<int:food_id>')
