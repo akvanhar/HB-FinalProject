@@ -1,5 +1,6 @@
 """Make Less Mush"""
 import os
+import json
 
 from jinja2 import StrictUndefined
 
@@ -64,7 +65,9 @@ def facebook_login():
 	fb_lname = request.form.get('fbLname')
 	fb_email = request.form.get('fbEmail')
 	current_acces_token = request.form.get('accessToken')
-	fb_friends = request.form.getlist('fbFriends')
+	fb_friends = request.form.get('fbFriends')
+	fb_friends = json.loads(fb_friends)
+	print type(fb_friends)
 
 	for friend in fb_friends:
 		print "fbFriend: ", friend

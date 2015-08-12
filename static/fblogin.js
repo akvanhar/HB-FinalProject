@@ -24,7 +24,7 @@ function collectUserFriends(accessToken, userDetails) {
             // friends[friendObject.name]= friendObject.id;
           
           console.log("Friends:");
-          console.log(friends); // still an empty list
+          console.log(friends);
           debugger;
         } //end if
       
