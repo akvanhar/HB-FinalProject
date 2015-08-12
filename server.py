@@ -65,17 +65,15 @@ def facebook_login():
 	fb_lname = request.form.get('fbLname')
 	fb_email = request.form.get('fbEmail')
 	current_acces_token = request.form.get('accessToken')
-	fb_friends = request.form.get('fbFriends')
-	fb_friends = json.loads(fb_friends)
-	print type(fb_friends)
-
-	for friend in fb_friends:
-		print "fbFriend: ", friend
+	fb_friends = request.form.getlist('fbFriends')
 
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
+	friends_list = [] #a list of user objects
+	for friend_id in fb_friends:
+		fb_friend = User.query.filter_by(fb_id=friend_id).first()
+		friends_list.append(fb_friend)
 
-	print "fb_user: ", fb_user
-
+	print "fb_friends_list: ", friends_list
 
 	if fb_user:
 		# User has previously logged into MLM
