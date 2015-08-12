@@ -64,8 +64,10 @@ def facebook_login():
 	fb_lname = request.form.get('fbLname')
 	fb_email = request.form.get('fbEmail')
 	current_acces_token = request.form.get('accessToken')
+	fb_friends = request.form.getlist('fbFriends')
 
-	print "fb_user_id: ", fb_user_id
+	for friend in fb_friends:
+		print "fbFriend: ", friend
 
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
 

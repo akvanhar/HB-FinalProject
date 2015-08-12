@@ -19,27 +19,27 @@ function collectUserDetails(accessToken) {
 function collectUserFriends(accessToken, userDetails) {
     FB.api('/me/friends',
       function (response) {
-        // if (response && !response.error) {
-        //   friendsids = []
-        //   for (var i = 0; i < response.data.length; i++) {
-        //     friendsids.push(response.id)
-        //   }
-          console.log("In the get my friends function")
-          console.log(response.data)
-          var this_response = response;
-        }
+        if (response && !response.error) {
+          var friends = response.data; //data has keys name and id
+            // friends[friendObject.name]= friendObject.id;
+          
+          console.log("Friends:");
+          console.log(friends); // still an empty list
+          debugger;
+        } //end if
       
-      submitInfoToServer(accessToken, userDetails, this_response);
-      });
-}
+        submitInfoToServer(accessToken, userDetails, friends);
+      } //end success function
+      ); //end api call
+  } //end collect User Friends function
 
-function submitInfoToServer(accessToken, userDetails, this_response) {
+function submitInfoToServer(accessToken, userDetails, friends) {
       //takes the access token, and a userdetails list as input, submits a form to the server.
       //userDetails is an object with fname, lname, email and fbUserId
 
       console.log('SUBMIT INFO TO SERVER');
-      console.log('response from friends call');
-      console.log(this_response.data);
+
+      debugger;
 
       //create form elements
       var form = document.createElement('form');
@@ -57,7 +57,7 @@ function submitInfoToServer(accessToken, userDetails, this_response) {
       var lname = userDetails.lname;
       var email = userDetails.email;
       var accessToken = accessToken;
-      var userfriends = userDetails.friends;
+      var userFriends = friends;
       
       form.method = "POST";
       form.action = "/facebook_login_portal";
@@ -69,6 +69,7 @@ function submitInfoToServer(accessToken, userDetails, this_response) {
       userLnameElement.value = lname;
       userEmailElement.value = email;
       currentAccessToken.value = accessToken;
+      userFriendsElement.value = userFriends;
 
       //set element names
       userIdElement.name = 'fbUserId';
@@ -76,16 +77,17 @@ function submitInfoToServer(accessToken, userDetails, this_response) {
       userLnameElement.name = 'fbLname';
       userEmailElement.name = 'fbEmail';
       currentAccessToken.name = 'accessToken';
+      userFriendsElement.name = 'fbFriends';
 
       form.appendChild(userIdElement);
       form.appendChild(userFnameElement);
       form.appendChild(userLnameElement);
       form.appendChild(userEmailElement);
       form.appendChild(currentAccessToken);
+      form.appendChild(userFriendsElement);
 
       document.body.appendChild(form);
       debugger;
-      alert('STOP');
       form.submit();
   }
 
