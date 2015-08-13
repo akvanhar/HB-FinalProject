@@ -65,7 +65,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% for food in recent_listings %}
+		{% for food in user_listings %}
 			<tr>
 				<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
 				<td><a href="/listings/{{ food.food_id }}">

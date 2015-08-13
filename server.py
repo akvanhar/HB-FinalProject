@@ -26,10 +26,37 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def home():
 	"""homepage"""
+	if 'user_id' in session:
+		user_id = session['user_id']
 
-	recent_listings = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
+	user = User.query.get(user_id)
+	user_friends = user.friendships
 
-	return render_template('index.html', recent_listings=recent_listings)
+	if user_friends:
+		friend_ids = [friend.friend_id for friend in user_friends]
+
+		friends_listings = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).all()
+		print "friends listings", friends_listings
+
+		friends_food_ids = [food.food_id for food in friends_listings]
+		print "friends_food_ids", friends_food_ids
+
+		other_listings = Food.query.filter_by(active=1).filter(~Food.food_id.in_(friends_food_ids)).order_by(desc('post_date')).all()
+		print "all_the_listings", other_listings
+
+		this_users_listings = other_listings.extend(friends_listings)
+		print "this", this_users_listings
+
+		# recent_listings = Food.query.filter_by(active=1).order_by(desc('post_date')).all()
+		# print "recent listings:", recent_listings
+
+		# user_listings = friends_listings.append(recent_listings)
+		# print "user_listings", user_listings
+
+	else:
+		user_listings = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
+
+	return render_template('index.html', user_listings=this_users_listings)
 
 @app.route('/login')
 def login():
@@ -73,7 +100,6 @@ def facebook_login():
 
 	if fb_user:
 		# User has previously logged into MLM
-		print "Hi. You're already a user."
 		user_id = fb_user.user_id
 		session['user_id'] = user_id
 		session['current_acces_token'] = current_acces_token
@@ -86,7 +112,6 @@ def facebook_login():
 				friend_user_id = db.session.query(User.user_id).filter_by(fb_id=friend_fb_id).first()
 				friends_user_ids.append(friend_user_id)
 			friends_user_ids = [x[0] for x in friends_user_ids]
-			print "friends user ids: ", friends_user_ids
 
 			#now see if those friends are in the friendship table.
 			for friend in friends_user_ids:
@@ -94,8 +119,7 @@ def facebook_login():
 				#if they're not, add them in! Yay friendship!
 				if friend_exists is None:
 					Friendship.add_friendship(user_id, friend)
-					print "Friend added!", friend
-							
+
 		flash('Login successful!')
 
 		return redirect('/')
@@ -226,7 +250,7 @@ def user_listings():
 	else:
 		#show user's listings.
 		user_id = session['user_id']
-		user_listings = Food.query.filter_by(user_id=user_id).all()
+		user_listings = Food.query.filter_by(user_id=user_id).order_by(desc('post_date')).all()
 		user = User.query.get(user_id)
 
 		return render_template('mylistings.html', user_listings=user_listings, user=user)
