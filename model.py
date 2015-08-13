@@ -38,21 +38,24 @@ class Friendship(db.Model):
 	__tablename__ = 'friendships'
 
 	friendship_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-	user1_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-	friends_user_id = db.Column(db.Integer, nullable=False)
-	food_shared = db.Column(db.Integer, db.ForeignKey('foods.food_id'), nullable=True)
+	admin_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+	friend_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
 
 	user = db.relationship("User",
-						    backref=db.backref("friendships", order_by=friendship_id))
-
-	food = db.relationship("Food",
+							primaryjoin="User.user_id == Friendship.admin_id",
 						    backref=db.backref("friendships", order_by=friendship_id))
 
 	def __repr__(self):
 		"""A helpful representation of the relationship"""
 
-		return "Friendship between User1_id: %s and User2_id: %s>" % (self.user1_id, 
-																	    self.friends_with_user2_id)
+		return "Friendship between admin_id: %s and friend_id: %s>" % (self.admin_id, self.friend_id)
+
+	@classmethod
+	def add_friendship(cls, admin_id, friend_id):
+		"""Insert a new friendship into the friendships table"""
+		friendship = cls(admin_id=admin_id, friend_id=friend_id)
+		db.session.add(friendship)
+		db.session.commit()
 
 class Food(db.Model):
 	"""Food shared on Make Less Mush"""
@@ -70,18 +73,20 @@ class Food(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
 	post_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
 	active = db.Column(db.Boolean, nullable=False, default=1) #1 indicates that the item is active
+	shared_with = db.Column(db.Integer, db.ForeignKey('friendships.friendship_id'), nullable=True)
 
 	allergen = db.relationship("Allergen",
 								backref=db.backref("foods", order_by=food_id))
 	user = db.relationship("User", 
 						   backref=db.backref("foods", order_by=food_id))
 
+	friendship = db.relationship("Friendship", 
+								 backref=db.backref("foods", order_by=food_id))
+
 	def __repr__(self):
 		"""A helpful representation of the food"""
 
 		return "<Food food_id: %s title: %s>" % (self.food_id, self.title)
-
-		# title, texture, datemade, quantity, freshfrozen, description, allergens, user_id
 
 	@classmethod
 	def add_food(cls, title, texture, datemade, quantity,
@@ -114,6 +119,18 @@ class Food(db.Model):
 
 		db.session.commit()
 
+	def share_food(self, food_id, user_id, friend_id):
+		"""adds a friendship reference to the food table"""
+
+		this_food = Food.query.get(food_id)
+
+		this_friendship = Friendship.query..filter_by(admin_id=user_id, friend_id=friend_id).first()
+		this_friendship_id = this_friendship.friendship_id
+
+		this_food.shared_with = this_friendship_id
+		db.session.commit()
+
+
 class Allergen(db.Model):
 	"""Allergens for a specific food listing. All are boolean values. 0 is not present."""
 
@@ -132,7 +149,7 @@ class Allergen(db.Model):
 	def __repr__(self):
 		"""A helpful representation of the Allergens"""
 
-		return "<Allergens allergen_id: %s" % (self.allergen_id)
+		return "<Allergens allergen_id: %s>" % (self.allergen_id)
 
 	@classmethod
 	def add_allergen(cls, allergen_list):

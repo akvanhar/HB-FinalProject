@@ -65,15 +65,10 @@ def facebook_login():
 	fb_lname = request.form.get('fbLname')
 	fb_email = request.form.get('fbEmail')
 	current_acces_token = request.form.get('accessToken')
-	fb_friends = request.form.getlist('fbFriends')
+	fb_friends = json.loads(request.form.get('fbFriends'))
 
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
-	friends_list = [] #a list of user objects
-	for friend_id in fb_friends:
-		fb_friend = User.query.filter_by(fb_id=friend_id).first()
-		friends_list.append(fb_friend)
 
-	print "fb_friends_list: ", friends_list
 
 	if fb_user:
 		# User has previously logged into MLM
@@ -81,6 +76,20 @@ def facebook_login():
 		user_id = fb_user.user_id
 		session['user_id'] = user_id
 		session['current_acces_token'] = current_acces_token
+
+		#check friends list in friends table. If friendship not there, add it.
+		if fb_friends:
+			friends_list = [] #a list of user objects
+			for friend_id in fb_friends:
+				fb_friend = User.query.filter_by(fb_id=friend_id).first()
+				friends_list.append(fb_friend)
+				
+
+	print "fb_friends_list: ", friends_list
+
+	for friend in friends_list:
+		friendship = Friendship.query.filter_by(admin_id=)
+
 		
 		flash('Login successful!')
 
@@ -259,7 +268,6 @@ def update_listing():
 			active = 1
 
 		this_allergen = Allergen.query.get(allergen_id)
-		print "LOOK HERE", this_allergen
 		this_allergen.update_allergen(allergen_id, allergen_list)
 
 		this_food = Food.query.get(food_id)

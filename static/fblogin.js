@@ -24,8 +24,11 @@ function collectUserFriends(accessToken, userDetails) {
           var friendsList = []
           for (var i = 0; i < friends.length; i++ ) {
             friendsList.push(friends[i].id);
-          }
-        }
+          }//endfor
+        }//endif
+        friendsList = JSON.stringify(friendsList);
+        console.log('Friends list: ');
+        console.log(friendsList);
         submitInfoToServer(accessToken, userDetails, friendsList);
       }
       );
@@ -83,6 +86,7 @@ function submitInfoToServer(accessToken, userDetails, friendsList) {
       form.appendChild(userFriendsElement);
 
       document.body.appendChild(form);
+      debugger;
       form.submit();
   }
 
