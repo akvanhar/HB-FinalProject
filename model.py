@@ -124,7 +124,7 @@ class Food(db.Model):
 
 		this_food = Food.query.get(food_id)
 
-		this_friendship = Friendship.query..filter_by(admin_id=user_id, friend_id=friend_id).first()
+		this_friendship = Friendship.query.filter_by(admin_id=user_id, friend_id=friend_id).first()
 		this_friendship_id = this_friendship.friendship_id
 
 		this_food.shared_with = this_friendship_id

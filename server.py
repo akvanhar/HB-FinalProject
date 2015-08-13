@@ -11,7 +11,7 @@ from datetime import datetime
 
 from sqlalchemy import desc
 
-from model import connect_to_db, User, Friendship, Food, Message, Allergen
+from model import db, connect_to_db, User, Friendship, Food, Message, Allergen
 
 from titlecase import titlecase
 
@@ -66,6 +66,7 @@ def facebook_login():
 	fb_email = request.form.get('fbEmail')
 	current_acces_token = request.form.get('accessToken')
 	fb_friends = json.loads(request.form.get('fbFriends'))
+	print "fb_friends_list: ", fb_friends
 
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
 
@@ -79,18 +80,22 @@ def facebook_login():
 
 		#check friends list in friends table. If friendship not there, add it.
 		if fb_friends:
-			friends_list = [] #a list of user objects
-			for friend_id in fb_friends:
-				fb_friend = User.query.filter_by(fb_id=friend_id).first()
-				friends_list.append(fb_friend)
-				
+			friends_user_ids = []
+			#turn the fb_ids into user_ids.
+			for friend_fb_id in fb_friends:
+				friend_user_id = db.session.query(User.user_id).filter_by(fb_id=friend_fb_id).first()
+				friends_user_ids.append(friend_user_id)
+			friends_user_ids = [x[0] for x in friends_user_ids]
+			print "friends user ids: ", friends_user_ids
 
-	print "fb_friends_list: ", friends_list
-
-	for friend in friends_list:
-		friendship = Friendship.query.filter_by(admin_id=)
-
-		
+			#now see if those friends are in the friendship table.
+			for friend in friends_user_ids:
+				friend_exists = db.session.query(Friendship.friend_id).filter_by(friend_id=friend).first()
+				#if they're not, add them in! Yay friendship!
+				if friend_exists is None:
+					Friendship.add_friendship(user_id, friend)
+					print "Friend added!", friend
+							
 		flash('Login successful!')
 
 		return redirect('/')
