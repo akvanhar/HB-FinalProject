@@ -33,30 +33,25 @@ def home():
 	user_friends = user.friendships
 
 	if user_friends:
-		friend_ids = [friend.friend_id for friend in user_friends]
+		friend_ids = [friend.friend_id for friend in user_friends] #get this user's friend ids
 
-		friends_listings = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).all()
-		print "friends listings", friends_listings
+		#get all their friend's listings
+		friends_listings = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).all() 
 
+		#get the food ids so they can be filtered out
 		friends_food_ids = [food.food_id for food in friends_listings]
-		print "friends_food_ids", friends_food_ids
 
+		#get all the other active listings
 		other_listings = Food.query.filter_by(active=1).filter(~Food.food_id.in_(friends_food_ids)).order_by(desc('post_date')).all()
-		print "all_the_listings", other_listings
 
-		this_users_listings = other_listings.extend(friends_listings)
-		print "this", this_users_listings
-
-		# recent_listings = Food.query.filter_by(active=1).order_by(desc('post_date')).all()
-		# print "recent listings:", recent_listings
-
-		# user_listings = friends_listings.append(recent_listings)
-		# print "user_listings", user_listings
+		#combine listings so that the friends listings come first
+		this_users_listings = friends_listings + other_listings
+		short_list = this_users_listings[:5]
 
 	else:
-		user_listings = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
+		short_list = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
 
-	return render_template('index.html', user_listings=this_users_listings)
+	return render_template('index.html', user_listings=short_list)
 
 @app.route('/login')
 def login():
@@ -215,14 +210,36 @@ def postlisting():
 
 @app.route('/listings')
 def listings():
-	"""Lists all the food listings"""
+	"""Lists all the food listings, putting the user's friends' listings first"""
 
 	if 'user_id' not in session:
 		#users who are not logged in cannot view complete list of listings
 		flash('Please login to view the complete list of Make Less Mush listings.')
 		return redirect('/login')
 	else:
-		foods = Food.query.filter_by(active=1).order_by(desc('post_date')).all()
+		user_id = session['user_id']
+
+		user = User.query.get(user_id)
+		user_friends = user.friendships
+
+		if user_friends:
+			friend_ids = [friend.friend_id for friend in user_friends] #get this user's friend ids
+
+			#get all their friend's listings
+			friends_listings = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).all() 
+
+			#get the food ids so they can be filtered out
+			friends_food_ids = [food.food_id for food in friends_listings]
+
+			#get all the other active listings
+			other_listings = Food.query.filter_by(active=1).filter(~Food.food_id.in_(friends_food_ids)).order_by(desc('post_date')).all()
+
+			#combine listings so that the friends listings come first
+			foods = friends_listings + other_listings
+
+		else:
+			foods = Food.query.filter_by(active=1).order_by(desc('post_date')).all()
+
 		return render_template('listings.html', foods=foods)
 
 @app.route('/listings/<int:food_id>')

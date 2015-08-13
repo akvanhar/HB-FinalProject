@@ -62,6 +62,7 @@
 			<th>Date posted</th>
 			<th>Title</th>
 			<th>Description</th>
+			<th>Made by</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -73,6 +74,7 @@
                 	</a>
                 </td>
 				<td>{{ food.description }}</td>
+				<td>{{ food.user.fname }} {{ food.user.lname }}</td>
 			</tr>
 		{% endfor %}
 	</tbody>
