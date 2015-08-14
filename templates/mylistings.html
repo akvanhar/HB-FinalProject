@@ -2,33 +2,38 @@
 {% block content %}
 
 <h2>Listings for {{ user.fname }} {{ user.lname }}</h2>
-<table>
-	<thead>
-		<tr>
-			<th></th>
-			<th>Date posted</th>
-			<th>Title</th>
-			<th>Description</th>
-			<th>Status</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for food in user_listings %}
+{% if user_listings %}
+	<table>
+		<thead>
 			<tr>
-				<td>
-					<a href="/listings/edit/{{food.food_id}}">edit/view</a>
-				</td>
-				<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
-				<td>{{ food.title }}</td>
-				<td>{{ food.description }}</td>
-				{% if food.active == 1 %}
-					<td>Active</td>
-				{% else %}
-					<td>Not active</td>
-				{% endif %}
+				<th></th>
+				<th>Date posted</th>
+				<th>Title</th>
+				<th>Description</th>
+				<th>Status</th>
 			</tr>
-		{% endfor %}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			{% for food in user_listings %}
+				<tr>
+					<td>
+						<a href="/listings/edit/{{food.food_id}}">edit/view</a>
+					</td>
+					<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
+					<td>{{ food.title }}</td>
+					<td>{{ food.description }}</td>
+					{% if food.active == 1 %}
+						<td>Active</td>
+					{% else %}
+						<td>Not active</td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% else %}
+	<p>Sorry. You haven't posted any listings yet.</p>
+	<p>If you would like to add a listing, <a href="/">return to the home page.</a></p>
+{% endif %}
 
 {% endblock %}

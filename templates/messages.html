@@ -8,20 +8,28 @@
 <table>
 	<thead>
 		<tr>
-			<th>Mark As Read:</th>
 			<th>Date Sent:</th>
 			<th>Message From:</th>
 			<th>Message</th>
+			<th></th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 		{% for message in user_messages %}
-			<tr class='user-message' id=message_{{ message.message_id }}style='font-weight: bold'>
-					<td><input class='check_read' type="button" value="mark as read"></td>
+			<tr class='user-message'>
 					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
 					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
 					<td>{{ message.message_sent }}</td>
+					<th><button id='replyto{{ message.user.user_id }}'>Reply</button>
+					<td><button id='deletemessage{{ message.message_id }}'>Delete</button></td>
 			</tr>
+			<script>
+				function deleteMessage() {
+					alert("delete! Ha. Not. {{message.message_id}}");
+				}
+				$('#deletemessage{{ message.message_id }}').on('click', deleteMessage)
+			</script>
 		{% endfor %}
 	</tbody>
 </table>

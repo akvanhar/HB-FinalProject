@@ -8,7 +8,12 @@
 	
 	<form action='/send_message', method='post'>
 		<input type='hidden' name='posting_user' value='{{ food_listing.user.user_id }}'>
-		<textarea name='message' rows='10' cols='50' placeholder="Please include your preferred method of contact, when you can pick up the food, what you're interested in swapping."></textarea>
+		<textarea name='message' rows='10' cols='50'>Hi {{ food_listing.user.fname }},
+I'm interesting in your {{ food_listing.title }}.
+Please contact me at {{ logged_in_user.email }}.
+Thanks!
+- {{ logged_in_user.fname }}
+		</textarea>
 		<br>
 		<input type='submit' value='Send Message'>
 	</form>

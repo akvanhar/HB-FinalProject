@@ -257,8 +257,10 @@ def food_info(food_id):
     else:
     	#get specific listing from db.
     	food_listing = Food.query.get(food_id)
+    	logged_in_user_id = session['user_id']
+    	logged_in_user = User.query.get(logged_in_user_id)
 
-    	return render_template('food_info.html', food_listing=food_listing)
+    	return render_template('food_info.html', food_listing=food_listing, logged_in_user=logged_in_user)
 
 @app.route('/mylistings')
 def user_listings():
