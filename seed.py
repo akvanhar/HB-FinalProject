@@ -41,4 +41,4 @@ if __name__ == "__main__":
 
     # load_users()
     # load_listings()
-    # load_messages()
+    load_messages()

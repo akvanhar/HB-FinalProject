@@ -356,11 +356,13 @@ def messages():
 	else:
 		#Get the messages for that particular user.
 		current_user_id = session['user_id']
+		current_user = User.query.get(current_user_id)
+
 		user_messages = Message.query.filter_by(receiver_id=current_user_id)
 		user_messages_by_date = user_messages.order_by(desc('datetime_sent'))
 		user_messages_by_status = user_messages.order_by('read_status').all()
 
-		return render_template('messages.html', user_messages=user_messages_by_status)
+		return render_template('messages.html', user_messages=user_messages_by_status, current_user=current_user)
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
@@ -389,9 +391,27 @@ def change_read_status():
 	message = Message.query.get(message_id)
 
 	message.delete_message()
-	print "message deleted"
 
 	return "message deleted"
+
+@app.route('/reply_to_message', methods=['POST'])
+def reply_to():
+	"""reply to another message"""
+	if 'user_id' not in session:
+		flash('Please login to send a message.')
+		return redirect('/login')
+	else:
+		message = request.form.get('message')
+		print message
+		current_user = session['user_id']
+		print current_user
+		reply_to_user = request.form.get('send_message_to')
+		print reply_to_user
+
+		Message.add_message(current_user, reply_to_user, message)
+
+	return "message sent"
+
 
 ################################################################################
 

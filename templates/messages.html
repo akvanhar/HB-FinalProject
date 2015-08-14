@@ -4,40 +4,79 @@
 <h2>Messages to you:</h2>
 <div id="message_sent"></div>
 {% if user_messages %}
-<table>
-	<thead>
-		<tr>
-			<th>Date Sent:</th>
-			<th>Message From:</th>
-			<th>Message</th>
-			<th></th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for message in user_messages %}
-			<tr class='user-message' id='message{{ message.message_id }}'>
-					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
-					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
-					<td>{{ message.message_sent }}</td>
-					<th><button id='replyto{{ message.user.user_id }}'>Reply</button>
-					<td><button id='deletemessage{{ message.message_id }}'>Delete</button></td>
+	<table>
+		<thead>
+			<tr>
+				<th>Date Sent:</th>
+				<th>Message From:</th>
+				<th>Message</th>
+				<th></th>
+				<th></th>
 			</tr>
-			<script>
-				function deleteMessage() {
-					alert("delete! {{message.message_id}}");
-					var message_id = { message_id: {{ message.message_id }} };
-					$.post("/delete_message", message_id, function (result) {
-						$("#message_sent").html('Your message has been deleted.');
-						$("#message_sent").delay(5000).fadeOut();
-						$("#message{{ message.message_id }}").remove();
-					});
-				}
-				$('#deletemessage{{ message.message_id }}').on('click', deleteMessage);
-			</script>
-		{% endfor %}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+
+				<script>
+
+				</script>
+
+
+			{% for message in user_messages %}
+				<tr class='user-message' id='message{{ message.message_id }}'>
+						<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
+						<td>{{ message.user.fname }} {{ message.user.lname }}</td>
+						<td>{{ message.message_sent }}</td>
+						<th><button id='replyTo{{ message.message_id }}'>Reply</button>
+						<td><button id='deletemessage{{ message.message_id }}'>Delete</button></td>
+				</tr>
+				<script>
+					function deleteMessage(evt) {
+						var message_id = { message_id: {{ message.message_id }} };
+						$.post("/delete_message", message_id, function (result) {
+							$("#message_sent").html('');
+							$("#message_sent").css("display", "block");
+							$("#message_sent").html('Your message has been deleted.');
+							$("#message_sent").delay(5000).fadeOut();
+							$("#message{{ message.message_id }}").remove();
+						});
+					}
+
+					
+					$('#deletemessage{{ message.message_id }}').on('click', deleteMessage);
+
+					
+
+					function createMessage(evt) {
+						//FIX THIS: change the function name to be dynamic?
+						$("#reply").css("display", "block");
+						$('#replyToMessage').html("<input type=hidden name='send_message_to' value={{ message.user.user_id }}><textarea name='message' rows='10' cols='50'></textarea><input type='submit' value='Send'>");
+					}
+
+					$('#replyTo{{ message.message_id }}').click(createMessage);
+				</script>
+			{% endfor %}
+
+		</tbody>
+	</table>
+	<form id="reply" action='/reply_to_message' method='post'>
+		<div id="replyToMessage"> </div>
+	</form>
+
+	<script>
+	//instead of going to a new page, once the message is sent, put a message at the top of the page and then fade it out.
+	function messageSent(evt) {
+		evt.preventDefault();
+		$('#reply').css("display", "none");
+		$("#message_sent").html('');
+		$("#message_sent").css("display", "block");
+		$("#message_sent").html('Your message has been sent.');
+		$("#message_sent").delay(5000).fadeOut();
+	}
+
+	$('#reply').submit(messageSent);
+	</script>
+
+
 
 {% else %}
 	<p>Sorry. You have no messages.</p>
