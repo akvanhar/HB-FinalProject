@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Listings</h2>
+
+<h2>{{ this_user.fname }} {{ this_user.lname }}'s Mush Listings</h2>
+
 <table>
 	<thead>
 		<tr>
 			<th>Date posted</th>
 			<th>Title</th>
 			<th>Description</th>
-			<th>Posting user</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
-		{% for food in foods %}
+		{% for food in food_listings %}
 			<tr>
 				<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
 				<td><a href="/listings/{{ food.food_id }}">
@@ -19,9 +21,14 @@
                 	</a>
                 </td>
 				<td>{{ food.description }}</td>
-				<td><a href="/user/{{ food.user_id }}">{{ food.user.fname }} {{ food.user.lname }}</a></td>
+				<td><a href="/listings/{{ food.food_id }}">
+					<button>Send {{ this_user.fname }} a message about this mush.</button>
+					</a>
+				</td>
 			</tr>
 		{% endfor %}
 	</tbody>
 </table>
+
+
 {% endblock %}
