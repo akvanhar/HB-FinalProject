@@ -26,7 +26,7 @@
 		</label>
 		<br>
 		<label>Date made:
-			<input type='date' name='datemade'>
+			<input type='date' name='datemade' value='{{ current_date }}'>
 		</label>
 		<br>
 		<label>Quantity:
@@ -74,7 +74,7 @@
                 	</a>
                 </td>
 				<td>{{ food.description }}</td>
-				<td>{{ food.user.fname }} {{ food.user.lname }}</td>
+				<td><a href='/user/{{ food.user_id }}'>{{ food.user.fname }} {{ food.user.lname }}</a></td>
 			</tr>
 		{% endfor %}
 	</tbody>

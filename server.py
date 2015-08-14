@@ -29,8 +29,8 @@ def home():
 	if 'user_id' in session:
 		user_id = session['user_id']
 
-	user = User.query.get(user_id)
-	user_friends = user.friendships
+		user = User.query.get(user_id)
+		user_friends = user.friendships
 
 	if user_friends:
 		friend_ids = [friend.friend_id for friend in user_friends] #get this user's friend ids
@@ -51,7 +51,11 @@ def home():
 	else:
 		short_list = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
 
-	return render_template('index.html', user_listings=short_list)
+	current_date = datetime.now()
+	current_date = current_date.strftime("%Y-%m-%d")
+	print current_date
+
+	return render_template('index.html', user_listings=short_list, current_date = current_date)
 
 @app.route('/login')
 def login():
