@@ -382,12 +382,12 @@ def send_message():
 
 		return redirect('/')
 
-@app.route('/change-read-status', methods=['POST'])
+@app.route('/delete_message', methods=['POST'])
 def change_read_status():
-	"""change read status of a message"""
-	#FIXTHIS
+	"""Delete a message"""
+	print "Hi Alyson"
 
-	return 'Hi Alyson'
+	return "message deleted"
 
 ################################################################################
 
