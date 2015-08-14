@@ -277,6 +277,12 @@ class Message(db.Model):
 					  message_sent=message_sent)
 		db.session.add(message)
 		db.session.commit()
+
+	def delete_message(self):
+		"""deletes a message from the messages table"""
+
+		db.session.delete(self)
+		db.session.commit()
 	
 
 ################################################################################

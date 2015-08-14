@@ -16,7 +16,7 @@
 	</thead>
 	<tbody>
 		{% for message in user_messages %}
-			<tr class='user-message'>
+			<tr class='user-message' id='message{{ message.message_id }}'>
 					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
 					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
 					<td>{{ message.message_sent }}</td>
@@ -25,16 +25,15 @@
 			</tr>
 			<script>
 				function deleteMessage() {
-					alert("delete! Ha. Not. {{message.message_id}}");
-					var message_id = {{ message.message_id }};
+					alert("delete! {{message.message_id}}");
+					var message_id = { message_id: {{ message.message_id }} };
 					$.post("/delete_message", message_id, function (result) {
-						$('#message_sent').html('Your message has been deleted.')
+						$("#message_sent").html('Your message has been deleted.');
 						$("#message_sent").delay(5000).fadeOut();
-					});//end ajax post method
-				} //end deleteMessage function
-
+						$("#message{{ message.message_id }}").remove();
+					});
+				}
 				$('#deletemessage{{ message.message_id }}').on('click', deleteMessage);
-
 			</script>
 		{% endfor %}
 	</tbody>

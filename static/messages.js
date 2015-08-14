@@ -8,17 +8,3 @@ function deleteMessage() {
 } //end deleteMessage function
 
 $('#deletemessage{{ message.message_id }}').on('click', deleteMessage)
-
-
-function submitOrder(evt) {
-
-  evt.preventDefault();
-  var formInputs = { type: $("#type").val(), amount: $("#amount").val() };
-
-  $.post("/new-order", formInputs, function (result) {
-      alert(result);
-    }
-  );
-}
-
-$("#order-form").on("submit", submitOrder);

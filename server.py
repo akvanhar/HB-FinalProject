@@ -385,7 +385,11 @@ def send_message():
 @app.route('/delete_message', methods=['POST'])
 def change_read_status():
 	"""Delete a message"""
-	print "Hi Alyson"
+	message_id = request.form.get('message_id')
+	message = Message.query.get(message_id)
+
+	message.delete_message()
+	print "message deleted"
 
 	return "message deleted"
 
