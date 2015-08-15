@@ -4,50 +4,51 @@
 	<title>
 		Make Less Mush
 	</title>
-	<style>
-		td, th, table {
-			border: 1px solid black;
-		}
-
-	</style>
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	
+	<link rel="stylesheet" href="/static/css/base.css">
 </head>
-
 <body>
+<div class="container">
 	<script src='/static/facebookplay.js'></script>
-
 	<div id="fb-root"></div>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      	<a href="/"><img class="navbar-brand" id="mlmlogo" alt="Make Less Mush Logo" src="/static/images/mlmlogo.jpg" width=100% height=100%></a>
+	    </div>
 
-	<a href='/'>
-		<button>Home</button>
-	</a>
-	<a href='/listings'>
-		<button>Listings</button>
-	</a>
-	<a href='/mylistings'>
-		<button>My Listings</button>
-	</a>
-	<a href='/messages'>
-		<button>Messages</button>
-	</a>
-	{% if 'user_id' in session %}
-		<a href='/logbutton'>
-			<button onclick="myFacebookLogout">Logout</button>
-		</a>
-    {% else %}
-    	<a href='/logbutton'>
-    		<button>Login</button>
-    	</a>
-    {% endif %}
-
-    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" scope='public_profile,email,user_friends'></div>
-
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
+			<li><a href='/listings'>Listings</a></li>
+			<li><a href='/messages'>Messages</a></li>
+	      </ul>
+	      
+	      <ul class="nav navbar-nav navbar-right">
+	      	{% if 'user_id' in session %}
+				<li><a href='/logbutton'>Logout</a></li>
+    		{% else %}
+		    	<li><a href='/logbutton'>Login</a></li>
+    		{% endif %}
+	        <li class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" scope='public_profile,email,user_friends'></li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
 	{% block content %}
 		put your content here.
 
 	{% endblock %}
+</div>
 </body>
 </html>
