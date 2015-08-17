@@ -3,7 +3,7 @@
 
 <h2>Listings for {{ user.fname }} {{ user.lname }}</h2>
 {% if user_listings %}
-	<table>
+	<table class="table table-condensed table-hover">
 		<thead>
 			<tr>
 				<th></th>
@@ -17,7 +17,7 @@
 			{% for food in user_listings %}
 				<tr>
 					<td>
-						<a href="/listings/edit/{{food.food_id}}">edit/view</a>
+						<a href="/listings/edit/{{food.food_id}}">edit</a>
 					</td>
 					<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
 					<td>{{ food.title }}</td>

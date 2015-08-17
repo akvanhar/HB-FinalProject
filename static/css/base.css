@@ -3,3 +3,11 @@
 	height: 50px;
 	padding: 1px;
 }
+
+.navbar-nav li {
+ line-height: 35px;
+}
+
+#message_sent {
+	display: none;
+}

@@ -31,12 +31,15 @@
 	      <ul class="nav navbar-nav">
 	        <li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
 			<li><a href='/listings'>Listings</a></li>
-			<li><a href='/messages'>Messages</a></li>
+			<li><a href='/mylistings'>My Listings</a></li>
+			<li><a href='/messages'>Messages <span class="badge">3</span></a></li>
 	      </ul>
 	      
+	      
 	      <ul class="nav navbar-nav navbar-right">
+	      	<p class="navbar-text navbar-centre">Signed in as {{ user.fname }} {{ user.lname}}</p>
 	      	{% if 'user_id' in session %}
-	      		<li><a href='/logbutton'><button type="button" class="btn btn-default navbar-btn">Logout</button></a></li>
+	      		<li><a href='/logbutton'>Logout</a></li>
     		{% else %}
 		    	<li><a href='/logbutton'><button type="button" class="btn btn-default navbar-btn">Login</button></a></li>
     		{% endif %}

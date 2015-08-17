@@ -55,7 +55,7 @@ def home():
 	current_date = current_date.strftime("%Y-%m-%d")
 	print current_date
 
-	return render_template('index.html', user_listings=short_list, current_date = current_date)
+	return render_template('index.html', user_listings=short_list, current_date = current_date, user=user)
 
 @app.route('/login')
 def login():
@@ -222,7 +222,6 @@ def listings():
 		return redirect('/login')
 	else:
 		user_id = session['user_id']
-
 		user = User.query.get(user_id)
 		user_friends = user.friendships
 
@@ -244,7 +243,7 @@ def listings():
 		else:
 			foods = Food.query.filter_by(active=1).order_by(desc('post_date')).all()
 
-		return render_template('listings.html', foods=foods)
+		return render_template('listings.html', foods=foods, user=user)
 
 @app.route('/listings/<int:food_id>')
 def food_info(food_id):
@@ -258,9 +257,9 @@ def food_info(food_id):
     	#get specific listing from db.
     	food_listing = Food.query.get(food_id)
     	logged_in_user_id = session['user_id']
-    	logged_in_user = User.query.get(logged_in_user_id)
+    	user = User.query.get(logged_in_user_id)
 
-    	return render_template('food_info.html', food_listing=food_listing, logged_in_user=logged_in_user)
+    	return render_template('food_info.html', food_listing=food_listing, user=user )
 
 @app.route('/mylistings')
 def user_listings():
@@ -288,9 +287,11 @@ def edit_food(food_id):
 		return redirect('/login')
 	else:
 		#show user listing and allow them to make changes.
+		user_id = session['user_id']
+		user = User.query.get(user_id)
 		food_listing = Food.query.get(food_id)
 
-		return render_template('editfood.html', food_listing=food_listing)
+		return render_template('editfood.html', food_listing=food_listing, user=user)
 
 @app.route('/updatelisting', methods=['POST'])
 def update_listing():
@@ -340,10 +341,13 @@ def fuser_info(user_id):
     	return redirect('/login')
     else:
     	#get specific listing from db.
+    	user_id = session['user_id']
+    	user = User.query.get(user_id)
     	this_user = User.query.get(user_id)
     	food_listings = Food.query.filter_by(user_id = user_id)
 
-    	return render_template('user_info.html', this_user = this_user, food_listings=food_listings)
+
+    	return render_template('user_info.html', this_user=this_user, food_listings=food_listings, user=user)
 
 @app.route('/messages')
 def messages():
@@ -355,14 +359,14 @@ def messages():
 		return redirect('/login')
 	else:
 		#Get the messages for that particular user.
-		current_user_id = session['user_id']
-		current_user = User.query.get(current_user_id)
+		user_id = session['user_id']
+		user = User.query.get(user_id)
 
-		user_messages = Message.query.filter_by(receiver_id=current_user_id)
+		user_messages = Message.query.filter_by(receiver_id=user_id)
 		user_messages_by_date = user_messages.order_by(desc('datetime_sent'))
 		user_messages_by_status = user_messages.order_by('read_status').all()
 
-		return render_template('messages.html', user_messages=user_messages_by_status, current_user=current_user)
+		return render_template('messages.html', user_messages=user_messages_by_status, user=user)
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
@@ -401,16 +405,15 @@ def reply_to():
 		flash('Please login to send a message.')
 		return redirect('/login')
 	else:
-		message = request.form.get('message')
-		print message
+		print "server side!"
+		reply_to_user = request.form['send_message_to']
 		current_user = session['user_id']
-		print current_user
-		reply_to_user = request.form.get('send_message_to')
-		print reply_to_user
+		message = request.form['message']
+		print message
 
 		Message.add_message(current_user, reply_to_user, message)
 
-	return "message sent"
+	return "Your message has been sent."
 
 
 ################################################################################

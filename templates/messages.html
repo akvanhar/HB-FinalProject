@@ -2,9 +2,9 @@
 {% block content %}
 
 <h2>Messages to you:</h2>
-<div id="message_sent"></div>
+<div id="messageSent" class="alert alert-success" role="alert"></div>
 {% if user_messages %}
-	<table>
+	<table class="table table-condensed table-hover">
 		<thead>
 			<tr>
 				<th>Date Sent:</th>
@@ -26,57 +26,72 @@
 						<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
 						<td>{{ message.user.fname }} {{ message.user.lname }}</td>
 						<td>{{ message.message_sent }}</td>
-						<th><button id='replyTo{{ message.message_id }}'>Reply</button>
-						<td><button id='deletemessage{{ message.message_id }}'>Delete</button></td>
+						<td>
+							<button class="btn" data-toggle="modal" data-target="#myModal">Reply</button>
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    							<div class="modal-dialog" role="document">
+        							<div class="modal-content">
+            							<div class="modal-header">
+                							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                							<h1 class="modal-title" id="myModalLabel">
+                    							Reply to {{ message.user.fname }}</h1>
+            							</div>
+        								<div class="modal-body">
+        									<p>Original message: {{ message.message_sent }}</p>
+        									<form action="/reply_to_message" methods="post" id='replyTo{{ message.message_id }}'>
+	        									<input id="modalUser" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
+												<textarea id="message" name='message' rows='10' cols='75'></textarea>
+        								</div>
+        								<div class="modal-footer">
+            								<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            								<button class="btn btn-primary pull-right" id='submit{{ message.message_id }}'>Reply</button>	
+        								</div>
+        								</form>
+
+    								</div>
+								</div>
+							</div>
+						</td>
+						<td><button id='deletemessage{{ message.message_id }}' class="btn">Delete</button></td>
 				</tr>
 				<script>
 					function deleteMessage(evt) {
 						var message_id = { message_id: {{ message.message_id }} };
 						$.post("/delete_message", message_id, function (result) {
-							$("#message_sent").html('');
-							$("#message_sent").css("display", "block");
-							$("#message_sent").html('Your message has been deleted.');
-							$("#message_sent").delay(5000).fadeOut();
+							$("#messageSent").html('');
+							$("#messageSent").css("display", "block");
+							$("#messageSent").html('Your message has been deleted.');
+							$("#messageSent").delay(5000).fadeOut();
 							$("#message{{ message.message_id }}").remove();
 						});
 					}
 
-					
 					$('#deletemessage{{ message.message_id }}').on('click', deleteMessage);
 
-					
+					function reply(evt) {
+						//submit the form to the server and close the modal window
+						evt.preventDefault();
+						message_info = $("#replyTo{{ message.message_id }}").serialize();
+						$.post("/reply_to_message", message_info, function (result) {
+						//Display a success message
+						$('#myModal').modal('hide');
+						$("#modalUser").val("");
+						$("#message").val("");
+						$("#messageSent").html('');
+						$("#messageSent").css("display", "block");
+						$("#messageSent").html(result);
+						$("#messageSent").delay(5000).fadeOut();
+						
+						});//close the Ajax call
+					}//close the reply function
 
-					function createMessage(evt) {
-						//FIX THIS: change the function name to be dynamic?
-						$("#reply").css("display", "block");
-						$('#replyToMessage').html("<input type=hidden name='send_message_to' value={{ message.user.user_id }}><textarea name='message' rows='10' cols='50'></textarea><input type='submit' value='Send'>");
-					}
+					$('#submit{{ message.message_id }}').click(reply);
 
-					$('#replyTo{{ message.message_id }}').click(createMessage);
 				</script>
 			{% endfor %}
 
 		</tbody>
 	</table>
-	<form id="reply" action='/reply_to_message' method='post'>
-		<div id="replyToMessage"> </div>
-	</form>
-
-	<script>
-	//instead of going to a new page, once the message is sent, put a message at the top of the page and then fade it out.
-	function messageSent(evt) {
-		evt.preventDefault();
-		$('#reply').css("display", "none");
-		$("#message_sent").html('');
-		$("#message_sent").css("display", "block");
-		$("#message_sent").html('Your message has been sent.');
-		$("#message_sent").delay(5000).fadeOut();
-	}
-
-	$('#reply').submit(messageSent);
-	</script>
-
-
 
 {% else %}
 	<p>Sorry. You have no messages.</p>

@@ -3,102 +3,102 @@
 
 <h2>Listing for: {{ food_listing.title }}</h3>
 <form action='/updatelisting' method='post'>
-		<input type='hidden' name='food_id' value='{{ food_listing.food_id }}'>
-		<input type='hidden' name='allergen_id' value='{{ food_listing.allergen_id }}'>
-		<label>Title:
-			<input type='text' name='title' value='{{ food_listing.title }}'>
-		</label>
-		<br>
-		<label>Texture:
-			<select name='texture'>
-				{% if food_listing.texture == 'smooth_puree'%}
-					<option value='smooth_puree' selected>Smooth puree
-				{% else %}
-					<option value='smooth_puree'>Smooth puree
-				{% endif %}
-				{% if food_listing.texture == 'lumpy_puree'%}
-					<option value='lumpy_puree' selected>Lumpy puree
-				{% else %}
-					<option value='lumpy_puree'>Lumpy puree
-				{% endif %}
-				{% if food_listing.texture == 'diced'%}
-					<option value='diced' selected>Diced
-				{% else %}
-					<option value='diced'>Diced
-				{% endif %}
-			</select>
-		</label>
-		<br>
-		<label>Date made:
-			<input type='date' name='datemade' value='{{ food_listing.datemade.strftime("%Y-%m-%d") }}'>
-		</label>
-		<br>
-		<label>Quantity:
-			<input type='number' name='quantity' value='{{ food_listing.quantity }}'> oz.
-		</label>
-		<br>
-		{% if food_listing.freshfrozen == 'fresh' %}
-			<input type='radio' name='freshfrozen' value='fresh' checked>Fresh
+	<input type='hidden' name='food_id' value='{{ food_listing.food_id }}'>
+	<input type='hidden' name='allergen_id' value='{{ food_listing.allergen_id }}'>
+	<label>Title:
+		<input type='text' name='title' value='{{ food_listing.title }}'>
+	</label>
+	<br>
+	<label>Texture:
+		<select name='texture'>
+			{% if food_listing.texture == 'smooth_puree'%}
+				<option value='smooth_puree' selected>Smooth puree
+			{% else %}
+				<option value='smooth_puree'>Smooth puree
+			{% endif %}
+			{% if food_listing.texture == 'lumpy_puree'%}
+				<option value='lumpy_puree' selected>Lumpy puree
+			{% else %}
+				<option value='lumpy_puree'>Lumpy puree
+			{% endif %}
+			{% if food_listing.texture == 'diced'%}
+				<option value='diced' selected>Diced
+			{% else %}
+				<option value='diced'>Diced
+			{% endif %}
+		</select>
+	</label>
+	<br>
+	<label>Date made:
+		<input type='date' name='datemade' value='{{ food_listing.datemade.strftime("%Y-%m-%d") }}'>
+	</label>
+	<br>
+	<label>Quantity:
+		<input type='number' name='quantity' value='{{ food_listing.quantity }}'> oz.
+	</label>
+	<br>
+	{% if food_listing.freshfrozen == 'fresh' %}
+		<input type='radio' name='freshfrozen' value='fresh' checked>Fresh
+	{% else %}
+		<input type='radio' name='freshfrozen' value='fresh'>Fresh
+	{% endif %}
+	{% if food_listing.freshfrozen == 'frozen' %}
+		<input type='radio' name='freshfrozen' value='frozen' checked>Frozen
+	{% else %}
+		<input type='radio' name='freshfrozen' value='frozen'>Frozen
+	{% endif %}
+	<br>
+	<label>Description:<br>
+		<textarea name='description' rows='10' cols='50'>{{ food_listing.description }}</textarea>
+	</label>
+	<br>
+	<label>Allergens:
+		{% if food_listing.allergen.eggs %}
+			<input type='checkbox' name='allergens' value='eggs' checked>Eggs
 		{% else %}
-			<input type='radio' name='freshfrozen' value='fresh'>Fresh
+			<input type='checkbox' name='allergens' value='eggs'>Eggs
 		{% endif %}
-		{% if food_listing.freshfrozen == 'frozen' %}
-			<input type='radio' name='freshfrozen' value='frozen' checked>Frozen
+		{% if food_listing.allergen.dairy %}
+			<input type='checkbox' name='allergens' value='dairy' checked>Dairy
 		{% else %}
-			<input type='radio' name='freshfrozen' value='frozen'>Frozen
+			<input type='checkbox' name='allergens' value='dairy'>Dairy
 		{% endif %}
-		<br>
-		<label>Description:<br>
-			<textarea name='description' rows='10' cols='50'>{{ food_listing.description }}</textarea>
-		</label>
-		<br>
-		<label>Allergens:
-			{% if food_listing.allergen.eggs %}
-				<input type='checkbox' name='allergens' value='eggs' checked>Eggs
-			{% else %}
-				<input type='checkbox' name='allergens' value='eggs'>Eggs
-			{% endif %}
-			{% if food_listing.allergen.dairy %}
-				<input type='checkbox' name='allergens' value='dairy' checked>Dairy
-			{% else %}
-				<input type='checkbox' name='allergens' value='dairy'>Dairy
-			{% endif %}
-			{% if food_listing.allergen.wheat %}
-				<input type='checkbox' name='allergens' value='wheat' checked>Wheat
-			{% else %}
-				<input type='checkbox' name='allergens' value='wheat'>Wheat
-			{% endif %}
-			{% if food_listing.allergen.peanuts %}
-				<input type='checkbox' name='allergens' value='peanuts' checked>Peanuts
-			{% else %}
-				<input type='checkbox' name='allergens' value='peanuts'>Peanuts
-			{% endif %}
-			{% if food_listing.allergen.soy %}
-				<input type='checkbox' name='allergens' value='soy' checked>Soy
-			{% else %}
-				<input type='checkbox' name='allergens' value='soy'>soy
-			{% endif %}
-			{% if food_listing.allergen.treenuts %}
-				<input type='checkbox' name='allergens' value='treenuts' checked>Treenuts
-			{% else %}
-				<input type='checkbox' name='allergens' value='treenuts'>Treenuts
-			{% endif %}
-			{% if food_listing.allergen.fish %}
-				<input type='checkbox' name='allergens' value='fish' checked>Fish
-			{% else %}
-				<input type='checkbox' name='allergens' value='fish'>Fish
-			{% endif %}
-			{% if food_listing.allergen.shellfish %}
-				<input type='checkbox' name='allergens' value='shellfish' checked>Shellfish
-			{% else %}
-				<input type='checkbox' name='allergens' value='shellfish'>Shellfish
-			{% endif %}
-		</label>
-		<br>
-		<input type='checkbox' name='deactivate' value='deactivate'>Deactivate listing (This will remove it from the active listings)
-		<br>
-		<input type='submit' value='update listing'>
-	</form>
+		{% if food_listing.allergen.wheat %}
+			<input type='checkbox' name='allergens' value='wheat' checked>Wheat
+		{% else %}
+			<input type='checkbox' name='allergens' value='wheat'>Wheat
+		{% endif %}
+		{% if food_listing.allergen.peanuts %}
+			<input type='checkbox' name='allergens' value='peanuts' checked>Peanuts
+		{% else %}
+			<input type='checkbox' name='allergens' value='peanuts'>Peanuts
+		{% endif %}
+		{% if food_listing.allergen.soy %}
+			<input type='checkbox' name='allergens' value='soy' checked>Soy
+		{% else %}
+			<input type='checkbox' name='allergens' value='soy'>soy
+		{% endif %}
+		{% if food_listing.allergen.treenuts %}
+			<input type='checkbox' name='allergens' value='treenuts' checked>Treenuts
+		{% else %}
+			<input type='checkbox' name='allergens' value='treenuts'>Treenuts
+		{% endif %}
+		{% if food_listing.allergen.fish %}
+			<input type='checkbox' name='allergens' value='fish' checked>Fish
+		{% else %}
+			<input type='checkbox' name='allergens' value='fish'>Fish
+		{% endif %}
+		{% if food_listing.allergen.shellfish %}
+			<input type='checkbox' name='allergens' value='shellfish' checked>Shellfish
+		{% else %}
+			<input type='checkbox' name='allergens' value='shellfish'>Shellfish
+		{% endif %}
+	</label>
+	<br>
+	<input type='checkbox' name='deactivate' value='deactivate'>Deactivate listing (This will remove it from the active listings)
+	<br>
+	<input type='submit' value='update listing'>
+</form>
 
 {% endblock %}
 
