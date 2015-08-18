@@ -13,45 +13,51 @@
 
 <h2>Post a new listing</h2>
 	<form action='/postlisting' method='post'>
-		<label>Title:
-			<input type='text' name='title'>
-		</label>
-		<br>
-		<label>Texture:
-			<select name='texture'>
-				<option value='smooth_puree'>Smooth puree
-				<option value='lumpy_puree'>Lumpy puree
-				<option value='diced'>Diced
-			</select>
-		</label>
-		<br>
-		<label>Date made:
-			<input type='date' name='datemade' value='{{ current_date }}'>
-		</label>
-		<br>
-		<label>Quantity:
-			<input type='number' name='quantity'> oz.
-		</label>
-		<br>
-		<input type='radio' name='freshfrozen' value='fresh'>Fresh
-		<input type='radio' name='freshfrozen' value='frozen'>Frozen
-		<br>
-		<label>Description:<br>
-			<textarea name='description' rows='10' cols='50' placeholder='Please include ingredients'></textarea>
-		</label>
-		<br>
-		<label>Allergens:
-			<input type='checkbox' name='allergens' value='eggs'>Eggs
-			<input type='checkbox' name='allergens' value='dairy'>Dairy
-			<input type='checkbox' name='allergens' value='wheat'>Wheat
-			<input type='checkbox' name='allergens' value='peanuts'>Peanuts
-			<input type='checkbox' name='allergens' value='soy'>Soy
-			<input type='checkbox' name='allergens' value='treenuts'>Tree nuts
-			<input type='checkbox' name='allergens' value='fish'>Fish
-			<input type='checkbox' name='allergens' value='shellfish'>Shellfish
-		</label>
-		<br>
-		<input type='submit' value='create listing'>
+		<div class="form-group">
+			<label>Title:
+				<input class="form-control" type='text' name='title'>
+			</label>
+		</div>
+			<br>
+		<div class="form-group">
+			<label>Texture:
+				<select name='texture'>
+					<option class="form-control" value='smooth_puree'>Smooth puree
+					<option class="form-control" value='lumpy_puree'>Lumpy puree
+					<option class="form-control" value='diced'>Diced
+				</select>
+			</label>
+		</div>
+			<br>
+			<label>Date made:
+				<input type='date' name='datemade' value='{{ current_date }}'>
+			</label>
+			<br>
+			<label>Quantity:
+				<input type='number' name='quantity'> oz.
+			</label>
+			<br>
+			<input type='radio' name='freshfrozen' value='fresh'>Fresh
+			<input type='radio' name='freshfrozen' value='frozen'>Frozen
+			<br>
+			<label>Description:<br>
+				<textarea name='description' rows='10' cols='50' placeholder='Please include ingredients'></textarea>
+			</label>
+			<br>
+			<div class="checkbox">
+			<label>Allergens:
+				<input type='checkbox' name='allergens' value='eggs'>Eggs
+				<input type='checkbox' name='allergens' value='dairy'>Dairy
+				<input type='checkbox' name='allergens' value='wheat'>Wheat
+				<input type='checkbox' name='allergens' value='peanuts'>Peanuts
+				<input type='checkbox' name='allergens' value='soy'>Soy
+				<input type='checkbox' name='allergens' value='treenuts'>Tree nuts
+				<input type='checkbox' name='allergens' value='fish'>Fish
+				<input type='checkbox' name='allergens' value='shellfish'>Shellfish
+			</label>
+			</div>
+			<br>
+			<input type='submit' value='create listing'>
 	</form>
 
 <h2>Most recent listings:</h2>
