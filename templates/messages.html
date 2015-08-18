@@ -24,20 +24,19 @@
 						<td>{{ message.user.fname }} {{ message.user.lname }}</td>
 						<td>{{ message.message_sent }}</td>
 						<td>
-							<button class="btn" data-toggle="modal" data-target="#myModal">Reply</button>
-							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<button id="modalReply{{ message.message_id }}" class="btn" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
+							<div class="modal fade" id="myModal{{message.message_id}}" tabindex="-1" role="dialog">
     							<div class="modal-dialog" role="document">
         							<div class="modal-content">
             							<div class="modal-header">
                 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                							<h1 class="modal-title" id="myModalLabel">
-                    							Reply to {{ message.user.fname }}</h1>
+                							<h1 id="replyToName{{message.message_id}}" class="modal-title">Reply to {{ message.user.fname }}:</h1>
             							</div>
         								<div class="modal-body">
         									<p>Original message: {{ message.message_sent }}</p>
         									<form action="/reply_to_message" methods="post" id='replyTo{{ message.message_id }}'>
-	        									<input id="modalUser" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
-												<textarea id="message" name='message' rows='10' cols='75'></textarea>
+	        									<input id="modalUser{{message.message_id}}" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
+												<textarea id="message{{message.message_id}}" name='message' rows='10' cols='75'></textarea>
         								</div>
         								<div class="modal-footer">
             								<button class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -53,6 +52,7 @@
 				</tr>
 				<script>
 					function deleteMessage(evt) {
+						//delete the user message and display success message
 						var message_id = { message_id: {{ message.message_id }} };
 						$.post("/delete_message", message_id, function (result) {
 							$("#messageSent").html('');
@@ -71,19 +71,17 @@
 						message_info = $("#replyTo{{ message.message_id }}").serialize();
 						$.post("/reply_to_message", message_info, function (result) {
 						//Display a success message
-						$('#myModal').modal('hide');
-						$("#modalUser").val("");
-						$("#message").val("");
-						$("#messageSent").html('');
-						$("#messageSent").css("display", "block");
-						$("#messageSent").html(result);
-						$("#messageSent").delay(5000).fadeOut();
-						
+							$(".modal").modal('hide');
+							$("#modalUser{{message.message_id}}").val("");
+							$("#message{{message.message_id}}").html("");
+							$("#messageSent").html('');
+							$("#messageSent").css("display", "block");
+							$("#messageSent").html(result);
+							$("#messageSent").delay(5000).fadeOut();
 						});//close the Ajax call
 					}//close the reply function
 
 					$('#submit{{ message.message_id }}').click(reply);
-
 				</script>
 			{% endfor %}
 

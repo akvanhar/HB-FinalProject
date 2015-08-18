@@ -369,9 +369,8 @@ def messages():
 
 		user_messages = Message.query.filter_by(receiver_id=user_id)
 		user_messages_by_date = user_messages.order_by(desc('datetime_sent'))
-		user_messages_by_status = user_messages.order_by('read_status').all()
 
-		return render_template('messages.html', user_messages=user_messages_by_status, user=user)
+		return render_template('messages.html', user_messages=user_messages_by_date, user=user)
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
