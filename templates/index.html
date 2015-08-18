@@ -12,52 +12,86 @@
 {% endif %}
 
 <h2>Post a new listing</h2>
-	<form action='/postlisting' method='post'>
-		<div class="form-group">
-			<label>Title:
-				<input class="form-control" type='text' name='title'>
+	<form class="form-horizontal" action='/postlisting' method='post'>
+		<div class="form-group form-group-lg">
+			<label class="col-sm-1 control-label" for="foodTitle">Title: </label>
+	    		<div class="col-sm-3">
+	      			<input class="form-control" type="text" id="foodTitle" placeholder="Your recipe title" name='title'>
+	    		</div>
+		</div>
+		<div class="form-group form-group-sm">
+			<label class="col-sm-1 control-label" for="texture">Texture: </label>
+	    		<div class="col-sm-3">
+	      			<select class="form-control" id="texture" name='texture'>
+						<option class="form-control" value='smooth_puree'>Smooth puree
+						<option class="form-control" value='lumpy_puree'>Lumpy puree
+						<option class="form-control" value='diced'>Diced
+					</select>
+	    		</div>
+    		</label>
+		</div>
+		<div class="form-group form-group-sm">
+			<label class="col-sm-1 control-label" for="datemade">Date made: </label>
+	    		<div class="col-sm-3">
+	      			<input class="form-control" id="datemade" type='date' name='datemade' value='{{ current_date }}'>
+	    		</div>
+		</div>
+		<div class="form-group form-group-sm">
+			<label class="col-sm-1 control-label" for="quantity">Quantity (oz): </label>
+	    		<div class="col-sm-3">
+	      			<input class="form-control" type='number' min='0' name='quantity' placeholder='8 oz.'>
+	    		</div>
+		</div>
+		<div class="form-group form-group-sm">
+			<label class="col-sm-1 control-label"></label>
+			<label class="col-sm-1 control-label" for="freshfrozen">Fresh 
+				<input class="col-sm-2 radio-inline" type="radio" name="freshfrozen" value="fresh">
+			</label>
+			<label class="col-sm-1 control-label" for="freshfrozen">Frozen 
+				<input class="col-sm-2 radio-inline" type="radio" name="freshfrozen" value="frozen">
 			</label>
 		</div>
-			<br>
-		<div class="form-group">
-			<label>Texture:
-				<select name='texture'>
-					<option class="form-control" value='smooth_puree'>Smooth puree
-					<option class="form-control" value='lumpy_puree'>Lumpy puree
-					<option class="form-control" value='diced'>Diced
-				</select>
+
+		<div class="form-group form-group-sm">
+			<label class="col-sm-1 control-label">Allergens:</label>
+				<label for="allergens" class="checkbox-inline">
+					<input type='checkbox' name='allergens' value='eggs'>Eggs
+				</label>
+				<label class="checkbox-inline">
+					<input type='checkbox' name='allergens' value='dairy'>Dairy
+				</label>
+				<label class="checkbox-inline">
+					<input type='checkbox' name='allergens' value='wheat'>Wheat
+				</label>
+				<label class="checkbox-inline">
+					<input type='checkbox' name='allergens' value='peanuts'>Peanuts
+				</label>
+				<br>
+				<label class="col-sm-1"></label>
+				<label class="checkbox-inline">
+					<input type='checkbox' name='allergens' value='soy'>Soy
+				</label>
+				<label class="checkbox-inline">
+					<input type='checkbox' name='allergens' value='treenuts'>Tree nuts
+				</label>
+				<label class="checkbox-inline">
+					<input type='checkbox' name='allergens' value='fish'>Fish
+				</label>
+				<label class="checkbox-inline">
+					<input type='checkbox' name='allergens' value='shellfish'>Shellfish
+				</label>
 			</label>
 		</div>
-			<br>
-			<label>Date made:
-				<input type='date' name='datemade' value='{{ current_date }}'>
-			</label>
-			<br>
-			<label>Quantity:
-				<input type='number' name='quantity'> oz.
-			</label>
-			<br>
-			<input type='radio' name='freshfrozen' value='fresh'>Fresh
-			<input type='radio' name='freshfrozen' value='frozen'>Frozen
-			<br>
+		<div class="form-group">
 			<label>Description:<br>
-				<textarea name='description' rows='10' cols='50' placeholder='Please include ingredients'></textarea>
+				<textarea class="form-control" name='description' rows='10' cols='40' placeholder='Please include ingredients'></textarea>
 			</label>
-			<br>
-			<div class="checkbox">
-			<label>Allergens:
-				<input type='checkbox' name='allergens' value='eggs'>Eggs
-				<input type='checkbox' name='allergens' value='dairy'>Dairy
-				<input type='checkbox' name='allergens' value='wheat'>Wheat
-				<input type='checkbox' name='allergens' value='peanuts'>Peanuts
-				<input type='checkbox' name='allergens' value='soy'>Soy
-				<input type='checkbox' name='allergens' value='treenuts'>Tree nuts
-				<input type='checkbox' name='allergens' value='fish'>Fish
-				<input type='checkbox' name='allergens' value='shellfish'>Shellfish
-			</label>
-			</div>
-			<br>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3"></label>
 			<input type='submit' value='create listing'>
+		</div>
 	</form>
 
 <h2>Most recent listings:</h2>
