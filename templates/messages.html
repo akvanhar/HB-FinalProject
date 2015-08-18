@@ -4,9 +4,9 @@
 	$("#messagesButton").attr("class", 'active');
 </script>
 
-<h2>Messages to you:</h2>
+<h3>New Messages:</h3>
 <div id="messageSent" class="alert alert-success" role="alert" style="display: none"></div>
-{% if user_messages %}
+{% if unread_messages %}
 	<table class="table table-condensed table-hover">
 		<thead>
 			<tr>
@@ -18,37 +18,37 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for message in user_messages %}
+			{% for message in unread_messages %}
 				<tr class='user-message' id='message{{ message.message_id }}'>
-						<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
-						<td>{{ message.user.fname }} {{ message.user.lname }}</td>
-						<td>{{ message.message_sent }}</td>
-						<td>
-							<button id="modalReply{{ message.message_id }}" class="btn" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
-							<div class="modal fade" id="myModal{{message.message_id}}" tabindex="-1" role="dialog">
-    							<div class="modal-dialog" role="document">
-        							<div class="modal-content">
-            							<div class="modal-header">
-                							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                							<h1 id="replyToName{{message.message_id}}" class="modal-title">Reply to {{ message.user.fname }}:</h1>
-            							</div>
-        								<div class="modal-body">
-        									<p>Original message: {{ message.message_sent }}</p>
-        									<form action="/reply_to_message" methods="post" id='replyTo{{ message.message_id }}'>
-	        									<input id="modalUser{{message.message_id}}" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
-												<textarea id="message{{message.message_id}}" name='message' rows='10' cols='75'></textarea>
-        								</div>
-        								<div class="modal-footer">
-            								<button class="btn btn-default" data-dismiss="modal">Cancel</button>
-            								<button class="btn btn-primary pull-right" id='submit{{ message.message_id }}'>Reply</button>	
-        								</div>
-        								</form>
-
+					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
+					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
+					<td>{{ message.message_sent }}</td>
+					<td>
+						<button id="modalReply{{ message.message_id }}" class="btn btn-sm" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
+						<div class="modal fade" id="myModal{{message.message_id}}" tabindex="-1" role="dialog">
+							<div class="modal-dialog" role="document">
+    							<div class="modal-content">
+        							<div class="modal-header">
+            							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            							<h1 id="replyToName{{message.message_id}}" class="modal-title">Reply to {{ message.user.fname }}:</h1>
+        							</div>
+    								<div class="modal-body">
+    									<p>Original message: {{ message.message_sent }}</p>
+    									<form action="/reply_to_message" methods="post" id='replyTo{{ message.message_id }}'>
+        									<input id="modalUser{{message.message_id}}" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
+											<textarea id="message{{message.message_id}}" name='message' rows='10' cols='75'></textarea>
     								</div>
+    								<div class="modal-footer">
+        								<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+        								<button class="btn btn-primary pull-right" id='submit{{ message.message_id }}'>Reply</button>	
+    								</div>
+    								</form>
 								</div>
 							</div>
-						</td>
-						<td><button id='deletemessage{{ message.message_id }}' class="btn">Delete</button></td>
+						</div>
+					</td>
+					<td><button id='deleteMessage{{ message.message_id }}' class="btn btn-sm">Delete</button></td>
+					<td><button id='readButton{{ message.message_id }}' class='btn btn-sm'>Mark as read</button></td>
 				</tr>
 				<script>
 					function deleteMessage(evt) {
@@ -63,7 +63,7 @@
 						});
 					}
 
-					$('#deletemessage{{ message.message_id }}').on('click', deleteMessage);
+					$('#deleteMessage{{ message.message_id }}').on('click', deleteMessage);
 
 					function reply(evt) {
 						//submit the form to the server and close the modal window
@@ -71,9 +71,10 @@
 						message_info = $("#replyTo{{ message.message_id }}").serialize();
 						$.post("/reply_to_message", message_info, function (result) {
 						//Display a success message
-							$(".modal").modal('hide');
 							$("#modalUser{{message.message_id}}").val("");
 							$("#message{{message.message_id}}").html("");
+							$("#myModal{{message.message_id}}").modal('hide');
+							$('.modal-backdrop').fadeOut(50);
 							$("#messageSent").html('');
 							$("#messageSent").css("display", "block");
 							$("#messageSent").html(result);
@@ -82,15 +83,54 @@
 					}//close the reply function
 
 					$('#submit{{ message.message_id }}').click(reply);
+
+					function markAsRead(evt) {
+						var message_id = { message_id: {{ message.message_id }} };
+						$.post("/mark_as_read", message_id, function (result) {
+							$("#messageSent").html('');
+							$("#messageSent").css("display", "block");
+							$("#messageSent").html('Your message has been read.');
+							$("#messageSent").delay(5000).fadeOut();
+							$("#message{{ message.message_id }}").remove();
+							$("readMessage{{ message.message_id }})").append(
+										"<tr><td>{{ message.datetime_sent.strftime('%b %d, %Y') }}</td><td>{{ message.user.fname }} {{ message.user.lname }}</td><td>{{ message.message_sent }}</td></tr>");
+
+							// do something here to reload the tables... maybe just unboled the message? maybe delete the row and add it to the read messages table?
+						});
+					}
+
+					$('#readButton{{ message.message_id }}').click(markAsRead);
 				</script>
 			{% endfor %}
 
 		</tbody>
 	</table>
-
 {% else %}
-	<p>Sorry. You have no messages.</p>
-
+	<p>You have no new messages</p>
+{% endif %}
+{% if read_messages %}
+	<table class="table table-condensed table-hover">
+		<thead>
+			<tr>
+				<th>Date Sent:</th>
+				<th>Message From:</th>
+				<th>Message</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for message in read_messages %}
+				<tr class='user-message' id='readMessage{{ message.message_id }}'>
+					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
+					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
+					<td>{{ message.message_sent }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% else %}
+	<p>You have no read messages.</p>
 {% endif %}
 
 {% endblock %}

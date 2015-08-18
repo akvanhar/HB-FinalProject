@@ -282,6 +282,12 @@ class Message(db.Model):
 		db.session.delete(self)
 		db.session.commit()
 	
+	def mark_as_read(self):
+	 	"""Mark a message as read"""
+
+	 	self.read_status = 1
+	 	db.session.commit()
+	
 
 ################################################################################
 #Helper functions

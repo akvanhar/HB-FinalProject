@@ -367,10 +367,13 @@ def messages():
 		user_id = session['user_id']
 		user = User.query.get(user_id)
 
-		user_messages = Message.query.filter_by(receiver_id=user_id)
-		user_messages_by_date = user_messages.order_by(desc('datetime_sent'))
+		unread_messages = Message.query.filter_by(receiver_id=user_id, read_status=0)
+		unread_messages_by_date = unread_messages.order_by(desc('datetime_sent')).all()		
 
-		return render_template('messages.html', user_messages=user_messages_by_date, user=user)
+		read_messages = Message.query.filter_by(receiver_id=user_id, read_status=1)
+		read_messages_by_date = read_messages.order_by(desc('datetime_sent')).all()
+
+		return render_template('messages.html', unread_messages=unread_messages_by_date, read_messages=read_messages_by_date, user=user)
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
@@ -418,6 +421,16 @@ def reply_to():
 		Message.add_message(current_user, reply_to_user, message)
 
 	return "Your message has been sent."
+
+@app.route('/mark_as_read', methods=['POST'])
+def mark_as_read():
+	"""mark a message as read in the db."""
+
+	message_id = request.form.get('message_id')
+	message = Message.query.get(message_id)
+	message.mark_as_read()
+
+	return "Message read"
 
 
 ################################################################################
