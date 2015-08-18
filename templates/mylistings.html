@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+<script>
+	$("#myListingsButton").attr("class", 'active');
+</script>
 
 <h2>Listings for {{ user.fname }} {{ user.lname }}</h2>
 {% if user_listings %}

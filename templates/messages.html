@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
+<script>
+	$("#messagesButton").attr("class", 'active');
+</script>
 
 <h2>Messages to you:</h2>
-<div id="messageSent" class="alert alert-success" role="alert"></div>
+<div id="messageSent" class="alert alert-success" role="alert" style="display: none"></div>
 {% if user_messages %}
 	<table class="table table-condensed table-hover">
 		<thead>
@@ -15,12 +18,6 @@
 			</tr>
 		</thead>
 		<tbody>
-
-				<script>
-
-				</script>
-
-
 			{% for message in user_messages %}
 				<tr class='user-message' id='message{{ message.message_id }}'>
 						<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>

@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+<script>
+	    $("#homeButton").attr("class", 'active');
+</script>
 
 <h1>Make Less Mush</h1>
 
@@ -7,119 +10,140 @@
 	{{message}}
 {% endfor %}
 
-{% if 'user_id' not in session %}
-	<h3>Don't forget to login before posting or checking out the Make Less Mush listings!</h3>
-{% endif %}
+	{% if 'user_id' not in session %}
+		<h3>Don't forget to login before posting or checking out the Make Less Mush listings!</h3>
+	{% endif %}
+	<div class="row">
+		<div class="col-sm-6" style="margin-right: 1">
+			<h2>Post a new listing</h2>
+			<form class="form-horizontal" action='/postlisting' method='post'>
+				<div class="row">
+					<div class="form-group form-group-lg">
+						<label class="col-sm-3 control-label" for="foodTitle">Title: </label>
+				    		<div class="col-sm-9">
+				      			<input class="form-control" type="text" id="foodTitle" placeholder="Your recipe title" name='title'>
+				    		</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group form-group-md">
+						<label class="col-sm-3 control-label" for="texture">Texture: </label>
+				    		<div class="col-sm-9">
+				      			<select class="form-control" id="texture" name='texture'>
+									<option class="form-control" value='smooth_puree'>Smooth puree
+									<option class="form-control" value='lumpy_puree'>Lumpy puree
+									<option class="form-control" value='diced'>Diced
+								</select>
+				    		</div>
+			    		</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group form-group-md">
+						<label class="col-sm-3 control-label" for="datemade">Date made: </label>
+				    		<div class="col-sm-9">
+				      			<input class="form-control" id="datemade" type='date' name='datemade' value='{{ current_date }}'>
+				    		</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group form-group-md">
+						<label class="col-sm-3 control-label" for="quantity">Quantity (oz): </label>
+				    		<div class="col-sm-9">
+				      			<input class="form-control" type='number' min='0' name='quantity' placeholder='8 oz.'>
+				    		</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group form-group-md">
+						<label class="col-sm-3 control-label">Fresh or Frozen?</label>
+						<label class="col-sm-3 control-label" for="freshfrozen">Fresh </label>
+							<input class="col-sm-1 radio-inline" type="radio" name="freshfrozen" value="fresh">
+						<label class="col-sm-3 control-label" for="freshfrozen">Frozen </label>
+							<input class="col-sm-1 radio-inline" type="radio" name="freshfrozen" value="frozen">
+						<div class="col-sm-1"></div>
+					</div>
+				</div>
+				<div class="form-group form-group-md">
+					<div class="row">
+						<label class="col-sm-3 control-label">Allergens:</label>
+							
+							<label class="checkbox-inline col-sm-1">
+								<input class="col-sm-1" type='checkbox' name='allergens' value='eggs'>
+								Eggs</label>
+							<label class="checkbox-inline col-sm-1">
+								<input class="col-sm-1" type='checkbox' name='allergens' value='dairy'>
+								Dairy</label>
+							<label class="checkbox-inline col-sm-1">
+								<input class="col-sm-1" type='checkbox' name='allergens' value='wheat'>Wheat</label>
+							<label class="checkbox-inline col-sm-1">
+								<input class="col-sm-1" type='checkbox' name='allergens' value='peanuts'>
+								Peanuts</label>	
+							<div class="col-sm-1"></div>
 
-<h2>Post a new listing</h2>
-	<form class="form-horizontal" action='/postlisting' method='post'>
-		<div class="form-group form-group-lg">
-			<label class="col-sm-1 control-label" for="foodTitle">Title: </label>
-	    		<div class="col-sm-3">
-	      			<input class="form-control" type="text" id="foodTitle" placeholder="Your recipe title" name='title'>
-	    		</div>
+					</div>
+					<div class="row">
+						<label class="col-sm-3"></label>
+						<label class="checkbox-inline col-sm-1">
+							<input class="col-sm-1" type='checkbox' name='allergens' value='soy'>Soy
+						</label>
+						<label class="checkbox-inline col-sm-2">
+							<input class="col-sm-1" type='checkbox' name='allergens' value='treenuts'>Tree-nuts
+						</label>
+						<label class="checkbox-inline col-sm-1">
+							<input class="col-sm-1" type='checkbox' name='allergens' value='fish'>Fish
+						</label>
+						<label class="checkbox-inline col-sm-1">
+							<input class="col-sm-1" type='checkbox' name='allergens' value='shellfish'>Shellfish
+						</label>
+					</div>
+				</div>
+				<div class="form-group form-group-md">
+					<div class="row">
+							<label class="col-sm-3">Description:</label>
+								<textarea class="form-control col-sm-9" name='description' rows='10' placeholder='Please include ingredients, what you would like to swap for, and your preferred method of contact'></textarea>
+							
+					</div>
+				</div>
+				<div class="form-group">
+					<input class="col-sm-2 col-sm-offset-10 btn btn-default" type='submit' value='create listing'>
+				</div>
+			</form>
 		</div>
-		<div class="form-group form-group-sm">
-			<label class="col-sm-1 control-label" for="texture">Texture: </label>
-	    		<div class="col-sm-3">
-	      			<select class="form-control" id="texture" name='texture'>
-						<option class="form-control" value='smooth_puree'>Smooth puree
-						<option class="form-control" value='lumpy_puree'>Lumpy puree
-						<option class="form-control" value='diced'>Diced
-					</select>
-	    		</div>
-    		</label>
+		<div class="col-sm-6">
+			<div class="row">
+				<h2 class="col-sm-12">Most recent listings:</h2>
+			</div>
+			<table class="table table-condensed table-hover">
+				<div class="row">
+					<thead>
+						<tr>
+							<th class="col-sm-2">Date posted</th>
+							<th class="col-sm-2">Title</th>
+							<th class="col-sm-6">Description</th>
+							<th class="col-sm-2">Made by</th>
+						</tr>
+					</thead>
+				</div>
+				<tbody>
+					{% for food in user_listings %}
+						<div class="row">
+							<tr>
+								<td class="col-sm-2">{{ food.post_date.strftime("%b %d, %Y") }}</td>
+								<td class="col-sm-2"><a href="/listings/{{ food.food_id }}">
+				                    {{ food.title }}
+				                	</a>
+				                </td>
+								<td class="col-sm-6">{{ food.description }}</td>
+								<td class="col-sm-2"><a href='/user/{{ food.user_id }}'>{{ food.user.fname }} {{ food.user.lname }}</a></td>
+							</tr>
+						</div>
+					{% endfor %}
+				</tbody>
+			</table>
+			<div class="row">
+				<a href='/listings'><button class="col-sm-2 col-sm-offset-10 btn btn-default">View all</button></a>
+			</div>
 		</div>
-		<div class="form-group form-group-sm">
-			<label class="col-sm-1 control-label" for="datemade">Date made: </label>
-	    		<div class="col-sm-3">
-	      			<input class="form-control" id="datemade" type='date' name='datemade' value='{{ current_date }}'>
-	    		</div>
-		</div>
-		<div class="form-group form-group-sm">
-			<label class="col-sm-1 control-label" for="quantity">Quantity (oz): </label>
-	    		<div class="col-sm-3">
-	      			<input class="form-control" type='number' min='0' name='quantity' placeholder='8 oz.'>
-	    		</div>
-		</div>
-		<div class="form-group form-group-sm">
-			<label class="col-sm-1 control-label"></label>
-			<label class="col-sm-1 control-label" for="freshfrozen">Fresh 
-				<input class="col-sm-2 radio-inline" type="radio" name="freshfrozen" value="fresh">
-			</label>
-			<label class="col-sm-1 control-label" for="freshfrozen">Frozen 
-				<input class="col-sm-2 radio-inline" type="radio" name="freshfrozen" value="frozen">
-			</label>
-		</div>
-
-		<div class="form-group form-group-sm">
-			<label class="col-sm-1 control-label">Allergens:</label>
-				<label for="allergens" class="checkbox-inline">
-					<input type='checkbox' name='allergens' value='eggs'>Eggs
-				</label>
-				<label class="checkbox-inline">
-					<input type='checkbox' name='allergens' value='dairy'>Dairy
-				</label>
-				<label class="checkbox-inline">
-					<input type='checkbox' name='allergens' value='wheat'>Wheat
-				</label>
-				<label class="checkbox-inline">
-					<input type='checkbox' name='allergens' value='peanuts'>Peanuts
-				</label>
-				<br>
-				<label class="col-sm-1"></label>
-				<label class="checkbox-inline">
-					<input type='checkbox' name='allergens' value='soy'>Soy
-				</label>
-				<label class="checkbox-inline">
-					<input type='checkbox' name='allergens' value='treenuts'>Tree nuts
-				</label>
-				<label class="checkbox-inline">
-					<input type='checkbox' name='allergens' value='fish'>Fish
-				</label>
-				<label class="checkbox-inline">
-					<input type='checkbox' name='allergens' value='shellfish'>Shellfish
-				</label>
-			</label>
-		</div>
-		<div class="form-group">
-			<label>Description:<br>
-				<textarea class="form-control" name='description' rows='10' cols='40' placeholder='Please include ingredients'></textarea>
-			</label>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-sm-3"></label>
-			<input type='submit' value='create listing'>
-		</div>
-	</form>
-
-<h2>Most recent listings:</h2>
-
-<table class="table table-condensed table-hover">
-	<thead>
-		<tr>
-			<th>Date posted</th>
-			<th>Title</th>
-			<th>Description</th>
-			<th>Made by</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for food in user_listings %}
-			<tr>
-				<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
-				<td><a href="/listings/{{ food.food_id }}">
-                    {{ food.title }}
-                	</a>
-                </td>
-				<td>{{ food.description }}</td>
-				<td><a href='/user/{{ food.user_id }}'>{{ food.user.fname }} {{ food.user.lname }}</a></td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
-
-<p><a href='/listings'>View all</a></p>
-
+	</div>
 {% endblock %}
