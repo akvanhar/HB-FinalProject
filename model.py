@@ -73,15 +73,12 @@ class Food(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
 	post_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
 	active = db.Column(db.Boolean, nullable=False, default=1) #1 indicates that the item is active
-	shared_with = db.Column(db.Integer, db.ForeignKey('friendships.friendship_id'), nullable=True)
+	shared_with = db.Column(db.String, nullable=False)
 
 	allergen = db.relationship("Allergen",
 								backref=db.backref("foods", order_by=food_id))
 	user = db.relationship("User", 
 						   backref=db.backref("foods", order_by=food_id))
-
-	friendship = db.relationship("Friendship", 
-								 backref=db.backref("foods", order_by=food_id))
 
 	def __repr__(self):
 		"""A helpful representation of the food"""
@@ -90,7 +87,7 @@ class Food(db.Model):
 
 	@classmethod
 	def add_food(cls, title, texture, datemade, quantity,
-				 freshfrozen, description, allergen_id, user_id):
+				 freshfrozen, description, allergen_id, user_id, shared_with=""):
 		"""Insert a new food listing into the foods table"""
 
 		datemade = datetime.strptime(datemade, "%Y-%m-%d")
@@ -98,12 +95,12 @@ class Food(db.Model):
 		food = cls(title=title, texture=texture, 
 				   datemade=datemade, quantity=quantity, 
 				   freshfrozen=freshfrozen, description=description, 
-				   allergen_id=allergen_id, user_id=user_id)
+				   allergen_id=allergen_id, user_id=user_id, shared_with=shared_with)
 		db.session.add(food)
 		db.session.commit()
 
 	def update_food(self, food_id, title, texture, datemade, quantity,
-				 freshfrozen, description, active=1):
+				 freshfrozen, description, active, shared_with):
 		"""updates a listing in the foods table"""
 
 		datemade = datetime.strptime(datemade, "%Y-%m-%d")
@@ -112,10 +109,11 @@ class Food(db.Model):
 		this_food.title = title
 		this_food.texture = texture
 		this_food.datemade = datemade
-		this_food.quantity = quantity
+		this_food.quantity = int(quantity)
 		this_food.freshfrozen = freshfrozen
 		this_food.description = description
 		this_food.active = active
+		this_food.shared_with = shared_with
 
 		db.session.commit()
 

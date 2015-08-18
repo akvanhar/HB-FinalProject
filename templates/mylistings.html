@@ -5,28 +5,44 @@
 {% if user_listings %}
 	<table class="table table-condensed table-hover">
 		<thead>
+			<tr>Active listings</tr>
 			<tr>
-				<th></th>
 				<th>Date posted</th>
 				<th>Title</th>
 				<th>Description</th>
-				<th>Status</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for food in user_listings %}
 				<tr>
-					<td>
-						<a href="/listings/edit/{{food.food_id}}">edit</a>
-					</td>
 					<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
 					<td>{{ food.title }}</td>
 					<td>{{ food.description }}</td>
-					{% if food.active == 1 %}
-						<td>Active</td>
-					{% else %}
-						<td>Not active</td>
-					{% endif %}
+					<td>
+						<a href="/listings/edit/{{food.food_id}}">update</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<table class="table table-condensed table-hover">
+		<thead>
+			<tr>Deactivated listings</tr>
+			<tr>
+				<th>Date posted</th>
+				<th>Title</th>
+				<th>Description</th>
+				<th>Shared with</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for food in old_listings %}
+				<tr>
+					<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
+					<td>{{ food.title }}</td>
+					<td>{{ food.description }}</td>
+					<td>{{ food.shared_with }}</td>
 				</tr>
 			{% endfor %}
 		</tbody>

@@ -48,6 +48,7 @@
 		<input type='radio' name='freshfrozen' value='frozen'>Frozen
 	{% endif %}
 	<br>
+	<br>
 	<label>Description:<br>
 		<textarea name='description' rows='10' cols='50'>{{ food_listing.description }}</textarea>
 	</label>
@@ -93,6 +94,12 @@
 		{% else %}
 			<input type='checkbox' name='allergens' value='shellfish'>Shellfish
 		{% endif %}
+	</label>
+	<br>
+	<br>
+	<label>Shared with: 
+		<input type='text' name='shared_with_fname' placeholder='First name'>
+		<input type='text' name='shared_with_lname' placeholder='Last name'>
 	</label>
 	<br>
 	<input type='checkbox' name='deactivate' value='deactivate'>Deactivate listing (This will remove it from the active listings)
