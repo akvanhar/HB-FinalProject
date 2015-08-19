@@ -5,55 +5,37 @@
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/static/css/login.css"
 </head>
 <body>
 <script src="/static/fblogin.js"></script>
 
-<div class="container">
-
-    <form class="form-signin" action='login_portal' method='post'>
-      	<h1 class="form-signin-heading">Welcome to Make Less Mush</h1>
-        <h2 class="form-signin-heading">Please sign in</h2>
-        	{% for message in get_flashed_messages() %}
-				<div class="flashedMessages">{{message}}</div>
-			{% endfor %}
-	        <label for="inputEmail" class="sr-only">Email address</label>
-	        <input type="email" id="inputEmail" class="form-control" name='email' placeholder="username@email.com" required autofocus>
-	        <label for="inputPassword" class="sr-only" type='password' name='password'>Password</label>
-	        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in">
-    </form>
-	<h2 class="break">or</h2>
-	<div id='fb-root'></div>
-	<fb:login-button size='large' 
-		 		 autologoutlink = 'true' 
-		 		 scope="public_profile,email,user_friends" 
-		 		 onlogin="checkLoginState();">
-	</fb:login-button>
-	<div id="status"></div>
-
-	<a href='/signup'>Not a user? Click here to sign up!</a>
-</div> <!-- /container -->
-
-
-<!-- login button triggers FB.login function when clicked -->
-
-	
-	<h2>or</h2>
-
-	<form action='login_portal' method='post'>
-		<label>Email: 
-			<input type='email' name='email' placeholder='username@email.com'>
-		</label>
-		<br>
-		<label>Password: 
-			<input type='password' name='password'>
-		</label>
-		<input type='submit' value='Login'>
-	</form>
-	<br>
-	<a href='/signup'>Not a user? Click here to sign up!</a>
-</div>
+	<div class="container">
+		<h1 class="MLM-heading col-sm-12">Welcome to Make Less Mush</h1>
+		<div class="row"></div>
+	    <form class="form-signin" action='login_portal' method='post'>
+	        <h2 class="form-signin-heading">Please sign in</h2>
+	        	{% for message in get_flashed_messages() %}
+					<div class="flashedMessages">{{message}}</div>
+				{% endfor %}
+		        <label for="inputEmail" class="sr-only">Email address</label>
+		        <input type="email" id="inputEmail" class="form-control" name='email' placeholder="username@email.com" required autofocus>
+		        <label for="inputPassword" class="sr-only" type='password' name='password'>Password</label>
+		        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+	        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in">
+	    </form>
+		<h2 class="break">or</h2>
+		<div id='fb-root' class="fbLogin"></div>
+		<div class="fbLogin">
+			<fb:login-button size='large' 
+			 		 autologoutlink = 'true' 
+			 		 scope="public_profile,email,user_friends" 
+			 		 onlogin="checkLoginState();">
+			</fb:login-button>
+		</div>	
+		<div id="status" class="fbLogin"></div>
+		<div class="signUpLink"><a href='/signup'>Not a user? Click here to sign up!</a></div>
+	</div>
 </body>
 </html>

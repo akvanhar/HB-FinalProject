@@ -55,3 +55,24 @@ body {
   margin: auto;
   text-align: center;
 }
+
+.fbLogin {
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  text-align: center;
+}
+
+.signUpLink {
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  text-align: center;
+}
+
+.MLM-heading {
+  padding: 15px;
+  margin: auto;
+  margin-bottom: 10px;
+  text-align: center;
+}
