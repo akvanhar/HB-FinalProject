@@ -432,6 +432,16 @@ def mark_as_read():
 
 	return "Message read"
 
+@app.route('/mark_as_unread', methods=['POST'])
+def mark_as_unread():
+	"""mark a message as read in the db."""
+
+	message_id = request.form.get('message_id')
+	message = Message.query.get(message_id)
+	message.mark_as_unread()
+
+	return "Message marked as unread"
+
 
 ################################################################################
 

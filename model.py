@@ -288,6 +288,11 @@ class Message(db.Model):
 	 	self.read_status = 1
 	 	db.session.commit()
 	
+	def mark_as_unread(self):
+	 	"""Mark a message as read"""
+
+	 	self.read_status = 0
+	 	db.session.commit()
 
 ################################################################################
 #Helper functions
