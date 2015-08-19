@@ -32,21 +32,21 @@ def home():
 		user = User.query.get(user_id)
 		user_friends = user.friendships
 
-	if user_friends:
-		friend_ids = [friend.friend_id for friend in user_friends] #get this user's friend ids
+		if user_friends:
+			friend_ids = [friend.friend_id for friend in user_friends] #get this user's friend ids
 
-		#get all their friend's listings
-		friends_listings = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).all() 
+			#get all their friend's listings
+			friends_listings = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).all() 
 
-		#get the food ids so they can be filtered out
-		friends_food_ids = [food.food_id for food in friends_listings]
+			#get the food ids so they can be filtered out
+			friends_food_ids = [food.food_id for food in friends_listings]
 
-		#get all the other active listings
-		other_listings = Food.query.filter_by(active=1).filter(~Food.food_id.in_(friends_food_ids)).order_by(desc('post_date')).all()
+			#get all the other active listings
+			other_listings = Food.query.filter_by(active=1).filter(~Food.food_id.in_(friends_food_ids)).order_by(desc('post_date')).all()
 
-		#combine listings so that the friends listings come first
-		this_users_listings = friends_listings + other_listings
-		short_list = this_users_listings[:5]
+			#combine listings so that the friends listings come first
+			this_users_listings = friends_listings + other_listings
+			short_list = this_users_listings[:5]
 
 	else:
 		short_list = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
