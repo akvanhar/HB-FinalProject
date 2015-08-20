@@ -11,11 +11,11 @@
 #message_sent {
 	display: none;
 }
-/*
-#formCol {
-	margin-right: 5px;
+
+.unReadMessage {
+	font-weight: bold;
 }
 
-#listingsCol {
-	margin-left: 5px;
-}*/
+.readMessage {
+	font-weight: normal;
+}
