@@ -336,21 +336,20 @@ def update_listing():
 
 	return redirect('/mylistings')
 
-@app.route('/user/<int:user_id>')
-def fuser_info(user_id):
+@app.route('/user/<int:food_user_id>')
+def user_info(food_user_id):
     """Displays a specific user's active listings"""
 
     if 'user_id' not in session:
     	#users who are not logged in cannot view listings details
-    	flash('Please login to view this user\'s listings')
+    	flash("Please login to view this user's listings")
     	return redirect('/login')
     else:
     	#get specific listing from db.
     	user_id = session['user_id']
     	user = User.query.get(user_id)
-    	this_user = User.query.get(user_id)
-    	food_listings = Food.query.filter_by(user_id = user_id)
-
+    	this_user = User.query.get(food_user_id)
+    	food_listings = Food.query.filter_by(user_id = food_user_id)
 
     	return render_template('user_info.html', this_user=this_user, food_listings=food_listings, user=user)
 
