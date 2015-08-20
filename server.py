@@ -404,7 +404,7 @@ def change_read_status():
 
 	message.delete_message()
 
-	return "message deleted"
+	return "deleted"
 
 @app.route('/reply_to_message', methods=['POST'])
 def reply_to():
