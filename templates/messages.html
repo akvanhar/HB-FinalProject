@@ -142,7 +142,6 @@
 			$("#messageSent").html('Your message has been marked as read.');
 			$("#messageSent").delay(3000).fadeOut();
 			// change the class and change the button
-			console.log(result['read_status']);
 			if (result['read_status'] === true) {
 				$(evt.currentTarget).html("Mark as unread");
 				$("#message"+thisMessageId).removeClass('unreadMessage');
@@ -152,6 +151,7 @@
 				$("#message"+thisMessageId).removeClass('readMessage');
 				$("#message"+thisMessageId).addClass('unReadMessage');
 			}
+			$("#messageCount").html(result['new_messages']);
 		});
 	}
 

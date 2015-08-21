@@ -446,12 +446,10 @@ def toggle_read():
 	message_id = request.form.get('message_id')
 	message = Message.query.get(message_id)
 	message.toggle_read()
+	user_id = session['user_id']
+	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 
-	return jsonify(date=message.datetime_sent.strftime("%b %d, %Y"), 
-				   fname=message.user.fname, 
-				   lname=message.user.lname, 
-				   sent=message.message_sent,
-				   read_status=message.read_status)
+	return jsonify(read_status=message.read_status, new_messages=new_messages)
 
 
 ################################################################################
