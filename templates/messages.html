@@ -49,7 +49,7 @@
 						</div>
 					</td>
 					<td><button class="deleteButton btn btn-sm" data-id='delete{{ message.message_id }}'>Delete</button></td>
-					<td><button data-id='read{{ message.message_id }}' class="readButton btn btn-sm">Mark as read</button></td>
+					<td><button data-id='read{{ message.message_id }}' class="readStatusButton btn btn-sm">Mark as read</button></td>
 				</tr>
 			{% endfor %}
 			</tbody>
@@ -86,7 +86,7 @@
 						</div>
 					</td>
 					<td><button class="deleteButton btn btn-sm" data-id='delete{{ message.message_id }}'>Delete</button></td>
-					<td><button data-id='unread{{ message.message_id }}' class="unreadButton btn btn-sm">Mark as unread</button></td>
+					<td><button data-id='read{{ message.message_id }}' class="readStatusButton btn btn-sm">Mark as unread</button></td>
 				</tr>
 			{% endfor %}
 			</tbody>
@@ -131,55 +131,66 @@
 
 	$('.modalSubmit').click(reply);
 
-	function markAsRead(evt) {
-		targetReadMessage = $(evt.currentTarget).data().id;
-		var thisReadMessageId = targetReadMessage.slice(4);
-		var readMessageId = { message_id: thisReadMessageId };
-		$.post("/mark_as_read", readMessageId, function (result) {
+	function toggleRead(evt) {
+		targetMessage = $(evt.currentTarget).data().id;
+		var thisMessageId = targetMessage.slice(4);
+		var messageId = { message_id: thisMessageId };
+		$.post("/toggle_read", messageId, function (result) {
 			// display a success message
 			$("#messageSent").html('');
 			$("#messageSent").css("display", "block");
 			$("#messageSent").html('Your message has been marked as read.');
 			$("#messageSent").delay(3000).fadeOut();
-			// change from bold to unbold
-			$("#message"+thisReadMessageId).removeClass('unReadMessage');
-			$("#message"+thisReadMessageId).addClass('readMessage');
-			// change the button
-			$(evt.currentTarget).html("Mark as unread");
-			$(evt.currentTarget).removeClass()
-			$(evt.currentTarget).addClass('unreadButton btn btn-sm');
-			$(evt.currentTarget).attr("data-id", 'unread'+thisReadMessageId);
-			// push it to the bottom?
+			// change the class and change the button
+			console.log(result['read_status']);
+			if (result['read_status'] === true) {
+				$(evt.currentTarget).html("Mark as unread");
+				$("#message"+thisMessageId).removeClass('unreadMessage');
+				$("#message"+thisMessageId).addClass('readMessage');
+			} else {
+				$(evt.currentTarget).html("Mark as read");
+				$("#message"+thisMessageId).removeClass('readMessage');
+				$("#message"+thisMessageId).addClass('unReadMessage');
+			}
 		});
 	}
 
-	$('.readButton').click(markAsRead);
+	$('.readStatusButton').click(toggleRead);
 
-	function markAsUnread(evt) {
-		targetUnReadMessage = $(evt.currentTarget).data().id;
-		var thisUnReadMessageId = targetUnReadMessage.slice(6);
-		var unReadMessageId = { message_id: thisUnReadMessageId };
+	// function markAsUnread(evt) {
+	// 	targetUnReadMessage = $(evt.currentTarget).data().id;
+	// 	var thisUnReadMessageId = targetUnReadMessage.slice(6);
+	// 	var unReadMessageId = { message_id: thisUnReadMessageId };
 
-		$.post("/mark_as_unread", unReadMessageId, function (result) {
-			console.log(result);
-			// display success message
-			$("#messageSent").html('');
-			$("#messageSent").css("display", "block");
-			$("#messageSent").html('Your message has been marked as unread.');
-			$("#messageSent").delay(3000).fadeOut();
-			// change from bold to unbold
-			$("#message"+thisUnReadMessageId).removeClass('readMessage');
-			$("#message"+thisUnReadMessageId).addClass('unReadMessage');
-			//change the button
-			$(evt.currentTarget).html("Mark as read");
-			$(evt.currentTarget).removeClass()
-			$(evt.currentTarget).addClass('readButton btn btn-sm');
-			$(evt.currentTarget).attr("data-id", 'read'+thisUnReadMessageId);
-			//push it to the bottom of the unread messages? That sounds crazy.
-		});
-	}
+	// 	$.post("/mark_as_unread", unReadMessageId, function (result) {
+	// 		console.log(result);
+	// 		// display success message
+	// 		$("#messageSent").html('');
+	// 		$("#messageSent").css("display", "block");
+	// 		$("#messageSent").html('Your message has been marked as unread.');
+	// 		$("#messageSent").delay(3000).fadeOut();
+	// 		// change from bold to unbold
+	// 		$("#message"+thisUnReadMessageId).removeClass('readMessage');
+	// 		$("#message"+thisUnReadMessageId).addClass('unReadMessage');
+	// 		//change the button
+	// 		$(evt.currentTarget).html("Mark as read");
+	// 		$(evt.currentTarget).removeClass()
+	// 		$(evt.currentTarget).addClass('readButton btn btn-sm');
+	// 		$(evt.currentTarget).attr("data-id", 'read'+thisUnReadMessageId);
+	// 		//push it to the bottom of the unread messages? That sounds crazy.
+	// 	});
+	// }
 
-	$('.unreadButton').click(markAsUnread);
+	// $('.unreadButton').click(markAsUnread);
 </script>
 
 {% endblock %}
+
+
+<button data-id="unread170" class="unreadButton btn btn-sm">Mark as unread</button>
+<button data-id="unread170" class="unreadButton btn btn-sm">Mark as unread</button>
+
+right after click:
+<button data-id="read170" class="readButton btn btn-sm">Mark as read</button>
+on refresh:
+<button data-id="read170" class="readButton btn btn-sm">Mark as read</button>

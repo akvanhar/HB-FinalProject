@@ -281,18 +281,14 @@ class Message(db.Model):
 
 		db.session.delete(self)
 		db.session.commit()
-	
-	def mark_as_read(self):
-	 	"""Mark a message as read"""
 
-	 	self.read_status = 1
-	 	db.session.commit()
-	
-	def mark_as_unread(self):
-	 	"""Mark a message as read"""
+	def toggle_read(self):
+		if self.read_status == 0:
+			self.read_status = 1
+		else:
+			self.read_status = 0
 
-	 	self.read_status = 0
-	 	db.session.commit()
+		db.session.commit()
 
 ################################################################################
 #Helper functions

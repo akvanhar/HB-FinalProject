@@ -439,28 +439,13 @@ def reply_to():
 
 	return "Your message has been sent."
 
-@app.route('/mark_as_read', methods=['POST'])
-def mark_as_read():
-	"""mark a message as read in the db."""
+@app.route('/toggle_read', methods=['POST'])
+def toggle_read():
+	"""mark a message as read or unread in the db."""
 
 	message_id = request.form.get('message_id')
 	message = Message.query.get(message_id)
-	message.mark_as_read()
-
-
-	return jsonify(date=message.datetime_sent.strftime("%b %d, %Y"), 
-				   fname=message.user.fname, 
-				   lname=message.user.lname, 
-				   sent=message.message_sent,
-				   read_status=message.read_status)
-
-@app.route('/mark_as_unread', methods=['POST'])
-def mark_as_unread():
-	"""mark a message as read in the db."""
-
-	message_id = request.form.get('message_id')
-	message = Message.query.get(message_id)
-	message.mark_as_unread()
+	message.toggle_read()
 
 	return jsonify(date=message.datetime_sent.strftime("%b %d, %Y"), 
 				   fname=message.user.fname, 
