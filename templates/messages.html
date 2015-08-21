@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-<script>
-	$("#messagesButton").attr("class", 'active');
-</script>
 
 <h3>New Messages:</h3>
 <div id="messageSent" class="alert alert-success" role="alert" style="display: none"></div>
@@ -11,17 +8,18 @@
 		<thead>
 			<tr>
 				<th>Date Sent:</th>
-				<th>Message From:</th>
+				<th colspan="2">Message From:</th>
 				<th>Message</th>
 				<th></th>
 				<th></th>
 			</tr>
 		</thead>
 		{% if unread_messages %}
-			<tbody id="unReadMessages">
+			<tbody>
 			{% for message in unread_messages %}
 				<tr class='unReadMessage' id='message{{ message.message_id }}'>
 					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
+					<td><img class="img-circle" src="//graph.facebook.com/{{ message.user.fb_id }}/picture"></td>
 					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
 					<td>{{ message.message_sent }}</td>
 					<td style="font-weight: normal">
@@ -59,6 +57,7 @@
 			{% for message in read_messages %}
 				<tr class='readMessage' id='message{{ message.message_id }}'>
 					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
+					<td><img class="img-circle" src="//graph.facebook.com/{{ message.user.fb_id }}/picture"></td>
 					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
 					<td>{{ message.message_sent }}</td>
 					<td style="font-weight: normal">
@@ -95,102 +94,6 @@
 {% else %}
 	<p>You have new messages</p>
 {% endif %}
-<script>
-	function deleteMessage(evt) {
-		//delete the user message and display success message
-		targetMessage = $(evt.currentTarget).data().id;
-		var thisMessage = targetMessage.slice(6);
-		var messageId = { message_id: thisMessage };
-		$.post("/delete_message", messageId, function (result) {
-			$("#messageSent").html('');
-			$("#messageSent").css("display", "block");
-			$("#messageSent").html('Your message has been deleted.');
-			$("#messageSent").delay(3000).fadeOut();
-			$("#message"+thisMessage).remove();
-			});
-	}
-	$('.deleteButton').click(deleteMessage);
-
-	function reply(evt) {
-		//submit the form to the server and close the modal window
-		evt.preventDefault();
-		targetModal = $(evt.currentTarget).data().id;
-		var thisModal = targetModal.slice(6);
-		messageInfo = $("#replyTo"+thisModal).serialize();
-
-		$.post("/reply_to_message", messageInfo, function (result) {
-			// Display a success message
-			$("#textArea"+thisModal).val("");
-			$("#myModal"+thisModal).modal('hide');
-			$("#messageSent").html('');
-			$("#messageSent").css("display", "block");
-			$("#messageSent").html(result);
-			$("#messageSent").delay(3000).fadeOut();
-			});// close the Ajax call
-	}// close the reply function
-
-	$('.modalSubmit').click(reply);
-
-	function toggleRead(evt) {
-		targetMessage = $(evt.currentTarget).data().id;
-		var thisMessageId = targetMessage.slice(4);
-		var messageId = { message_id: thisMessageId };
-		$.post("/toggle_read", messageId, function (result) {
-			// display a success message
-			$("#messageSent").html('');
-			$("#messageSent").css("display", "block");
-			$("#messageSent").html('Your message has been marked as read.');
-			$("#messageSent").delay(3000).fadeOut();
-			// change the class and change the button
-			if (result['read_status'] === true) {
-				$(evt.currentTarget).html("Mark as unread");
-				$("#message"+thisMessageId).removeClass('unreadMessage');
-				$("#message"+thisMessageId).addClass('readMessage');
-			} else {
-				$(evt.currentTarget).html("Mark as read");
-				$("#message"+thisMessageId).removeClass('readMessage');
-				$("#message"+thisMessageId).addClass('unReadMessage');
-			}
-			$("#messageCount").html(result['new_messages']);
-		});
-	}
-
-	$('.readStatusButton').click(toggleRead);
-
-	// function markAsUnread(evt) {
-	// 	targetUnReadMessage = $(evt.currentTarget).data().id;
-	// 	var thisUnReadMessageId = targetUnReadMessage.slice(6);
-	// 	var unReadMessageId = { message_id: thisUnReadMessageId };
-
-	// 	$.post("/mark_as_unread", unReadMessageId, function (result) {
-	// 		console.log(result);
-	// 		// display success message
-	// 		$("#messageSent").html('');
-	// 		$("#messageSent").css("display", "block");
-	// 		$("#messageSent").html('Your message has been marked as unread.');
-	// 		$("#messageSent").delay(3000).fadeOut();
-	// 		// change from bold to unbold
-	// 		$("#message"+thisUnReadMessageId).removeClass('readMessage');
-	// 		$("#message"+thisUnReadMessageId).addClass('unReadMessage');
-	// 		//change the button
-	// 		$(evt.currentTarget).html("Mark as read");
-	// 		$(evt.currentTarget).removeClass()
-	// 		$(evt.currentTarget).addClass('readButton btn btn-sm');
-	// 		$(evt.currentTarget).attr("data-id", 'read'+thisUnReadMessageId);
-	// 		//push it to the bottom of the unread messages? That sounds crazy.
-	// 	});
-	// }
-
-	// $('.unreadButton').click(markAsUnread);
-</script>
+<script src="/static/messages.js"></script>
 
 {% endblock %}
-
-
-<button data-id="unread170" class="unreadButton btn btn-sm">Mark as unread</button>
-<button data-id="unread170" class="unreadButton btn btn-sm">Mark as unread</button>
-
-right after click:
-<button data-id="read170" class="readButton btn btn-sm">Mark as read</button>
-on refresh:
-<button data-id="read170" class="readButton btn btn-sm">Mark as read</button>

@@ -10,7 +10,7 @@
 			<th>Date posted</th>
 			<th>Title</th>
 			<th>Description</th>
-			<th>Posting user</th>
+			<th colspan="2">Posting user</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,6 +23,7 @@
                 </td>
 				<td>{{ food.description }}</td>
 				<td><a href="/user/{{ food.user_id }}">{{ food.user.fname }} {{ food.user.lname }}</a></td>
+				<td><img class="img-circle" src="//graph.facebook.com/{{ food.user.fb_id }}/picture" alt="Facebook profile picture"></td>
 			</tr>
 		{% endfor %}
 	</tbody>

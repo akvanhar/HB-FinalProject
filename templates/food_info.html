@@ -3,7 +3,7 @@
 	
 	<h2>Listing for: </h2><h3>{{ food_listing.title }}</h3>
 	<p>Description: {{ food_listing.description }}</p>
-	<p>Posting user: {{ food_listing.user.fname }} {{ food_listing.user.lname }}</p>
+	<p>Posting user: {{ food_listing.user.fname }} {{ food_listing.user.lname }} <img class="img-circle" src="//graph.facebook.com/{{ food_listing.user.fb_id }}/picture" alt="Facebook profile picture"></p>
 	<h5>Interested? Send {{ food_listing.user.fname }} a message:</h5>
 	
 	<form action='/send_message', method='post'>

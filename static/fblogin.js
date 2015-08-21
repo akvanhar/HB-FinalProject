@@ -34,6 +34,16 @@ function collectUserFriends(accessToken, userDetails) {
       );
   }
 
+// function userProfilePicture(accessToken, userDetails, friendsList) {
+//   FB.api("/{user-id}/picture",
+//       function (response) {
+//         if (response && !response.error) {
+//           /* handle the result */
+//         }
+//       }
+//   );
+// }
+
 function submitInfoToServer(accessToken, userDetails, friendsList) {
       //takes the access token, and a userdetails list as input, submits a form to the server.
       //userDetails is an object with fname, lname, email and fbUserId

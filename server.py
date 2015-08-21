@@ -36,6 +36,9 @@ def home():
 
 		if user_friends:
 			friend_ids = [friend.friend_id for friend in user_friends] #get this user's friend ids
+			friends_fb_ids = db.session.query(User.user_id, User.fb_id).filter(User.user_id.in_(friend_ids)).all()
+			# friends_fb_ids = [(int(x[0]), int(x[1])) for x in friends_fb_ids]
+			print friends_fb_ids
 
 			#get all their friend's listings
 			friends_listings = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).all() 
@@ -55,9 +58,14 @@ def home():
 
 	current_date = datetime.now()
 	current_date = current_date.strftime("%Y-%m-%d")
-	print current_date
 
-	return render_template('index.html', user_listings=short_list, current_date = current_date, user=user, new_messages=new_messages)
+	return render_template('index.html', 
+						   user_listings=short_list, 
+						   current_date = current_date, 
+						   user=user, 
+						   new_messages=new_messages,
+						   user_friends = user_friends,
+						   friends_fb_ids=friends_fb_ids)
 
 @app.route('/login')
 def login():
@@ -261,7 +269,7 @@ def food_info(food_id):
     	food_listing = Food.query.get(food_id)
     	logged_in_user_id = session['user_id']
     	user = User.query.get(logged_in_user_id)
-    	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+    	new_messages = Message.query.filter_by(receiver_id=logged_in_user_id, read_status=0).count()
 
     	return render_template('food_info.html', food_listing=food_listing, user=user, new_messages=new_messages)
 

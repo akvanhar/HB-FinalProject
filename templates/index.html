@@ -13,7 +13,7 @@
 	{% endif %}
 	<div class="row">
 		<div class="container">
-			<div id="formCol" class="col-sm-6" style="margin-right: 1">
+			<div id="formCol" class="col-sm-5" style="margin-right: 1">
 				<h3>Share some mush:</h3>
 				<form class="form-horizontal" action='/postlisting' method='post'>
 					<div class="row">
@@ -55,7 +55,7 @@
 					</div>
 					<div class="row">
 						<div class="form-group form-group-md">
-							<label class="col-sm-3 control-label">Fresh or Frozen?</label>
+							<label class="col-sm-3 control-label">Fresh or Frozen:</label>
 							<label class="col-sm-3 control-label" for="freshfrozen">Fresh </label>
 								<input class="col-sm-1 radio-inline" type="radio" name="freshfrozen" value="fresh">
 							<label class="col-sm-3 control-label" for="freshfrozen">Frozen </label>
@@ -65,41 +65,59 @@
 					</div>
 					<div class="form-group form-group-md">
 						<div class="row">
-							<label class="col-sm-3 control-label">Allergens:</label>
+							<label class="control-label col-sm-3">Allergens:</label>
 								
-								<label class="checkbox-inline col-sm-1">
-									<input class="col-sm-1" type='checkbox' name='allergens' value='eggs'>
+								<div class="col-sm-2">
+									<label class="checkbox-inline">
+										<input type='checkbox' name='allergens' value='eggs'>
 									Eggs</label>
-								<label class="checkbox-inline col-sm-1">
-									<input class="col-sm-1" type='checkbox' name='allergens' value='dairy'>
+								</div>
+								<div class="col-sm-2">
+									<label class="checkbox-inline">
+										<input type='checkbox' name='allergens' value='dairy'>
 									Dairy</label>
-								<label class="checkbox-inline col-sm-1">
-									<input class="col-sm-1" type='checkbox' name='allergens' value='fish'>
+								</div>
+								<div class="col-sm-2">
+									<label class="checkbox-inline">
+										<input type='checkbox' name='allergens' value='fish'>
 									Fish</label>
-								<label class="checkbox-inline col-sm-1">
-									<input class="col-sm-1" type='checkbox' name='allergens' value='peanuts'>
+								</div>
+								<div class="col-sm-2">
+									<label class="checkbox-inline">
+										<input type='checkbox' name='allergens' value='peanuts'>
 									Peanuts</label>	
-								<div class="col-sm-1"></div>
+								</div>
+							<div class="col-sm-1"></div>
 						</div>
 						<div class="row">
-							<label class="col-sm-3"></label>
-							<label class="checkbox-inline col-sm-1">
-								<input class="col-sm-1" type='checkbox' name='allergens' value='soy'>Soy
-							</label>
-							<label class="checkbox-inline col-sm-2">
-								<input class="col-sm-1" type='checkbox' name='allergens' value='treenuts'>Tree-nuts
-							</label>
-							<label class="checkbox-inline col-sm-1">
-								<input class="col-sm-1" type='checkbox' name='allergens' value='wheat'>Wheat</label>
-							<label class="checkbox-inline col-sm-1">
-								<input class="col-sm-1" type='checkbox' name='allergens' value='shellfish'>Shellfish
-							</label>
+							<div class="col-sm-3"></div>
+							<div class="col-sm-2">
+								<label class="checkbox-inline">
+									<input type='checkbox' name='allergens' value='soy'>
+									Soy</label>
+							</div>
+							<div class="col-sm-2">
+								<label class="checkbox-inline">
+									<input type='checkbox' name='allergens' value='treenuts'>
+								Tree-nuts</label>
+							</div>
+							<div class="col-sm-2">
+								<label class="checkbox-inline">
+									<input class="col-sm-1" type='checkbox' name='allergens' value='wheat'>
+								Wheat</label>
+							</div>
+							<div class="col-sm-2">
+								<label class="checkbox-inline col-sm-1">
+									<input class="col-sm-1" type='checkbox' name='allergens' value='shellfish'>
+								Shellfish</label>
+							</div>
+							<div class="col-sm-1"></div>
 						</div>
 					</div>
 					<div class="form-group form-group-md">
 						<div class="row">
 								<label class="col-sm-3">Description:</label>
-									<textarea class="form-control col-sm-9" name='description' rows='10' placeholder='Please include ingredients, what you would like to swap for, and your preferred method of contact'></textarea>
+									<textarea class="form-control col-sm-9" name='description' rows='5' placeholder='Please include ingredients, what you would like to swap for, and your preferred method of contact'></textarea>
 								
 						</div>
 					</div>
@@ -108,7 +126,7 @@
 					</div>
 				</form>
 			</div>
-			<div id="listingsCol "class="col-sm-6">
+			<div id="listingsCol "class="col-sm-7">
 				<div class="row">
 					<h3 class="col-sm-12">Get some mush:</h3>
 				</div>
@@ -118,8 +136,8 @@
 							<tr>
 								<th class="col-sm-2">Date posted</th>
 								<th class="col-sm-2">Title</th>
-								<th class="col-sm-6">Description</th>
-								<th class="col-sm-2">Made by</th>
+								<th class="col-sm-5">Description</th>
+								<th class="col-sm-3">Made by</th>
 							</tr>
 						</thead>
 					</div>
@@ -132,8 +150,8 @@
 					                    {{ food.title }}
 					                	</a>
 					                </td>
-									<td class="col-sm-6">{{ food.description }}</td>
-									<td class="col-sm-2"><a href='/user/{{ food.user_id }}'>{{ food.user.fname }} {{ food.user.lname }}</a></td>
+									<td class="col-sm-5">{{ food.description }}</td>
+									<td class="col-sm-3"><a href='/user/{{ food.user_id }}'>{{ food.user.fname }}  <img class="img-circle" src="//graph.facebook.com/{{ food.user.fb_id }}/picture" alt="Facebook profile picture"></td></a>
 								</tr>
 							</div>
 						{% endfor %}
@@ -142,7 +160,16 @@
 				<div class="row">
 					<a href='/listings'><button class="col-sm-2 col-sm-offset-10 btn btn-default">View all</button></a>
 				</div>
-			</div>
+
+				<div class="row">
+					<div class="col-sm-1"></div>
+					<h4 class="col-sm-11">Your facebook friends on Make Less Mush:</h4>
+					{% for friend in friends_fb_ids %}
+						<div class="col-sm-1"></div>
+						<div class="col-sm-1"><a href='/user/{{friend[0]}}'><img class="thumbnail" src="//graph.facebook.com/{{friend[1]}}/picture" alt="Facebook profile picture"></a></div>
+					{% endfor %}
+				</div> <!-- end row -->
+			</div> <!-- end recent listings table -->
 		</div>
 	</div>
 {% endblock %}
