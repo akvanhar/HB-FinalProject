@@ -145,8 +145,10 @@
 			$("#message"+thisReadMessageId).removeClass('unReadMessage');
 			$("#message"+thisReadMessageId).addClass('readMessage');
 			// change the button
-			$(evt.currentTarget).html("<td><button data-id='unread"+thisReadMessageId+"' class='unreadButton btn btn-sm'>Mark as unread</button></td>");
-			// $('#message'+thisReadMessageId).append("<td><button data-id='unread'"+thisReadMessageId+" class='unreadButton btn btn-sm'>Mark as unread</button></td>");
+			$(evt.currentTarget).html("Mark as unread");
+			$(evt.currentTarget).removeClass()
+			$(evt.currentTarget).addClass('unreadButton btn btn-sm');
+			$(evt.currentTarget).attr("data-id", 'unread'+thisReadMessageId);
 			// push it to the bottom?
 		});
 	}
@@ -169,7 +171,10 @@
 			$("#message"+thisUnReadMessageId).removeClass('readMessage');
 			$("#message"+thisUnReadMessageId).addClass('unReadMessage');
 			//change the button
-			$(evt.currentTarget).html("<td><button data-id='read"+thisUnReadMessageId+"' class='readButton btn btn-sm'>Mark as read</button></td>");
+			$(evt.currentTarget).html("Mark as read");
+			$(evt.currentTarget).removeClass()
+			$(evt.currentTarget).addClass('readButton btn btn-sm');
+			$(evt.currentTarget).attr("data-id", 'read'+thisUnReadMessageId);
 			//push it to the bottom of the unread messages? That sounds crazy.
 		});
 	}

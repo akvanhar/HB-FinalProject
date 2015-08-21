@@ -32,6 +32,8 @@ def home():
 		user = User.query.get(user_id)
 		user_friends = user.friendships
 
+		new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+
 		if user_friends:
 			friend_ids = [friend.friend_id for friend in user_friends] #get this user's friend ids
 
@@ -55,7 +57,7 @@ def home():
 	current_date = current_date.strftime("%Y-%m-%d")
 	print current_date
 
-	return render_template('index.html', user_listings=short_list, current_date = current_date, user=user)
+	return render_template('index.html', user_listings=short_list, current_date = current_date, user=user, new_messages=new_messages)
 
 @app.route('/login')
 def login():
@@ -223,6 +225,7 @@ def listings():
 	else:
 		user_id = session['user_id']
 		user = User.query.get(user_id)
+		new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 		user_friends = user.friendships
 
 		if user_friends:
@@ -243,7 +246,7 @@ def listings():
 		else:
 			foods = Food.query.filter_by(active=1).order_by(desc('post_date')).all()
 
-		return render_template('listings.html', foods=foods, user=user)
+		return render_template('listings.html', foods=foods, user=user, new_messages=new_messages)
 
 @app.route('/listings/<int:food_id>')
 def food_info(food_id):
@@ -258,8 +261,9 @@ def food_info(food_id):
     	food_listing = Food.query.get(food_id)
     	logged_in_user_id = session['user_id']
     	user = User.query.get(logged_in_user_id)
+    	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 
-    	return render_template('food_info.html', food_listing=food_listing, user=user )
+    	return render_template('food_info.html', food_listing=food_listing, user=user, new_messages=new_messages)
 
 @app.route('/mylistings')
 def user_listings():
@@ -275,8 +279,12 @@ def user_listings():
 		active_user_listings = Food.query.filter(Food.user_id == user_id, Food.active == 1).order_by(desc('post_date')).all()
 		old_listings = Food.query.filter(Food.user_id == user_id, Food.active == 0).order_by(desc('post_date')).all()
 		user = User.query.get(user_id)
+		new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 
-		return render_template('mylistings.html', user_listings=active_user_listings, old_listings=old_listings, user=user)
+		return render_template('mylistings.html', 
+								user_listings=active_user_listings, 
+								old_listings=old_listings, user=user, 
+								new_messages=new_messages)
 
 @app.route('/listings/edit/<int:food_id>')
 def edit_food(food_id):
@@ -290,9 +298,10 @@ def edit_food(food_id):
 		#show user listing and allow them to make changes.
 		user_id = session['user_id']
 		user = User.query.get(user_id)
+		new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 		food_listing = Food.query.get(food_id)
 
-		return render_template('editfood.html', food_listing=food_listing, user=user)
+		return render_template('editfood.html', food_listing=food_listing, user=user, new_messages=new_messages)
 
 @app.route('/updatelisting', methods=['POST'])
 def update_listing():
@@ -348,10 +357,11 @@ def user_info(food_user_id):
     	#get specific listing from db.
     	user_id = session['user_id']
     	user = User.query.get(user_id)
+    	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
     	this_user = User.query.get(food_user_id)
     	food_listings = Food.query.filter_by(user_id = food_user_id)
 
-    	return render_template('user_info.html', this_user=this_user, food_listings=food_listings, user=user)
+    	return render_template('user_info.html', this_user=this_user, food_listings=food_listings, user=user, new_messages=new_messages)
 
 @app.route('/messages')
 def messages():
@@ -365,6 +375,7 @@ def messages():
 		#Get the messages for that particular user.
 		user_id = session['user_id']
 		user = User.query.get(user_id)
+		new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 
 		unread_messages = Message.query.filter_by(receiver_id=user_id, read_status=0)
 		unread_messages_by_date = unread_messages.order_by(desc('datetime_sent')).all()		
@@ -374,7 +385,12 @@ def messages():
 
 		all_messages = unread_messages_by_date+read_messages_by_date
 
-		return render_template('messages.html', all_messages=all_messages, unread_messages=unread_messages_by_date, read_messages=read_messages_by_date, user=user)
+		return render_template('messages.html', 
+			all_messages=all_messages, 
+			unread_messages=unread_messages_by_date, 
+			read_messages=read_messages_by_date, 
+			user=user,
+			new_messages=new_messages)
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
