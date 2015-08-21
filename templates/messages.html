@@ -17,52 +17,80 @@
 				<th></th>
 			</tr>
 		</thead>
-		<tbody id="messageTable">
-			{% for message in all_messages %}
-				<tr id='message{{ message.message_id }}'>
-				{% if message.read_status == 0 %}
-					<td class='unReadMessage'>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
-					<td class='unReadMessage'>{{ message.user.fname }} {{ message.user.lname }}</td>
-					<td class='unReadMessage'>{{ message.message_sent }}</td>	
-				{% else %}
-					<td class='readMessage'>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
-					<td class='readMessage'>{{ message.user.fname }} {{ message.user.lname }}</td>
-					<td class='readMessage'>{{ message.message_sent }}</td>
-				{% endif %}
-					<td>
+		{% if unread_messages %}
+			<tbody id="unReadMessages">
+			{% for message in unread_messages %}
+				<tr class='unReadMessage' id='message{{ message.message_id }}'>
+					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
+					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
+					<td>{{ message.message_sent }}</td>
+					<td style="font-weight: normal">
 						<button id = "reply{{message.message_id}}" class="btn btn-sm" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
 						<div class="replyModal modal fade" id="myModal{{message.message_id}}" tabindex="-1" role="dialog">
 							<div class="modal-dialog" role="document">
-    							<div class="modal-content">
-        							<div class="modal-header">
-            							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            							<h1 id="header{{message.message_id}}" class="modalHeader modal-title">Reply to {{ message.user.fname }}:</h1>
-        							</div>
-    								<div class="modal-body">
-    									<p>Original message: {{ message.message_sent }}</p>
-    									<form action="/reply_to_message" methods="post" class="modalForm" id='replyTo{{ message.message_id }}'>
-        									<input class="modalUser" id="modalUser{{message.message_id}}" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
+								<div class="modal-content">
+	    							<div class="modal-header">
+	        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        							<h1 id="header{{message.message_id}}" class="modalHeader modal-title">Reply to {{ message.user.fname }}:</h1>
+	    							</div>
+									<div class="modal-body">
+										<p>Original message: {{ message.message_sent }}</p>
+										<form action="/reply_to_message" methods="post" class="modalForm" id='replyTo{{ message.message_id }}'>
+	    									<input class="modalUser" id="modalUser{{message.message_id}}" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
 											<textarea class="modalTextArea" id="textArea{{message.message_id}}" name='message' rows='10' cols='75'></textarea>
-    								</div>
-    								<div class="modal-footer">
-        								<button class="modalCancel btn btn-default" data-dismiss="modal">Cancel</button>
-        								<button class="modalSubmit btn btn-primary pull-right" data-id='submit{{ message.message_id }}'>Reply</button>	
-    								</div>
-    								</form>
+									</div>
+									<div class="modal-footer">
+	    								<button class="modalCancel btn btn-default" data-dismiss="modal">Cancel</button>
+	    								<button class="modalSubmit btn btn-primary pull-right" data-id='submit{{ message.message_id }}'>Reply</button>	
+									</div>
+									</form>
 								</div>
 							</div>
 						</div>
 					</td>
 					<td><button class="deleteButton btn btn-sm" data-id='delete{{ message.message_id }}'>Delete</button></td>
-					{% if message.read_status == 0%}
-						<td><button data-id='read{{ message.message_id }}' class="readButton btn btn-sm">Mark as read</button></td>
-					{% else %}
-						<td><button data-id='unread{{ message.message_id }}' class="unreadButton btn btn-sm">Mark as unread</button></td>
-					{% endif %}
+					<td><button data-id='read{{ message.message_id }}' class="readButton btn btn-sm">Mark as read</button></td>
 				</tr>
 			{% endfor %}
-
-		</tbody>
+			</tbody>
+		{% endif %}
+		{% if read_messages %}
+		<tbody id="readMessages">
+			{% for message in read_messages %}
+				<tr class='readMessage' id='message{{ message.message_id }}'>
+					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
+					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
+					<td>{{ message.message_sent }}</td>
+					<td style="font-weight: normal">
+						<button id = "reply{{message.message_id}}" class="btn btn-sm" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
+						<div class="replyModal modal fade" id="myModal{{message.message_id}}" tabindex="-1" role="dialog">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+	    							<div class="modal-header">
+	        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        							<h1 id="header{{message.message_id}}" class="modalHeader modal-title">Reply to {{ message.user.fname }}:</h1>
+	    							</div>
+									<div class="modal-body">
+										<p>Original message: {{ message.message_sent }}</p>
+										<form action="/reply_to_message" methods="post" class="modalForm" id='replyTo{{ message.message_id }}'>
+	    									<input class="modalUser" id="modalUser{{message.message_id}}" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
+											<textarea class="modalTextArea" id="textArea{{message.message_id}}" name='message' rows='10' cols='75'></textarea>
+									</div>
+									<div class="modal-footer">
+	    								<button class="modalCancel btn btn-default" data-dismiss="modal">Cancel</button>
+	    								<button class="modalSubmit btn btn-primary pull-right" data-id='submit{{ message.message_id }}'>Reply</button>	
+									</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</td>
+					<td><button class="deleteButton btn btn-sm" data-id='delete{{ message.message_id }}'>Delete</button></td>
+					<td><button data-id='unread{{ message.message_id }}' class="unreadButton btn btn-sm">Mark as unread</button></td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		{% endif %}
 	</table>
 {% else %}
 	<p>You have new messages</p>
@@ -91,15 +119,15 @@
 		messageInfo = $("#replyTo"+thisModal).serialize();
 
 		$.post("/reply_to_message", messageInfo, function (result) {
-					// 	//Display a success message
+			// Display a success message
 			$("#textArea"+thisModal).val("");
 			$("#myModal"+thisModal).modal('hide');
 			$("#messageSent").html('');
 			$("#messageSent").css("display", "block");
 			$("#messageSent").html(result);
 			$("#messageSent").delay(3000).fadeOut();
-			});//close the Ajax call
-	}//close the reply function
+			});// close the Ajax call
+	}// close the reply function
 
 	$('.modalSubmit').click(reply);
 
@@ -108,11 +136,18 @@
 		var thisReadMessageId = targetReadMessage.slice(4);
 		var readMessageId = { message_id: thisReadMessageId };
 		$.post("/mark_as_read", readMessageId, function (result) {
+			// display a success message
 			$("#messageSent").html('');
 			$("#messageSent").css("display", "block");
 			$("#messageSent").html('Your message has been marked as read.');
 			$("#messageSent").delay(3000).fadeOut();
-
+			// change from bold to unbold
+			$("#message"+thisReadMessageId).removeClass('unReadMessage');
+			$("#message"+thisReadMessageId).addClass('readMessage');
+			// change the button
+			$(evt.currentTarget).html("<td><button data-id='unread"+thisReadMessageId+"' class='unreadButton btn btn-sm'>Mark as unread</button></td>");
+			// $('#message'+thisReadMessageId).append("<td><button data-id='unread'"+thisReadMessageId+" class='unreadButton btn btn-sm'>Mark as unread</button></td>");
+			// push it to the bottom?
 		});
 	}
 
@@ -124,10 +159,18 @@
 		var unReadMessageId = { message_id: thisUnReadMessageId };
 
 		$.post("/mark_as_unread", unReadMessageId, function (result) {
+			console.log(result);
+			// display success message
 			$("#messageSent").html('');
 			$("#messageSent").css("display", "block");
-			$("#messageSent").html('Your message has been marked as read.');
+			$("#messageSent").html('Your message has been marked as unread.');
 			$("#messageSent").delay(3000).fadeOut();
+			// change from bold to unbold
+			$("#message"+thisUnReadMessageId).removeClass('readMessage');
+			$("#message"+thisUnReadMessageId).addClass('unReadMessage');
+			//change the button
+			$(evt.currentTarget).html("<td><button data-id='read"+thisUnReadMessageId+"' class='readButton btn btn-sm'>Mark as read</button></td>");
+			//push it to the bottom of the unread messages? That sounds crazy.
 		});
 	}
 

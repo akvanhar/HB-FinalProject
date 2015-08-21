@@ -4,7 +4,7 @@ import json
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 from datetime import datetime
@@ -431,7 +431,12 @@ def mark_as_read():
 	message = Message.query.get(message_id)
 	message.mark_as_read()
 
-	return "Message read"
+
+	return jsonify(date=message.datetime_sent.strftime("%b %d, %Y"), 
+				   fname=message.user.fname, 
+				   lname=message.user.lname, 
+				   sent=message.message_sent,
+				   read_status=message.read_status)
 
 @app.route('/mark_as_unread', methods=['POST'])
 def mark_as_unread():
@@ -441,7 +446,11 @@ def mark_as_unread():
 	message = Message.query.get(message_id)
 	message.mark_as_unread()
 
-	return "Message marked as unread"
+	return jsonify(date=message.datetime_sent.strftime("%b %d, %Y"), 
+				   fname=message.user.fname, 
+				   lname=message.user.lname, 
+				   sent=message.message_sent,
+				   read_status=message.read_status)
 
 
 ################################################################################
