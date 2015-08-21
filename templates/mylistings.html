@@ -22,6 +22,7 @@
 					<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
 					<td>{{ food.title }}</td>
 					<td>{{ food.description }}</td>
+					<!-- <td><button class="share" data-href="http://localhost:5000/listings/{{food.food_id}}">Share on FaceBook</button></td> -->
 					<td>
 						<a href="/listings/edit/{{food.food_id}}">update</a>
 					</td>
@@ -54,5 +55,21 @@
 	<p>Sorry. You haven't posted any listings yet.</p>
 	<p>If you would like to add a listing, <a href="/">return to the home page.</a></p>
 {% endif %}
+<script>
+// function shareMush(evt) {
+// 	FB.ui({
+// 	  method: 'share_open_graph',
+// 	  action_type: 'og.likes',
+// 	  action_properties: JSON.stringify({
+//       	object: 'https://www.facebook.com/dialog/share_open_graph?app_id=478449745662319&display=popup&action_type=og.likes&action_properties=%7B%22object%22%3A%22https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F%22%7D&redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer',
+//   	  }),
+// 	}, function(response){});
+// }
+
+// $(".share").click(shareMush);
+
+//fix this? It doesn't work on localhost....
+
+</script>
 
 {% endblock %}
