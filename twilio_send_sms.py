@@ -8,10 +8,12 @@ TWILIO_NUMBER=os.environ['TWILIO_NUMBER']
 
 client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
-to_number="+14152169086"
+def send_text(to_number, message):
+	to_number = to_number
+	body_message = message
 
-message = client.messages.create(from_=TWILIO_NUMBER, 
-								 to=to_number, 
-								 body="Robot Robot Robot.  Reeeh Rooooh.")
+	message = client.messages.create(from_=TWILIO_NUMBER, 
+									 to=to_number, 
+									 body=body_message)
 
-print message.sid
+	print message.sid
