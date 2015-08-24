@@ -223,11 +223,21 @@ def postlisting():
 		description = request.form.get('description')
 		allergens = request.form.getlist('allergens')
 		user_id = session['user_id']
+		contact = request.form.getlist('contact')
+		if 'email' in contact:
+			contact_email = db.session.query(User.email).filter_by(user_id = user_id).first()
+			contact_email = [x[0] for x in contact_email]
+		else:
+			email = None
+		if 'text' in contact:
+			phone_number = request.form.get('phone_number')
+		else:
+			phone_number = None
 
 		allergen = Allergen.add_allergen(allergens)
 		allergen_id = allergen.allergen_id
 
-		Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id)
+		Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id, contact_email, phone_number)
 
 		flash('Your listing has been successfully posted!')
 
@@ -471,6 +481,7 @@ def send_sms_message():
 		message = request.form.get('message')
 		send_text(number, message)
 		return "Message sent"
+
 @app.route('/toggle_read', methods=['POST'])
 def toggle_read():
 	"""mark a message as read or unread in the db."""

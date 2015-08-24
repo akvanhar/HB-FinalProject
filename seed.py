@@ -21,10 +21,10 @@ def load_listings():
     listings_file = open('sampledata/samplelistings.txt')
 
     for line in listings_file:
-        title, texture, datemade, quantity, freshfrozen, description, allergen_list, user_id = line.split("|")
+        title, texture, datemade, quantity, freshfrozen, description, allergen_list, user_id, email, phone_number = line.split("|")
         allergen = Allergen.add_allergen(allergen_list)
         Food.add_food(title, texture, datemade, quantity,
-                 freshfrozen, description, allergen.allergen_id, user_id)
+                 freshfrozen, description, allergen.allergen_id, user_id, email, phone_number)
 
 def load_messages():
     """Load messages from samplemessages into database"""
@@ -39,6 +39,6 @@ def load_messages():
 if __name__ == "__main__":
     connect_to_db(app)
 
-    load_users()
-    # load_listings()
+    # load_users()
+    load_listings()
     # load_messages()

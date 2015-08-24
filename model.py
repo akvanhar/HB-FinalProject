@@ -74,6 +74,8 @@ class Food(db.Model):
 	post_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
 	active = db.Column(db.Boolean, nullable=False, default=1) #1 indicates that the item is active
 	shared_with = db.Column(db.String, nullable=False)
+	email = db.Column(db.String, nullable=True)
+	phone_number = db.Column(db.String, nullable=True)
 
 	allergen = db.relationship("Allergen",
 								backref=db.backref("foods", order_by=food_id))
@@ -87,7 +89,7 @@ class Food(db.Model):
 
 	@classmethod
 	def add_food(cls, title, texture, datemade, quantity,
-				 freshfrozen, description, allergen_id, user_id, shared_with=""):
+				 freshfrozen, description, allergen_id, user_id, email, phone_number, shared_with=""):
 		"""Insert a new food listing into the foods table"""
 
 		datemade = datetime.strptime(datemade, "%Y-%m-%d")
@@ -95,7 +97,8 @@ class Food(db.Model):
 		food = cls(title=title, texture=texture, 
 				   datemade=datemade, quantity=quantity, 
 				   freshfrozen=freshfrozen, description=description, 
-				   allergen_id=allergen_id, user_id=user_id, shared_with=shared_with)
+				   allergen_id=allergen_id, user_id=user_id, 
+				   email=email, phone_number=phone_number, shared_with=shared_with)
 		db.session.add(food)
 		db.session.commit()
 
