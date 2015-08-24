@@ -11,9 +11,9 @@ def load_users():
     user_file = open('sampledata/sampleusers.txt')
     
     for line in user_file:
-        email, password, fname, lname, fbid, phone_number = line.split("|")
+        email, password, fname, lname, fbid= line.split("|")
         fbid = int(fbid)
-        User.add_user(email, fname, lname, phone_number, password, fbid)
+        User.add_user(email, fname, lname, password, fbid)
 
 def load_listings():
     """Load listings from samplelistings into database"""
