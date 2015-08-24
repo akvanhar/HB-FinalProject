@@ -19,6 +19,7 @@ class User(db.Model):
 	fname = db.Column(db.String(64), nullable=False)
 	lname = db.Column(db.String(64), nullable=True)
 	fb_id = db.Column(db.String(64), nullable=True, default=None)
+	phone_number = db.Column(db.Integer, nullable=True)
 
 	def __repr__(self):
 		"""A helpful representation of the user"""
@@ -26,9 +27,9 @@ class User(db.Model):
 		return "<User user_id: %s email: %s>" % (self.user_id, self.email)
 
 	@classmethod
-	def add_user(cls, email, fname, lname, password=None, fb_id=None):
+	def add_user(cls, email, fname, lname, phone_number=None, password=None, fb_id=None):
 		"""Insert a new user into the users table"""
-		user = cls(email=email, password=password, fname=fname, lname=lname, fb_id=fb_id)
+		user = cls(email=email, password=password, fname=fname, lname=lname, fb_id=fb_id, phone_number=phone_number)
 		db.session.add(user)
 		db.session.commit()
 

@@ -14,82 +14,51 @@
 				<th></th>
 			</tr>
 		</thead>
-		{% if unread_messages %}
-			<tbody>
-			{% for message in unread_messages %}
+		<tbody>
+		{% for message in all_messages %}
+			{% if message.read_status == 0 %}
 				<tr class='unReadMessage' id='message{{ message.message_id }}'>
-					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
-					<td><img class="img-circle" src="//graph.facebook.com/{{ message.user.fb_id }}/picture"></td>
-					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
-					<td>{{ message.message_sent }}</td>
-					<td style="font-weight: normal">
-						<button id = "reply{{message.message_id}}" class="btn btn-sm" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
-						<div class="replyModal modal fade" id="myModal{{message.message_id}}" tabindex="-1" role="dialog">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-	    							<div class="modal-header">
-	        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        							<h1 id="header{{message.message_id}}" class="modalHeader modal-title">Reply to {{ message.user.fname }}:</h1>
-	    							</div>
-									<div class="modal-body">
-										<p>Original message: {{ message.message_sent }}</p>
-										<form action="/reply_to_message" methods="post" class="modalForm" id='replyTo{{ message.message_id }}'>
-	    									<input class="modalUser" id="modalUser{{message.message_id}}" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
-											<textarea class="modalTextArea" id="textArea{{message.message_id}}" name='message' rows='10' cols='75'></textarea>
-									</div>
-									<div class="modal-footer">
-	    								<button class="modalCancel btn btn-default" data-dismiss="modal">Cancel</button>
-	    								<button class="modalSubmit btn btn-primary pull-right" data-id='submit{{ message.message_id }}'>Reply</button>	
-									</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</td>
-					<td><button class="deleteButton btn btn-sm" data-id='delete{{ message.message_id }}'>Delete</button></td>
-					<td><button data-id='read{{ message.message_id }}' class="readStatusButton btn btn-sm">Mark as read</button></td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		{% endif %}
-		{% if read_messages %}
-		<tbody id="readMessages">
-			{% for message in read_messages %}
+			{% else %}
 				<tr class='readMessage' id='message{{ message.message_id }}'>
-					<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
-					<td><img class="img-circle" src="//graph.facebook.com/{{ message.user.fb_id }}/picture"></td>
-					<td>{{ message.user.fname }} {{ message.user.lname }}</td>
-					<td>{{ message.message_sent }}</td>
-					<td style="font-weight: normal">
-						<button id = "reply{{message.message_id}}" class="btn btn-sm" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
-						<div class="replyModal modal fade" id="myModal{{message.message_id}}" tabindex="-1" role="dialog">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-	    							<div class="modal-header">
-	        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        							<h1 id="header{{message.message_id}}" class="modalHeader modal-title">Reply to {{ message.user.fname }}:</h1>
-	    							</div>
-									<div class="modal-body">
-										<p>Original message: {{ message.message_sent }}</p>
-										<form action="/reply_to_message" methods="post" class="modalForm" id='replyTo{{ message.message_id }}'>
-	    									<input class="modalUser" id="modalUser{{message.message_id}}" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
-											<textarea class="modalTextArea" id="textArea{{message.message_id}}" name='message' rows='10' cols='75'></textarea>
-									</div>
-									<div class="modal-footer">
-	    								<button class="modalCancel btn btn-default" data-dismiss="modal">Cancel</button>
-	    								<button class="modalSubmit btn btn-primary pull-right" data-id='submit{{ message.message_id }}'>Reply</button>	
-									</div>
-									</form>
+			{% endif %}
+				<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
+				<td><img class="img-circle" src="//graph.facebook.com/{{ message.user.fb_id }}/picture" alt="Facebook profile picture"></td>
+				<td>{{ message.user.fname }} {{ message.user.lname }}</td>
+				<td>{{ message.message_sent }}</td>
+				<td style="font-weight: normal">
+					<button id = "reply{{message.message_id}}" class="btn btn-sm" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
+					<div class="replyModal modal fade" id="myModal{{message.message_id}}" tabindex="-1" role="dialog">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+    							<div class="modal-header">
+        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        							<h1 id="header{{message.message_id}}" class="modalHeader modal-title">Reply to {{ message.user.fname }}:</h1>
+    							</div>
+								<div class="modal-body">
+									<p>Original message: {{ message.message_sent }}</p>
+									<form action="/reply_to_message" methods="post" class="modalForm" id='replyTo{{ message.message_id }}'>
+    									<input class="modalUser" id="modalUser{{message.message_id}}" type="hidden" name="send_message_to" value="{{ message.user.user_id }}">
+										<textarea class="modalTextArea" id="textArea{{message.message_id}}" name='message' rows='10' cols='75'></textarea>
 								</div>
+								<div class="modal-footer">
+    								<button class="modalCancel btn btn-default" data-dismiss="modal">Cancel</button>
+    								<button class="modalSubmit btn btn-primary pull-right" data-id='submit{{ message.message_id }}'>Reply</button>	
+								</div>
+								</form>
 							</div>
 						</div>
-					</td>
-					<td><button class="deleteButton btn btn-sm" data-id='delete{{ message.message_id }}'>Delete</button></td>
+					</div>
+				</td>
+				<td><button class="textButton btn btn-sm" data-id='text{{ message.message_id }}'>Send text</button></td>
+				{% if message.read_status == 0 %}
+					<td><button data-id='read{{ message.message_id }}' class="readStatusButton btn btn-sm">Mark as read</button></td>
+				{% else %}
 					<td><button data-id='read{{ message.message_id }}' class="readStatusButton btn btn-sm">Mark as unread</button></td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		{% endif %}
+				{% endif %}
+				<td><button class="deleteButton btn btn-sm" data-id='delete{{ message.message_id }}'>Delete</button></td>
+			</tr>
+		{% endfor %}
+		</tbody>
 	</table>
 {% else %}
 	<p>You have new messages</p>

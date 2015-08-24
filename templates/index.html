@@ -164,10 +164,15 @@
 				<div class="row">
 					<div class="col-sm-1"></div>
 					<h4 class="col-sm-11">Your facebook friends on Make Less Mush:</h4>
+					{% if friends_fb_ids %}
 					{% for friend in friends_fb_ids %}
 						<div class="col-sm-1"></div>
 						<div class="col-sm-1"><a href='/user/{{friend[0]}}'><img class="thumbnail" src="//graph.facebook.com/{{friend[1]}}/picture" alt="Facebook profile picture"></a></div>
 					{% endfor %}
+					{% else %}
+						<div class="col-sm-1"></div><p class="col-sm-11">Sorry! None of your FaceBook friends have signed up for Make Less Mush yet! Why don't you tell them about it?</p>
+						<div class="col-sm-1"></div><button class="btn btn-default col-sm-6">Share Make Less Mush on FaceBook</button>
+					{% endif %}
 				</div> <!-- end row -->
 			</div> <!-- end recent listings table -->
 		</div>

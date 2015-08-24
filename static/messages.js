@@ -37,17 +37,23 @@ function toggleRead(evt) {
 	var thisMessageId = targetMessage.slice(4);
 	var messageId = { message_id: thisMessageId };
 	$.post("/toggle_read", messageId, function (result) {
-		// display a success message
-		$("#messageSent").html('');
-		$("#messageSent").css("display", "block");
-		$("#messageSent").html('Your message has been marked as read.');
-		$("#messageSent").delay(3000).fadeOut();
-		// change the class and change the button
 		if (result['read_status'] === true) {
+			// display a success message
+			$("#messageSent").html('');
+			$("#messageSent").css("display", "block");
+			$("#messageSent").html('Your message has been marked as read.');
+			$("#messageSent").delay(3000).fadeOut();
+			// change the class and change the button
 			$(evt.currentTarget).html("Mark as unread");
 			$("#message"+thisMessageId).removeClass('unreadMessage');
 			$("#message"+thisMessageId).addClass('readMessage');
 		} else {
+			// display a success message
+			$("#messageSent").html('');
+			$("#messageSent").css("display", "block");
+			$("#messageSent").html('Your message has been marked as unread.');
+			$("#messageSent").delay(3000).fadeOut();
+			// chage the class and change the button
 			$(evt.currentTarget).html("Mark as read");
 			$("#message"+thisMessageId).removeClass('readMessage');
 			$("#message"+thisMessageId).addClass('unReadMessage');
@@ -57,3 +63,12 @@ function toggleRead(evt) {
 }
 
 $('.readStatusButton').click(toggleRead);
+
+function sendText(evt) {
+	targetMessage = $(evt.currentTarget).data().id;
+	var thisMessageId = targetMessage.slice(4);
+	var messageId = { message_id: thisMessageId };
+
+}
+
+$('.textButton').click(sendText);

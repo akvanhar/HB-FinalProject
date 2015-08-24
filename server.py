@@ -15,6 +15,8 @@ from model import db, connect_to_db, User, Friendship, Food, Message, Allergen
 
 from titlecase import titlecase
 
+from twilio_send_sms import send_text
+
 app = Flask(__name__)
 
 #Required to use Flask sessions and the debug toolbar:
@@ -52,9 +54,14 @@ def home():
 			#combine listings so that the friends listings come first
 			this_users_listings = friends_listings + other_listings
 			short_list = this_users_listings[:5]
+		
+		else:
+			short_list = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
+			friends_fb_ids = None
 
 	else:
 		short_list = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
+		friends_fb_ids = None
 
 	current_date = datetime.now()
 	current_date = current_date.strftime("%Y-%m-%d")
@@ -176,8 +183,12 @@ def signup_portal():
 	fname = titlecase(fname)
 	lname = request.form.get('lname')
 	lname = titlecase(lname)
+	phone1 = request.form.get('phone-1')
+	phone2 = request.form.get('phone-2')
+	phone3 = request.form.get('phone-3')
+	phone_number = "+1"+str(phone1)+str(phone2)+str(phone3)
 
-	User.add_user(email, fname, lname, password)
+	User.add_user(email, fname, lname, phone_number, password)
 
 	#automatically sign in user after account creation
 	user = User.query.filter_by(email=email, password=password).first()
@@ -433,6 +444,7 @@ def change_read_status():
 @app.route('/reply_to_message', methods=['POST'])
 def reply_to():
 	"""reply to another message"""
+	
 	if 'user_id' not in session:
 		flash('Please login to send a message.')
 		return redirect('/login')
@@ -447,6 +459,18 @@ def reply_to():
 
 	return "Your message has been sent."
 
+@app.route('/send_text', methods=['POST'])
+def send_sms_message():
+	"""send an sms to a user about their listing"""
+
+	if 'user_id' not in session:
+		flash('Please login to send a text.')
+		return redirect('/login')
+	else:
+		number = request.form.get('number')
+		message = request.form.get('message')
+		send_text(number, message)
+		return "Message sent"
 @app.route('/toggle_read', methods=['POST'])
 def toggle_read():
 	"""mark a message as read or unread in the db."""
