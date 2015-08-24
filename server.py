@@ -221,12 +221,6 @@ def postlisting():
 		user_id = session['user_id']
 		contact = request.form.getlist('contact')
 
-		if 'email' in contact:
-			contact_email = db.session.query(User.email).filter_by(user_id = user_id).first()
-			contact_email = contact_email[0]
-		else:
-			contact_email = None
-
 		if 'text' in contact:
 			phone_number = request.form.get('phone_number')
 			phone_number = phone_number[4:7]+phone_number[9:12]+phone_number[13:]
@@ -236,7 +230,7 @@ def postlisting():
 		allergen = Allergen.add_allergen(allergens)
 		allergen_id = allergen.allergen_id
 
-		Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id, contact_email, phone_number)
+		Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id, phone_number)
 
 		flash('Your listing has been successfully posted!')
 

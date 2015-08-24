@@ -24,7 +24,7 @@ def load_listings():
         title, texture, datemade, quantity, freshfrozen, description, allergen_list, user_id, email, phone_number = line.split("|")
         allergen = Allergen.add_allergen(allergen_list)
         Food.add_food(title, texture, datemade, quantity,
-                 freshfrozen, description, allergen.allergen_id, user_id, email, phone_number)
+                 freshfrozen, description, allergen.allergen_id, user_id, phone_number)
 
 def load_messages():
     """Load messages from samplemessages into database"""
