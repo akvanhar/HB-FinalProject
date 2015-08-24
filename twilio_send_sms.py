@@ -17,5 +17,3 @@ def send_text(to_number, message):
 									 body=body_message)
 
 	print message.sid
-
-

@@ -5,9 +5,11 @@
 	<p>Description: {{ food_listing.description }}</p>
 	<p>Posting user: {{ food_listing.user.fname }} {{ food_listing.user.lname }} <img class="img-circle" src="//graph.facebook.com/{{ food_listing.user.fb_id }}/picture" alt="Facebook profile picture"></p>
 	<h5>Interested? Send {{ food_listing.user.fname }} a message:</h5>
+	<h6>Don't forget to include your preferred method of contact!!</h6>
 	
 	<form action='/send_message', method='post'>
 		<input type='hidden' name='posting_user' value='{{ food_listing.user.user_id }}'>
+		<input type='hidden' name='food_listing' value='{{food_listing.food_id}}'>
 		<textarea name='message' rows='10' cols='50'>Hi {{ food_listing.user.fname }},
 I'm interesting in your {{ food_listing.title }}.
 Please contact me at {{ user.email }}.

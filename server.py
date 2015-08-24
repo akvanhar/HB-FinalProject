@@ -220,15 +220,16 @@ def postlisting():
 		allergens = request.form.getlist('allergens')
 		user_id = session['user_id']
 		contact = request.form.getlist('contact')
+
 		if 'email' in contact:
 			contact_email = db.session.query(User.email).filter_by(user_id = user_id).first()
 			contact_email = contact_email[0]
 		else:
 			contact_email = None
+
 		if 'text' in contact:
 			phone_number = request.form.get('phone_number')
 			phone_number = phone_number[4:7]+phone_number[9:12]+phone_number[13:]
-
 		else:
 			phone_number = None
 
@@ -434,6 +435,20 @@ def send_message():
 		posting_user = request.form.get('posting_user')
 
 		Message.add_message(current_user_id, posting_user, message)
+
+		#Send an alert via sms to the posting user that someone is interested in their food.
+		food_listing_id = request.form.get('food_listing')
+		food_listing = Food.query.get(food_listing_id)
+		poster_name = food_listing.user.fname
+		email = food_listing.email
+		if email:
+			#send email via sendgrid
+			pass
+		print "email", email
+		phone_number = "+1"+food_listing.phone_number
+		print phone_number, poster_name
+		if phone_number:
+			send_text(phone_number, "Hi, %s! Someone's interested in your post on Make Less Mush! Sign in and check your messages!" % (poster_name))
 
 		flash('Your message has been sent.')
 
