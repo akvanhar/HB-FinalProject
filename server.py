@@ -21,6 +21,7 @@ app = Flask(__name__)
 
 #Required to use Flask sessions and the debug toolbar:
 app.secret_key = os.environ['FLASK_SECRET_KEY']
+google_api = os.environ['GOOGLE_MAPS_API_KEY']
 
 #Set this in order to raise Jinja errors.
 app.jinja_env.undefined = StrictUndefined
@@ -220,12 +221,18 @@ def postlisting():
 		allergens = request.form.getlist('allergens')
 		user_id = session['user_id']
 		contact = request.form.getlist('contact')
+		geoCheckbox = request.form.get('geoCheckbox')
 
 		if 'text' in contact:
 			phone_number = request.form.get('phone_number')
 			phone_number = phone_number[4:7]+phone_number[9:12]+phone_number[13:]
 		else:
 			phone_number = None
+
+		if geoCheckbox:
+			lat = request.form.get('lat')
+			lng = request.form.get('lng')
+			print lat, lng
 
 		allergen = Allergen.add_allergen(allergens)
 		allergen_id = allergen.allergen_id
@@ -235,6 +242,13 @@ def postlisting():
 		flash('Your listing has been successfully posted!')
 
 		return redirect('/')
+@app.route('/map')
+def map():
+	"""Show all listings on a map"""
+
+	API_KEY = google_api
+
+	return render_template('testmap.html', API_KEY=API_KEY)
 
 @app.route('/listings')
 def listings():

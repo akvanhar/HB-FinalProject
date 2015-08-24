@@ -75,11 +75,15 @@ class Food(db.Model):
 	active = db.Column(db.Boolean, nullable=False, default=1) #1 indicates that the item is active
 	shared_with = db.Column(db.String, nullable=False)
 	phone_number = db.Column(db.String, nullable=True)
+	location = db.Column(db.Integer, db.ForeignKey('locations.location_id'), nullable=True)
 
 	allergen = db.relationship("Allergen",
 								backref=db.backref("foods", order_by=food_id))
 	user = db.relationship("User", 
 						   backref=db.backref("foods", order_by=food_id))
+
+	location = db.relationship("Location",
+								backref=db.backref("foods", order_by=food_id))
 
 	def __repr__(self):
 		"""A helpful representation of the food"""
@@ -291,6 +295,21 @@ class Message(db.Model):
 			self.read_status = 0
 
 		db.session.commit()
+
+class Location(db.Model):
+	"""Locations where food listings where posted from"""
+
+	__tablename__ = 'locations'
+
+	location_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+	latitude = db.Column(db.Integer, nullable=False)
+	longitude = db.Column(db.Integer, nullable=False)
+
+	def __repr__(self):
+		"""A helpful representation of the location"""
+
+		return "<location: latitude: %s longitude: %s>" % (self.latitude, self.longitude)
+
 
 ################################################################################
 #Helper functions
