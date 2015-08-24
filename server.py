@@ -40,7 +40,6 @@ def home():
 			friend_ids = [friend.friend_id for friend in user_friends] #get this user's friend ids
 			friends_fb_ids = db.session.query(User.user_id, User.fb_id).filter(User.user_id.in_(friend_ids)).all()
 			# friends_fb_ids = [(int(x[0]), int(x[1])) for x in friends_fb_ids]
-			print friends_fb_ids
 
 			#get all their friend's listings
 			friends_listings = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).all() 
@@ -88,8 +87,6 @@ def login_portal():
 	password = request.form.get('password')
 	user = User.query.filter_by(email=email, password=password).first()
 
-	print 'user: ', user
-
 	if user:
 		user_id = user.user_id
 		session['user_id'] = user_id
@@ -109,7 +106,6 @@ def facebook_login():
 	fb_email = request.form.get('fbEmail')
 	current_acces_token = request.form.get('accessToken')
 	fb_friends = json.loads(request.form.get('fbFriends'))
-	print "fb_friends_list: ", fb_friends
 
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
 
@@ -226,11 +222,13 @@ def postlisting():
 		contact = request.form.getlist('contact')
 		if 'email' in contact:
 			contact_email = db.session.query(User.email).filter_by(user_id = user_id).first()
-			contact_email = [x[0] for x in contact_email]
+			contact_email = contact_email[0]
 		else:
-			email = None
+			contact_email = None
 		if 'text' in contact:
 			phone_number = request.form.get('phone_number')
+			phone_number = phone_number[4:7]+phone_number[9:12]+phone_number[13:]
+
 		else:
 			phone_number = None
 
@@ -459,11 +457,9 @@ def reply_to():
 		flash('Please login to send a message.')
 		return redirect('/login')
 	else:
-		print "server side!"
 		reply_to_user = request.form['send_message_to']
 		current_user = session['user_id']
 		message = request.form['message']
-		print message
 
 		Message.add_message(current_user, reply_to_user, message)
 
