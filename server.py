@@ -251,16 +251,36 @@ def postlisting():
 def map():
 	"""Show all listings on a map"""
 
+	user_id = session['user_id']
+	user = User.query.get(user_id)
+	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+
 	API_KEY = google_api
 
-	all_locations = Location.query.all();
-	locations = {}
-	for location in all_locations:
-		locations[int(location.location_id)] = [location.latitude, location.longitude]
+	return render_template('testmap.html', API_KEY=API_KEY, new_messages=new_messages, user=user)
 
-	print json.dumps(locations)
-	
-	return render_template('testmap.html', API_KEY=API_KEY, locations=json.dumps(locations))
+@app.route('/listings.json')
+def display_listings():
+    """Query database for posts active listings. Return listings as a JSON object"""
+
+    location_results = Location.query.all()
+
+    if not location_results:
+    	#FIXTHIS: return an error message
+    	pass
+    else:
+    	locations = {}
+
+    	for location in location_results:
+    		locations[location.location_id] = {
+    			"title": (location.foods[0]).title,
+    			"date_posted": (location.foods[0]).post_date.strftime("%Y-%m-%d"),
+    			"posting_user": (location.foods[0]).user.fname,
+    			"latitude": location.latitude,
+    			"longitude": location.longitude
+    		}
+
+	return jsonify(locations)
 
 @app.route('/listings')
 def listings():

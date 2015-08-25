@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <style type="text/css">
+<head>
+  <title>
+    Make Less Mush
+  </title>
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/base.css">
+  <style type="text/css">
       html, body { height: 100%; margin: 0; padding: 0; }
       #map { height: 100%; }
-    </style>
-  </head>
-  <body>
-    <script>var locations = JSON.parse({{locations}});
-    console.log(locations);
-    </script>
+  </style>
+</head>
+<body>
+
     <div id="map"></div>
-    <script type="text/javascript">
+<script type="text/javascript">
 
 var map;
 function initMap() {
@@ -25,13 +29,39 @@ var marker = new google.maps.Marker({
     map: map,
     title: 'MUSH!'
   });
+
+  $.get('/listings.json', function(data) {
+    var image = 'static/images/mlmlogo.jpg';
+    for (var key in data) {
+        var location = data[key];
+
+            // Create marker per location object
+            marker = new google.maps.Marker({
+              position: {lat: location['latitude'], lng: location['longitude']},
+              map: map,
+              animation: google.maps.Animation.DROP,
+              title: location['title'],
+              // icon: image
+            });
+
+            // // Define content of infoWindow per marker
+            // contentString = (
+            //   '<div class="window-content">' +
+            //   '<p>Posting User: ' + location['posting_user'] + '</p>' +
+            //   '<p>Date Posted: ' + location['date_posted'] + '</p>'+
+            //   '</div>'
+            // );
+
+            // Add event listeners per marker
+            // bindinfoWindow(marker, map, infoWindow, contentString);
+
+    }  // END for loop
+  });//end $get
 }
 
     </script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&callback=initMap">
     </script>
-  </body>
+</body>
 </html>
-
-37.766825|-122.447352
