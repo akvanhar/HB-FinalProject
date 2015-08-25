@@ -9,22 +9,22 @@ Yams|lumpy_puree|2015-02-21|8|frozen|mashed yams|[]|2||37.772084|-122.402270
 Banana Smoothie|smooth_puree|2015-03-21|8|frozen|bananas, milk, yogurt|[dairy]|2||37.772084|-122.402270
 Brocolli And Potatoes|lumpy_puree|2015-04-21|8|frozen|brocolli and potatoes|[]|2||37.772084|-122.402270
 Chicken Curry|diced|2015-05-21|8|fresh|chicken, yams, coconut milk|[treenuts]|2||37.772084|-122.402270
-Strawberry Fields|smooth_puree|2015-06-21|8|frozen|strawberries, barley, spinach|[wheat]|2||37.772084|-122.402270
+Barley and Spinach|smooth_puree|2015-06-21|8|frozen|strawberries, barley, spinach|[wheat]|2||37.772084|-122.402270
 Peas And Carrots|lumpy_puree|2015-01-21|8|fresh|peas and carrots|[]|3||37.775016|-122.436536
 Yams|lumpy_puree|2015-02-21|8|frozen|mashed yams|[]|3||37.775016|-122.436536
-Banana Smoothie|smooth_puree|2015-03-21|8|frozen|bananas, milk, yogurt|[dairy]|3||37.775016|-122.436536
 Brocolli And Potatoes|lumpy_puree|2015-04-21|8|frozen|brocolli and potatoes|[]|3||37.775016|-122.436536
 Chicken Curry|diced|2015-05-21|8|fresh|chicken, yams, coconut milk|[treenuts]|3||37.775016|-122.436536
 Strawberry Fields|smooth_puree|2015-06-21|8|frozen|strawberries, barley, spinach|[wheat]|3||37.775016|-122.436536
+Banana Smoothie|smooth_puree|2015-03-21|8|frozen|bananas, milk, yogurt|[dairy]|3||37.775016|-122.436536
 Peas And Carrots|lumpy_puree|2015-01-21|8|fresh|peas and carrots|[]|4||37.774549|-122.454517
 Yams|lumpy_puree|2015-02-21|8|frozen|mashed yams|[]|4||37.774549|-122.454517
 Banana Smoothie|smooth_puree|2015-03-21|8|frozen|bananas, milk, yogurt|[dairy]|4||37.774549|-122.454517
 Brocolli And Potatoes|lumpy_puree|2015-04-21|8|frozen|brocolli and potatoes|[]|4||37.774549|-122.454517
-Chicken Curry|diced|2015-05-21|8|fresh|chicken, yams, coconut milk|[treenuts]|4||37.774549|-122.454517
 Strawberry Fields|smooth_puree|2015-06-21|8|frozen|strawberries, barley, spinach|[wheat]|4||37.774549|-122.454517
-Peas And Carrots|lumpy_puree|2015-01-21|8|fresh|peas and carrots|[]|5||37.754407|-122.414431
+Chicken Curry|diced|2015-05-21|8|fresh|chicken, yams, coconut milk|[treenuts]|4||37.774549|-122.454517
 Yams|lumpy_puree|2015-02-21|8|frozen|mashed yams|[]|5||37.754407|-122.414431
 Banana Smoothie|smooth_puree|2015-03-21|8|frozen|bananas, milk, yogurt|[dairy]|5||37.754407|-122.414431
 Brocolli And Potatoes|lumpy_puree|2015-04-21|8|frozen|brocolli and potatoes|[]|5||37.754407|-122.414431
 Chicken Curry|diced|2015-05-21|8|fresh|chicken, yams, coconut milk|[treenuts]|5||37.754407|-122.414431
 Strawberry Fields|smooth_puree|2015-06-21|8|frozen|strawberries, barley, spinach|[wheat]|5||37.754407|-122.414431
+Peas And Carrots|lumpy_puree|2015-01-21|8|fresh|peas and carrots|[]|5||37.754407|-122.414431

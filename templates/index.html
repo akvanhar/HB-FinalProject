@@ -14,7 +14,7 @@
 	{% endif %}
 	<div class="row">
 		<div class="container">
-			<div id="formCol" class="col-sm-5" style="margin-right: 1">
+			<div id="formCol" class="col-sm-7" style="margin-right: 1">
 				<h3>Share some mush:</h3>
 
 				<form id='postForm' class="form-horizontal" action='/postlisting' method='post'>
@@ -153,7 +153,7 @@
 
 <!-- listings table -->
 
-			<div id="listingsCol "class="col-sm-7">
+			<div id="listingsCol "class="col-sm-5">
 				<div class="row">
 					<h3 class="col-sm-12">Get some mush:</h3>
 				</div>
@@ -161,10 +161,9 @@
 					<div class="row">
 						<thead>
 							<tr>
-								<th class="col-sm-2">Date posted</th>
-								<th class="col-sm-2">Title</th>
-								<th class="col-sm-5">Description</th>
-								<th class="col-sm-3">Made by</th>
+								<th class="col-sm-3">Date posted</th>
+								<th class="col-sm-4">Title</th>
+								<th class="col-sm-5" colspan="2">Made by</th>
 							</tr>
 						</thead>
 					</div>
@@ -172,13 +171,13 @@
 						{% for food in user_listings %}
 							<div class="row">
 								<tr>
-									<td class="col-sm-2">{{ food.post_date.strftime("%b %d, %Y") }}</td>
-									<td class="col-sm-2"><a href="/listings/{{ food.food_id }}">
+									<td class="col-sm-3">{{ food.post_date.strftime("%b %d, %Y") }}</td>
+									<td class="col-sm-4"><a href="/listings/{{ food.food_id }}">
 					                    {{ food.title }}
 					                	</a>
 					                </td>
-									<td class="col-sm-5">{{ food.description }}</td>
-									<td class="col-sm-3"><a href='/user/{{ food.user_id }}'>{{ food.user.fname }}  <img class="img-circle" src="//graph.facebook.com/{{ food.user.fb_id }}/picture" alt="Facebook profile picture"></td></a>
+									<td class="col-sm-5"><a href='/user/{{ food.user_id }}'>{{ food.user.fname }}</a></td>
+									<td><a href='/user/{{ food.user_id }}'><img class="img-circle" src="//graph.facebook.com/{{ food.user.fb_id }}/picture" alt="Facebook profile picture"></a></td>
 								</tr>
 							</div>
 						{% endfor %}
@@ -205,5 +204,5 @@
 		</div>
 	</div>
 
-<script src="/static/map.js"></script>
+<script src="/static/form.js"></script>
 {% endblock %}

@@ -257,7 +257,7 @@ def map():
 
 	API_KEY = google_api
 
-	return render_template('testmap.html', API_KEY=API_KEY, new_messages=new_messages, user=user)
+	return render_template('map.html', API_KEY=API_KEY, new_messages=new_messages, user=user)
 
 @app.route('/listings.json')
 def display_listings():
@@ -279,6 +279,7 @@ def display_listings():
     			"latitude": location.latitude,
     			"longitude": location.longitude
     		}
+    	print locations
 
 	return jsonify(locations)
 

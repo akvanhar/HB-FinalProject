@@ -36,14 +36,12 @@
 	      </ul>
 	      
 	      <ul class="nav navbar-nav navbar-right">
-	      	<div class="navbar-centre">
-	      		<p class="navbar-text">Signed in as {{ user.fname }} {{ user.lname}}</p>
-	      		<img class="thumbnail" src="//graph.facebook.com/{{user.fb_id}}/picture" alt="Facebook profile picture">
-	     	 </div>
+	      		<p class="navbar-text navbar-centre">Signed in as {{ user.fname }} {{ user.lname}}</p>
+	      		<!-- <img class="thumbnail" src="//graph.facebook.com/{{user.fb_id}}/picture" alt="Facebook profile picture"> -->
 	      	{% if 'user_id' in session %}
 	      		<li><a href='/logbutton'>Logout</a></li>
     		{% else %}
-		    	<li><a href='/logbutton'><button type="button" class="btn btn-sm navbar-btn">Login</button></a></li>
+		    	<li><a href='/logbutton'><button type="button" class="btn btn-default navbar-btn">Login</button></a></li>
     		{% endif %}
 	        <li class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" scope='public_profile,email,user_friends'></li>
 	      </ul>

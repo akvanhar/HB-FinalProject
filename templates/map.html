@@ -55,14 +55,18 @@ function initMap() {
             });
 
             // Add event listeners per marker
-
-            marker.addListener('click', function() {
-              infoWindow.open(map, marker);
-            });
-            // bindinfoWindow(marker, map, infoWindow, contentString);
+            bindinfoWindow(marker, map, infoWindow, contentString);
 
     }  // END for loop
   });//end $get
+} //end map initialize
+
+function bindinfoWindow(marker, map, infoWindow, html) {
+  google.maps.event.addListener(marker, 'click', function() {
+    // Set infoWindow content and open it when user clicks.
+    infoWindow.setContent(html);
+    infoWindow.open(map, marker);
+  });
 }
 
     </script>
