@@ -9,6 +9,7 @@ function deleteMessage(evt) {
 		$("#messageSent").html('Your message has been deleted.');
 		$("#messageSent").delay(3000).fadeOut();
 		$("#message"+thisMessage).remove();
+		$("#messageCount").html(result['new_messages']);
 		});
 }
 $('.deleteButton').click(deleteMessage);

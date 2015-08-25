@@ -253,7 +253,14 @@ def map():
 
 	API_KEY = google_api
 
-	return render_template('testmap.html', API_KEY=API_KEY)
+	all_locations = Location.query.all();
+	locations = {}
+	for location in all_locations:
+		locations[int(location.location_id)] = [location.latitude, location.longitude]
+
+	print json.dumps(locations)
+	
+	return render_template('testmap.html', API_KEY=API_KEY, locations=json.dumps(locations))
 
 @app.route('/listings')
 def listings():
@@ -472,10 +479,13 @@ def change_read_status():
 	"""Delete a message"""
 	message_id = request.form.get('message_id')
 	message = Message.query.get(message_id)
+	print message
 
 	message.delete_message()
+	user_id = session['user_id']
+	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 
-	return "deleted"
+	return jsonify(new_messages=new_messages)
 
 @app.route('/reply_to_message', methods=['POST'])
 def reply_to():

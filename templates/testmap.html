@@ -7,6 +7,9 @@
     </style>
   </head>
   <body>
+    <script>var locations = JSON.parse({{locations}});
+    console.log(locations);
+    </script>
     <div id="map"></div>
     <script type="text/javascript">
 
@@ -16,6 +19,12 @@ function initMap() {
     center: {lat: 37.773561, lng: -122.444323},
     zoom: 13
   });
+
+var marker = new google.maps.Marker({
+    position: {lat: 37.766825, lng: -122.447352},
+    map: map,
+    title: 'MUSH!'
+  });
 }
 
     </script>
@@ -24,3 +33,5 @@ function initMap() {
     </script>
   </body>
 </html>
+
+37.766825|-122.447352
