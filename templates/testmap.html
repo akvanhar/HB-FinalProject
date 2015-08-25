@@ -24,16 +24,26 @@ function initMap() {
     zoom: 13
   });
 
-var marker = new google.maps.Marker({
-    position: {lat: 37.766825, lng: -122.447352},
-    map: map,
-    title: 'MUSH!'
-  });
-
   $.get('/listings.json', function(data) {
     var image = 'static/images/mlmlogo.jpg';
     for (var key in data) {
         var location = data[key];
+        console.log(location);
+
+            // Define content of infoWindow per marker
+            var contentString = (
+              '<div id="content">' + '<div id="siteNotice">'+'</div>'+
+              '<h3>Mush:' + location['title'] + '</h3>' +
+              '<p>Posting User: ' + location['posting_user'] + '</p>' +
+              '<p>Date Posted: ' + location['date_posted'] + '</p>'+
+              '</div>'
+            );
+            console.log(contentString);
+
+            // Create info window 
+            var infoWindow = new google.maps.InfoWindow({
+              content: contentString
+            });
 
             // Create marker per location object
             marker = new google.maps.Marker({
@@ -44,15 +54,11 @@ var marker = new google.maps.Marker({
               // icon: image
             });
 
-            // // Define content of infoWindow per marker
-            // contentString = (
-            //   '<div class="window-content">' +
-            //   '<p>Posting User: ' + location['posting_user'] + '</p>' +
-            //   '<p>Date Posted: ' + location['date_posted'] + '</p>'+
-            //   '</div>'
-            // );
-
             // Add event listeners per marker
+
+            marker.addListener('click', function() {
+              infoWindow.open(map, marker);
+            });
             // bindinfoWindow(marker, map, infoWindow, contentString);
 
     }  // END for loop
