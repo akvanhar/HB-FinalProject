@@ -11,7 +11,7 @@ from datetime import datetime
 
 from sqlalchemy import desc
 
-from model import db, connect_to_db, User, Friendship, Food, Message, Allergen
+from model import db, connect_to_db, User, Friendship, Food, Message, Allergen, Location
 
 from titlecase import titlecase
 
@@ -229,15 +229,20 @@ def postlisting():
 		else:
 			phone_number = None
 
+		allergen = Allergen.add_allergen(allergens)
+		allergen_id = allergen.allergen_id
+
 		if geoCheckbox:
 			lat = request.form.get('lat')
 			lng = request.form.get('lng')
 			print lat, lng
+			location = Location.add_location(lat, lng)
+			print location
+			location_id = location.location_id
+		else:
+			location_id = None
 
-		allergen = Allergen.add_allergen(allergens)
-		allergen_id = allergen.allergen_id
-
-		Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id, phone_number)
+		Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id, location_id, phone_number)
 
 		flash('Your listing has been successfully posted!')
 

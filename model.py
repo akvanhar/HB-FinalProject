@@ -75,15 +75,16 @@ class Food(db.Model):
 	active = db.Column(db.Boolean, nullable=False, default=1) #1 indicates that the item is active
 	shared_with = db.Column(db.String, nullable=False)
 	phone_number = db.Column(db.String, nullable=True)
-	location = db.Column(db.Integer, db.ForeignKey('locations.location_id'), nullable=True)
+	location_id = db.Column(db.Integer, db.ForeignKey('locations.location_id'), nullable=True)
 
 	allergen = db.relationship("Allergen",
 								backref=db.backref("foods", order_by=food_id))
+
 	user = db.relationship("User", 
 						   backref=db.backref("foods", order_by=food_id))
 
-	location = db.relationship("Location",
-								backref=db.backref("foods", order_by=food_id))
+	location = db.relationship("Location", 
+						   backref=db.backref("foods", order_by=food_id))
 
 	def __repr__(self):
 		"""A helpful representation of the food"""
@@ -92,7 +93,7 @@ class Food(db.Model):
 
 	@classmethod
 	def add_food(cls, title, texture, datemade, quantity,
-				 freshfrozen, description, allergen_id, user_id, phone_number, shared_with=""):
+				 freshfrozen, description, allergen_id, user_id, phone_number, location, shared_with=""):
 		"""Insert a new food listing into the foods table"""
 
 		datemade = datetime.strptime(datemade, "%Y-%m-%d")
@@ -101,7 +102,8 @@ class Food(db.Model):
 				   datemade=datemade, quantity=quantity, 
 				   freshfrozen=freshfrozen, description=description, 
 				   allergen_id=allergen_id, user_id=user_id, 
-				   phone_number=phone_number, shared_with=shared_with)
+				   phone_number=phone_number, location=location, shared_with=shared_with)
+
 		db.session.add(food)
 		db.session.commit()
 
@@ -309,6 +311,23 @@ class Location(db.Model):
 		"""A helpful representation of the location"""
 
 		return "<location: latitude: %s longitude: %s>" % (self.latitude, self.longitude)
+
+	@classmethod
+	def add_location(cls, lat, lng):
+		"""Insert a new location into the locations table"""
+		location = cls(latitude=lat, 
+					  longitude=lng)
+		db.session.add(location)
+		db.session.commit()
+
+		return location
+
+	def update_location(self, lat, lng):
+		"""update a location"""
+
+		self.lat = lat
+		self.lng = lng
+		db.session.commit()
 
 
 ################################################################################

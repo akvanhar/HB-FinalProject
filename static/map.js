@@ -16,11 +16,31 @@ function findMe() {
   }
 }
 
-// $('#geoCheckbox').on('check', googleGeoFindMe)
-
 $("#geoCheckbox").click(function () {
 	var thisCheck = $(this);
     if(thisCheck.is (':checked')) {
     	findMe();
     }
 });
+
+function waitForLocationAndSubmit(evt) {
+	evt.preventDefault();
+	var checkbox = $("#geoCheckbox")
+	if(checkbox.is (':checked')) {
+		var lngInput = $("#hideLng");
+		console.log(lngInput)
+		var lngVal = lngInput.val();
+		var i = 0;
+		while (lngVal === "" && i<100000000){
+		// 	lngVal = lngInput.val();
+		// 	i++;
+			// dont submit
+		// }
+	}
+	// this.submit()
+}
+
+$("#postForm").on('submit', waitForLocationAndSubmit);
+
+// In findMe... before fxn callback, disable submit button, and display "waiting for location"
+// incallback enable submit
