@@ -219,48 +219,44 @@ def postlisting():
 	"""
 	Handles a new listing being submitted
 	"""
+	check_login('Please login to post a Make Less Mush listing')
+	
+	title = request.form.get('title')
+	title = titlecase(title)
+	texture = request.form.get('texture')
+	datemade = request.form.get('datemade')
+	quantity = request.form.get('quantity')
+	freshfrozen = request.form.get('freshfrozen')
+	description = request.form.get('description')
+	allergens = request.form.getlist('allergens')
+	user_id = session['user_id']
+	contact = request.form.getlist('contact')
+	geoCheckbox = request.form.get('geoCheckbox')
 
-	if 'user_id' not in session:
-		#users who are not logged in cannot post a new listing
-		flash('Please login to post a Make Less Mush listing')
-		return redirect('/login')
+	if 'text' in contact:
+		phone_number = request.form.get('phone_number')
+		phone_number = phone_number[4:7]+phone_number[9:12]+phone_number[13:]
 	else:
-		title = request.form.get('title')
-		title = titlecase(title)
-		texture = request.form.get('texture')
-		datemade = request.form.get('datemade')
-		quantity = request.form.get('quantity')
-		freshfrozen = request.form.get('freshfrozen')
-		description = request.form.get('description')
-		allergens = request.form.getlist('allergens')
-		user_id = session['user_id']
-		contact = request.form.getlist('contact')
-		geoCheckbox = request.form.get('geoCheckbox')
+		phone_number = None
 
-		if 'text' in contact:
-			phone_number = request.form.get('phone_number')
-			phone_number = phone_number[4:7]+phone_number[9:12]+phone_number[13:]
-		else:
-			phone_number = None
+	allergen = Allergen.add_allergen(allergens)
+	allergen_id = allergen.allergen_id
 
-		allergen = Allergen.add_allergen(allergens)
-		allergen_id = allergen.allergen_id
+	if geoCheckbox:
+		lat = request.form.get('lat')
+		lng = request.form.get('lng')
+		print lat, lng
+		location = Location.add_location(lat, lng)
+		print location
+		location_id = location.location_id
+	else:
+		location_id = None
 
-		if geoCheckbox:
-			lat = request.form.get('lat')
-			lng = request.form.get('lng')
-			print lat, lng
-			location = Location.add_location(lat, lng)
-			print location
-			location_id = location.location_id
-		else:
-			location_id = None
+	Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id, location_id, phone_number)
 
-		Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id, location_id, phone_number)
+	flash('Your listing has been successfully posted!')
 
-		flash('Your listing has been successfully posted!')
-
-		return redirect('/')
+	return redirect('/')
 @app.route('/map')
 def map():
 	"""
@@ -310,9 +306,7 @@ def listings():
 		flash('Please login to view the complete list of Make Less Mush listings.')
 		return redirect('/login')
 	else:
-		user_id = session['user_id']
-		user = User.query.get(user_id)
-		new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+		user, new_messages = info_for_base()
 		user_friends = user.friendships
 
 		if user_friends:
@@ -348,9 +342,7 @@ def food_info(food_id):
     else:
     	#get specific listing from db.
     	food_listing = Food.query.get(food_id)
-    	logged_in_user_id = session['user_id']
-    	user = User.query.get(logged_in_user_id)
-    	new_messages = Message.query.filter_by(receiver_id=logged_in_user_id, read_status=0).count()
+    	user, new_messages = info_for_base()
 
     	return render_template('food_info.html', food_listing=food_listing, user=user, new_messages=new_messages)
 
@@ -366,11 +358,9 @@ def user_listings():
 		return redirect('/login')
 	else:
 		#show user's listings.
-		user_id = session['user_id']
+		user, new_messages = info_for_base()
 		active_user_listings = Food.query.filter(Food.user_id == user_id, Food.active == 1).order_by(desc('post_date')).all()
 		old_listings = Food.query.filter(Food.user_id == user_id, Food.active == 0).order_by(desc('post_date')).all()
-		user = User.query.get(user_id)
-		new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 
 		return render_template('mylistings.html', 
 								user_listings=active_user_listings, 
@@ -389,9 +379,7 @@ def edit_food(food_id):
 		return redirect('/login')
 	else:
 		#show user listing and allow them to make changes.
-		user_id = session['user_id']
-		user = User.query.get(user_id)
-		new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+		user, new_messages = info_for_base()
 		food_listing = Food.query.get(food_id)
 
 		return render_template('editfood.html', food_listing=food_listing, user=user, new_messages=new_messages)
@@ -452,9 +440,7 @@ def user_info(food_user_id):
     	return redirect('/login')
     else:
     	#get specific listing from db.
-    	user_id = session['user_id']
-    	user = User.query.get(user_id)
-    	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+    	user, new_messages = info_for_base()
     	this_user = User.query.get(food_user_id)
     	food_listings = Food.query.filter_by(user_id = food_user_id)
 
@@ -472,9 +458,7 @@ def messages():
 		return redirect('/login')
 	else:
 		#Get the messages for that particular user.
-		user_id = session['user_id']
-		user = User.query.get(user_id)
-		new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+		user, new_messages = info_for_base()
 
 		unread_messages = Message.query.filter_by(receiver_id=user_id, read_status=0)
 		unread_messages_by_date = unread_messages.order_by(desc('datetime_sent')).all()		
@@ -540,7 +524,7 @@ def change_read_status():
 @app.route('/reply_to_message', methods=['POST'])
 def reply_to():
 	"""
-	Reply to another message.
+	Reply to a message.
 	"""
 	
 	if 'user_id' not in session:
