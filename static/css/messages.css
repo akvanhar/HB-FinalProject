@@ -1,3 +1,4 @@
 .facebookImage {
-	border: 50%;
+	max-width: 100%
+	vertical-align: middle;
 }

@@ -219,8 +219,7 @@ def postlisting():
 	"""
 	Handles a new listing being submitted
 	"""
-	check_login('Please login to post a Make Less Mush listing')
-	
+
 	title = request.form.get('title')
 	title = titlecase(title)
 	texture = request.form.get('texture')
@@ -257,17 +256,22 @@ def postlisting():
 	flash('Your listing has been successfully posted!')
 
 	return redirect('/')
+
 @app.route('/map')
 def map():
 	"""
 	Show all listings on a map
 	"""
 
-	user, new_messages = info_for_base()
+	if check_login('Please login.') == 'not_logged_in':
+		return redirect('/login')
 
-	API_KEY = google_api
+	else:
+		user, new_messages = info_for_base()
 
-	return render_template('map.html', API_KEY=API_KEY, new_messages=new_messages, user=user)
+		API_KEY = google_api
+
+		return render_template('map.html', API_KEY=API_KEY, new_messages=new_messages, user=user)
 
 @app.route('/listings.json')
 def display_listings():
@@ -301,10 +305,9 @@ def listings():
 	Lists all the food listings, putting the user's friends' listings first.
 	"""
 
-	if 'user_id' not in session:
-		#users who are not logged in cannot view complete list of listings
-		flash('Please login to view the complete list of Make Less Mush listings.')
+	if check_login('Please login to view listings.') == 'not_logged_in':
 		return redirect('/login')
+
 	else:
 		user, new_messages = info_for_base()
 		user_friends = user.friendships
@@ -335,10 +338,8 @@ def food_info(food_id):
     Display information about a specific food listing.
     """
 
-    if 'user_id' not in session:
-    	#users who are not logged in cannot view listings details
-    	flash('Please login to view the details of that particular listing')
-    	return redirect('/login')
+    if check_login('Please login to view listing details.') == 'not_logged_in':
+		return redirect('/login')
     else:
     	#get specific listing from db.
     	food_listing = Food.query.get(food_id)
@@ -352,9 +353,7 @@ def user_listings():
 	Shows a list of all of that particular user's listings.
 	"""
 
-	if 'user_id' not in session:
-		#users who are not logged in cannot view their own listings
-		flash('Please login to view your listings')
+	if check_login('Please login to view your listings.') == 'not_logged_in':
 		return redirect('/login')
 	else:
 		#show user's listings.
@@ -373,9 +372,7 @@ def edit_food(food_id):
 	Display information about a specific food listing and allows the user to edit it.
 	"""
 
-	if 'user_id' not in session:
-		#user must be logged in to edit listings
-		flash('Please login to edit your listings')
+	if check_login('Please login to edit your listings.') == 'not_logged_in':
 		return redirect('/login')
 	else:
 		#show user listing and allow them to make changes.
@@ -390,9 +387,7 @@ def update_listing():
 	Update an existing listing in the database.
 	"""
 
-	if 'user_id' not in session:
-		#users who are not logged in cannot post a new listing
-		flash('Please login to update a Make Less Mush listing')
+	if check_login('Please login to update your post.') == 'not_logged_in':
 		return redirect('/login')
 	else:
 		title = request.form.get('title')
@@ -434,10 +429,8 @@ def user_info(food_user_id):
     Displays a specific user's active listings.
     """
 
-    if 'user_id' not in session:
-    	#users who are not logged in cannot view listings details
-    	flash("Please login to view this user's listings")
-    	return redirect('/login')
+    if check_login("Please login to view this user's listings.") == 'not_logged_in':
+		return redirect('/login')
     else:
     	#get specific listing from db.
     	user, new_messages = info_for_base()
@@ -452,9 +445,7 @@ def messages():
 	Displays messages for that specific user.
 	"""
 
-	if 'user_id' not in session:
-		#users who are not logged in cannot view their messages.
-		flash('Please login to view your messages.')
+	if check_login("Please login to view your messages.") == 'not_logged_in':
 		return redirect('/login')
 	else:
 		#Get the messages for that particular user.
@@ -481,31 +472,26 @@ def send_message():
 	Handles sending a message to a specific user.
 	"""
 
-	if 'user_id' not in session:
-		#users who are not logged in cannot send messages.
-		flash('Please login to send a message.')
-		return redirect('/login')
-	else:
-		#create a message field in the db.
-		message = request.form.get('message')
-		current_user_id = session['user_id']
-		posting_user = request.form.get('posting_user')
+	#create a message field in the db.
+	message = request.form.get('message')
+	current_user_id = session['user_id']
+	posting_user = request.form.get('posting_user')
 
-		Message.add_message(current_user_id, posting_user, message)
+	Message.add_message(current_user_id, posting_user, message)
 
-		#Send an alert via sms to the posting user that someone is interested in their food.
-		food_listing_id = request.form.get('food_listing')
-		food_listing = Food.query.get(food_listing_id)
-		poster_name = food_listing.user.fname
-		
-		phone_number = food_listing.phone_number
-		if phone_number:
-			phone_number = "+1"+phone_number
-			send_text(phone_number, "Hi, %s! Someone's interested in your post on Make Less Mush! Sign in and check your messages!" % (poster_name))
+	#Send an alert via sms to the posting user that someone is interested in their food.
+	food_listing_id = request.form.get('food_listing')
+	food_listing = Food.query.get(food_listing_id)
+	poster_name = food_listing.user.fname
+	
+	phone_number = food_listing.phone_number
+	if phone_number:
+		phone_number = "+1"+phone_number
+		send_text(phone_number, "Hi, %s! Someone's interested in your post on Make Less Mush! Sign in and check your messages!" % (poster_name))
 
-		flash('Your message has been sent.')
+	flash('Your message has been sent.')
 
-		return redirect('/')
+	return redirect('/')
 
 @app.route('/delete_message', methods=['POST'])
 def change_read_status():
@@ -516,8 +502,7 @@ def change_read_status():
 	message = Message.query.get(message_id)
 
 	message.delete_message()
-	user_id = session['user_id']
-	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+	user, new_messages = info_for_base()
 
 	return jsonify(new_messages=new_messages)
 
@@ -526,16 +511,12 @@ def reply_to():
 	"""
 	Reply to a message.
 	"""
-	
-	if 'user_id' not in session:
-		flash('Please login to send a message.')
-		return redirect('/login')
-	else:
-		reply_to_user = request.form['send_message_to']
-		current_user = session['user_id']
-		message = request.form['message']
 
-		Message.add_message(current_user, reply_to_user, message)
+	reply_to_user = request.form['send_message_to']
+	current_user = session['user_id']
+	message = request.form['message']
+
+	Message.add_message(current_user, reply_to_user, message)
 
 	return "Your message has been sent."
 
@@ -545,14 +526,11 @@ def send_sms_message():
 	Send an sms to a user about their listing.
 	"""
 
-	if 'user_id' not in session:
-		flash('Please login to send a text.')
-		return redirect('/login')
-	else:
-		number = request.form.get('number')
-		message = request.form.get('message')
-		send_text(number, message)
-		return "Message sent"
+	number = request.form.get('number')
+	message = request.form.get('message')
+	send_text(number, message)
+	
+	return "Message sent"
 
 @app.route('/toggle_read', methods=['POST'])
 def toggle_read():
