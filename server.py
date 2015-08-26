@@ -481,14 +481,11 @@ def send_message():
 		food_listing_id = request.form.get('food_listing')
 		food_listing = Food.query.get(food_listing_id)
 		poster_name = food_listing.user.fname
-		email = food_listing.email
-		if email:
-			#send email via sendgrid
-			pass
-		print "email", email
-		phone_number = "+1"+food_listing.phone_number
+		
+		phone_number = food_listing.phone_number
 		print phone_number, poster_name
 		if phone_number:
+			phone_number = "+1"+phone_number
 			send_text(phone_number, "Hi, %s! Someone's interested in your post on Make Less Mush! Sign in and check your messages!" % (poster_name))
 
 		flash('Your message has been sent.')
