@@ -28,14 +28,12 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def home():
-	"""homepage"""
+	"""
+	homepage
+	"""
 	if 'user_id' in session:
-		user_id = session['user_id']
-
-		user = User.query.get(user_id)
+		user, new_messages = info_for_base()
 		user_friends = user.friendships
-
-		new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 
 		if user_friends:
 			friend_ids = [friend.friend_id for friend in user_friends] #get this user's friend ids
@@ -76,13 +74,17 @@ def home():
 
 @app.route('/login')
 def login():
-	"""Login page."""
+	"""
+	Login page.
+	"""
 
 	return render_template("login.html")
 
 @app.route('/login_portal', methods=['POST'])
 def login_portal():
-	"""Handles the login form"""
+	"""
+	Handles the login form
+	"""
 
 	email = request.form.get('email')
 	password = request.form.get('password')
@@ -99,7 +101,9 @@ def login_portal():
 
 @app.route('/facebook_login_portal', methods=['POST'])
 def facebook_login():
-	"""Handles the login from the facebook login button)"""
+	"""
+	Handles the login from the facebook login button
+	"""
 	
 	fb_user_id = request.form.get('fbUserId')
 	fb_fname = request.form.get('fbFname')
@@ -153,7 +157,9 @@ def facebook_login():
 
 @app.route('/logbutton')
 def logbutton():
-    """You get here if you click the login/logout button from any page other than login/signup"""
+    """
+    You get here if you click the login/logout button from any page other than login/signup
+    """
     
     if 'user_id' in session:
         del session['user_id']
@@ -166,13 +172,17 @@ def logbutton():
 
 @app.route('/signup')
 def signup():
-	"""Allows a user to signup for Make Less Mush"""
+	"""
+	Allows a user to signup for Make Less Mush
+	"""
 
 	return render_template('signup.html')
 
 @app.route('/signup_portal', methods=['POST'])
 def signup_portal():
-	"""Handles the signup form"""
+	"""
+	Handles the signup form
+	"""
 
 	email = request.form.get('email')
 	password = request.form.get('password')
@@ -197,14 +207,18 @@ def signup_portal():
 
 @app.route('/fblogout_portal')
 def logout_portal():
-	"""Handles logout of MLM"""
+	"""
+	Handles logout of MLM
+	"""
 	# FIXTHIS
 
 	return redirect('/login')
 
 @app.route('/postlisting', methods=['POST'])
 def postlisting():
-	"""Handles a new listing being submitted"""
+	"""
+	Handles a new listing being submitted
+	"""
 
 	if 'user_id' not in session:
 		#users who are not logged in cannot post a new listing
@@ -249,11 +263,11 @@ def postlisting():
 		return redirect('/')
 @app.route('/map')
 def map():
-	"""Show all listings on a map"""
+	"""
+	Show all listings on a map
+	"""
 
-	user_id = session['user_id']
-	user = User.query.get(user_id)
-	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+	user, new_messages = info_for_base()
 
 	API_KEY = google_api
 
@@ -261,8 +275,10 @@ def map():
 
 @app.route('/listings.json')
 def display_listings():
-    """Query database for posts active listings. Return listings as a JSON object"""
-
+    """
+    Query database for posts active listings. Return listings as a JSON object.
+    """
+    #FIX THIS. RETURN ONLY ACTIVE LISTINGS
     location_results = Location.query.all()
 
     if not location_results:
@@ -285,7 +301,9 @@ def display_listings():
 
 @app.route('/listings')
 def listings():
-	"""Lists all the food listings, putting the user's friends' listings first"""
+	"""
+	Lists all the food listings, putting the user's friends' listings first.
+	"""
 
 	if 'user_id' not in session:
 		#users who are not logged in cannot view complete list of listings
@@ -319,7 +337,9 @@ def listings():
 
 @app.route('/listings/<int:food_id>')
 def food_info(food_id):
-    """Display information about a specific food listing"""
+    """
+    Display information about a specific food listing.
+    """
 
     if 'user_id' not in session:
     	#users who are not logged in cannot view listings details
@@ -336,7 +356,9 @@ def food_info(food_id):
 
 @app.route('/mylistings')
 def user_listings():
-	"""Shows a list of all of that particular user's listings"""
+	"""
+	Shows a list of all of that particular user's listings.
+	"""
 
 	if 'user_id' not in session:
 		#users who are not logged in cannot view their own listings
@@ -357,7 +379,9 @@ def user_listings():
 
 @app.route('/listings/edit/<int:food_id>')
 def edit_food(food_id):
-	"""Display information about a specific food listing and allows the user to edit it."""
+	"""
+	Display information about a specific food listing and allows the user to edit it.
+	"""
 
 	if 'user_id' not in session:
 		#user must be logged in to edit listings
@@ -374,7 +398,9 @@ def edit_food(food_id):
 
 @app.route('/updatelisting', methods=['POST'])
 def update_listing():
-	"""Update an existing listing in the database"""
+	"""
+	Update an existing listing in the database.
+	"""
 
 	if 'user_id' not in session:
 		#users who are not logged in cannot post a new listing
@@ -416,7 +442,9 @@ def update_listing():
 
 @app.route('/user/<int:food_user_id>')
 def user_info(food_user_id):
-    """Displays a specific user's active listings"""
+    """
+    Displays a specific user's active listings.
+    """
 
     if 'user_id' not in session:
     	#users who are not logged in cannot view listings details
@@ -434,7 +462,9 @@ def user_info(food_user_id):
 
 @app.route('/messages')
 def messages():
-	"""Displays messages for that specific user"""
+	"""
+	Displays messages for that specific user.
+	"""
 
 	if 'user_id' not in session:
 		#users who are not logged in cannot view their messages.
@@ -463,7 +493,9 @@ def messages():
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
-	"""Handles sending a message to a specific user"""
+	"""
+	Handles sending a message to a specific user.
+	"""
 
 	if 'user_id' not in session:
 		#users who are not logged in cannot send messages.
@@ -483,7 +515,6 @@ def send_message():
 		poster_name = food_listing.user.fname
 		
 		phone_number = food_listing.phone_number
-		print phone_number, poster_name
 		if phone_number:
 			phone_number = "+1"+phone_number
 			send_text(phone_number, "Hi, %s! Someone's interested in your post on Make Less Mush! Sign in and check your messages!" % (poster_name))
@@ -494,10 +525,11 @@ def send_message():
 
 @app.route('/delete_message', methods=['POST'])
 def change_read_status():
-	"""Delete a message"""
+	"""
+	Delete a message.
+	"""
 	message_id = request.form.get('message_id')
 	message = Message.query.get(message_id)
-	print message
 
 	message.delete_message()
 	user_id = session['user_id']
@@ -507,7 +539,9 @@ def change_read_status():
 
 @app.route('/reply_to_message', methods=['POST'])
 def reply_to():
-	"""reply to another message"""
+	"""
+	Reply to another message.
+	"""
 	
 	if 'user_id' not in session:
 		flash('Please login to send a message.')
@@ -523,7 +557,9 @@ def reply_to():
 
 @app.route('/send_text', methods=['POST'])
 def send_sms_message():
-	"""send an sms to a user about their listing"""
+	"""
+	Send an sms to a user about their listing.
+	"""
 
 	if 'user_id' not in session:
 		flash('Please login to send a text.')
@@ -536,7 +572,9 @@ def send_sms_message():
 
 @app.route('/toggle_read', methods=['POST'])
 def toggle_read():
-	"""mark a message as read or unread in the db."""
+	"""
+	Mark a message as read or unread in the db.
+	"""
 
 	message_id = request.form.get('message_id')
 	message = Message.query.get(message_id)
@@ -545,6 +583,27 @@ def toggle_read():
 	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 
 	return jsonify(read_status=message.read_status, new_messages=new_messages)
+
+#############  Helper functions   ##############################################
+
+def info_for_base():
+	"""
+	Preps new_messages count, user object, and session for base.html.
+	"""
+	user_id = session['user_id']
+	user = User.query.get(user_id)
+	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+
+	return user, new_messages
+
+def check_login(message):
+	"""
+	Checks if the user is logged in, redirects to home page and displays a message if not.
+	"""
+
+	if 'user_id' not in session:
+		flash(message)
+		return redirect('/login')
 
 
 ################################################################################
