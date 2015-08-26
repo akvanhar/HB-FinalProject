@@ -31,7 +31,11 @@ def home():
 	"""
 	homepage
 	"""
-	if 'user_id' in session:
+
+	if check_login('Please login.') == 'not_logged_in':
+		return redirect('/login')
+
+	else:
 		user, new_messages = info_for_base()
 		user_friends = user.friendships
 
@@ -57,20 +61,16 @@ def home():
 			short_list = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
 			friends_fb_ids = None
 
-	else:
-		short_list = Food.query.filter_by(active=1).order_by(desc('post_date')).limit(5).all()
-		friends_fb_ids = None
+		current_date = datetime.now()
+		current_date = current_date.strftime("%Y-%m-%d")
 
-	current_date = datetime.now()
-	current_date = current_date.strftime("%Y-%m-%d")
-
-	return render_template('index.html', 
-						   user_listings=short_list, 
-						   current_date = current_date, 
-						   user=user, 
-						   new_messages=new_messages,
-						   user_friends = user_friends,
-						   friends_fb_ids=friends_fb_ids)
+		return render_template('index.html', 
+							   user_listings=short_list, 
+							   current_date = current_date, 
+							   user=user, 
+							   new_messages=new_messages,
+							   user_friends = user_friends,
+							   friends_fb_ids=friends_fb_ids)
 
 @app.route('/login')
 def login():
@@ -585,9 +585,13 @@ def check_login(message):
 	Checks if the user is logged in, redirects to home page and displays a message if not.
 	"""
 
-	if 'user_id' not in session:
+	if not session.get('user_id'):
 		flash(message)
-		return redirect('/login')
+		return "not_logged_in"
+	else:
+		return "logged_in"
+
+		#@app.beforerequest
 
 
 ################################################################################
