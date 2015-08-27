@@ -10,7 +10,7 @@
 	
 	<form action='/send_message', method='post'>
 		<input type='hidden' name='posting_user' value='{{ food_listing.user.user_id }}'>
-		<input type='hidden' name='food_listing' value='{{food_listing.food_id}}'>
+		<input type='hidden' name='food_listing' value='{{ food_listing.food_id }}'>
 		<textarea name='message' rows='10' cols='50'>Hi {{ food_listing.user.fname }},
 I'm interesting in your {{ food_listing.title }}.
 Please contact me at {{ user.email }}.

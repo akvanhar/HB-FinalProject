@@ -65,6 +65,26 @@ class ServerTestCase(unittest.TestCase):
 
 		assert User.query.filter_by(email = "test@user.com").one()
 
+	def test_add_friendship(self):
+		"""Ensure function adds friendship to database"""
+
+		Friendship.add_friendship(1, 2)
+
+		assert Friendship.query.filter_by(admin_id = 1, friend_id = 2).one()
+
+	def test_add_allergen(self):
+		"""Ensure function adds allergen to database"""
+		this_allergen = Allergen.add_allergen(['eggs', 'wheat', 'dairy'])
+		this_id = this_allergen.allergen_id
+
+		assert Allergen.query.filter_by(allergen_id = this_id).one()
+
+	def test_add_message(self):
+		"""Ensure function adds message to the database"""
+
+		Message.add_message(1, 2, "Hello test user")
+		assert Message.query.filter_by(message_sent = "Hello test user").one()
+
 	def test_no_route(self):
 		"""test that a user gets a 404 error when trying to access a nonexistant route."""
 

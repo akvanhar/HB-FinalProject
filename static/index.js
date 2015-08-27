@@ -26,11 +26,3 @@ $("#geoCheckbox").click(function () {
     	findMe();
     }
 });
-
-function showMessages(message) {
-  //delete the user message and display success message
-    $("#flash").html('');
-    $("#flash").css("display", "block");
-    $("#flash").html(message);
-    $("#flash").delay(3000).fadeOut();
-}

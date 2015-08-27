@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<head>
-  <title>
-    Make Less Mush
-  </title>
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/css/base.css">
-  <style type="text/css">
-      html, body { height: 100%; margin: 0; padding: 0; }
-      #map { height: 100%; }
+{% extends 'base.html' %}
+{% block title %}Listings Map{% endblock %}
+{% block head %}
+<style type="text/css">
+      #map { height: 500px; width: 450px%; }
   </style>
-</head>
-<body>
-
-    <div id="map"></div>
-      <script type="text/javascript" src="static/map.js"></script>
-    <script async defer
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div id="map"></div>
+    </div>
+  </div> <!-- close row -->
+</div> <!-- close container -->
+    
+<script type="text/javascript" src="static/map.js"></script>
+<script async defer
       src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&callback=initMap">
-    </script>
-</body>
-</html>
+</script>
+{% endblock %}
