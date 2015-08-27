@@ -15,7 +15,7 @@ class User(db.Model):
 
 	user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	email = db.Column(db.String(64), nullable=False)
-	password = db.Column(db.String(64), nullable=True)
+	password = db.Column(db.Integer, nullable=True)
 	fname = db.Column(db.String(64), nullable=False)
 	lname = db.Column(db.String(64), nullable=True)
 	fb_id = db.Column(db.String(64), nullable=True, default=None)
@@ -331,15 +331,6 @@ class Location(db.Model):
 		self.lng = lng
 		db.session.commit()
 
-	def test_no_route(self):
-		"""test that a user gets a 404 error when trying to access a nonexistant route."""
-
-		response = self.test_client.get('/thisdoesntexist')
-		assert response.status_code == 404
-
-	def tearDown(self):
-		os.close(self.db_fd)
-		os.unlink(self.db_filename)
 
 ################################################################################
 #Helper functions

@@ -45,7 +45,10 @@ def home():
 			friends_fb_ids = db.session.query(User.user_id, User.fb_id).filter(User.user_id.in_(friend_ids)).all()
 
 			#get all their friend's listings
-			friends_listings = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).all() 
+			friends_listings = []
+			for friend in friend_ids:
+				listing = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).first()
+				friends_listings.append(listing)
 
 			#get the food ids so they can be filtered out
 			friends_food_ids = [food.food_id for food in friends_listings]
@@ -87,8 +90,12 @@ def login_portal():
 	"""
 
 	email = request.form.get('email')
+	print email
 	password = request.form.get('password')
+	password = hash(password)
+	print password
 	user = User.query.filter_by(email=email, password=password).first()
+	print user
 
 	if user:
 		user_id = user.user_id
@@ -187,16 +194,13 @@ def signup_portal():
 
 	email = request.form.get('email')
 	password = request.form.get('password')
+	password = hash(password)
 	fname = request.form.get('fname')
 	fname = titlecase(fname)
 	lname = request.form.get('lname')
 	lname = titlecase(lname)
-	phone1 = request.form.get('phone-1')
-	phone2 = request.form.get('phone-2')
-	phone3 = request.form.get('phone-3')
-	phone_number = "+1"+str(phone1)+str(phone2)+str(phone3)
 
-	User.add_user(email, fname, lname, phone_number, password)
+	User.add_user(email, fname, lname, password)
 
 	#automatically sign in user after account creation
 	user = User.query.filter_by(email=email, password=password).first()

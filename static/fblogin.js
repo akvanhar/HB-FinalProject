@@ -86,7 +86,6 @@ function submitInfoToServer(accessToken, userDetails, friendsList) {
       form.appendChild(userFriendsElement);
 
       document.body.appendChild(form);
-      debugger;
       form.submit();
   }
 

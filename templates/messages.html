@@ -2,6 +2,7 @@
 {% block title %}Messages{% endblock %}
 {% block head %}
 	<link rel="stylesheet" href="/static/css/messages.css">
+	<link rel="stylesheet" href="/static/jasmine/jasmine.min.css">
 {% endblock %}
 {% block content %}
 <h3>New Messages:</h3>
@@ -11,7 +12,7 @@
 		<thead>
 			<tr>
 				<th>Date Sent:</th>
-				<th colspan="2">Message From:</th>
+				<th>Message From:</th>
 				<th>Message</th>
 				<th colspan="3">Actions</th>
 			</tr>
@@ -24,8 +25,7 @@
 				<tr class='readMessage' id='message{{ message.message_id }}'>
 			{% endif %}
 				<td>{{ message.datetime_sent.strftime("%b %d, %Y") }}</td>
-				<td><img class="facebookImage img-circle" src="//graph.facebook.com/{{ message.user.fb_id }}/picture" alt="Facebook profile picture"></td>
-				<td>{{ message.user.fname }} {{ message.user.lname }}</td>
+				<td><a href="/user/{{ message.user.user_id }}"><img class="facebookImage img-circle" src="//graph.facebook.com/{{ message.user.fb_id }}/picture" alt="Facebook profile picture">  {{ message.user.fname }} {{ message.user.lname }}</a></td>
 				<td>{{ message.message_sent }}</td>
 				<td style="font-weight: normal">
 					<button id = "reply{{message.message_id}}" class="btn btn-xs" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
@@ -65,5 +65,8 @@
 	<p>You have new messages</p>
 {% endif %}
 <script src="/static/messages.js"></script>
-
+<script src="/static/jasmine/jasmine.min.js"></script>
+<script src="/static/jasmine/jasmine-html.min.js"></script>
+<script src="/static/jasmine/boot.min.js"></script>
+<script src="/static/messages-spec.js"></script>
 {% endblock %}
