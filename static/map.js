@@ -12,9 +12,9 @@ function initMap() {
         var location = data[key];
             // Define content of infoWindow per marker
             var contentString = (
-              '<div id="content">' + '<div id="siteNotice">'+'</div>'+
-              '<h3>Mush:' + location['title'] + '</h3>' +
-              '<p>Posting User: ' + location['posting_user'] + '</p>' +
+              "<div id='content'>"+
+              "<h3><a href='/listings/" + location['food_id']+"'>"+location['title'] + "</a></h3>" +
+              "<p>Posting user: <a href='/user/" + location['posting_user_id'] + "'>"+location['posting_user'] + "</a></p>" +
               '<p>Date Posted: ' + location['date_posted'] + '</p>'+
               '</div>'
             );

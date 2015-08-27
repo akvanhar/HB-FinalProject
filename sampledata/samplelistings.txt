@@ -1,30 +1,30 @@
-Peas And Carrots|lumpy_puree|2015-01-21|8|fresh|peas and carrots|[]|1|4152169086|37.76681|-122.4471
-Yams|lumpy_puree|2015-02-21|8|frozen|mashed yams|[]|1|4152169086|37.76682|-122.4476
-Banana Smoothie|smooth_puree|2015-03-21|8|frozen|bananas, milk, yogurt|[dairy]|1|4152169086|37.76683|-122.4472
-Brocolli And Potatoes|lumpy_puree|2015-04-21|8|frozen|brocolli and potatoes|[]|1|4152169086|37.76683|-122.4473
-Chicken Curry|diced|2015-05-21|8|fresh|chicken, yams, coconut milk|[treenuts]|1|4152169086|37.76684|-122.4474
-Strawberry Fields|smooth_puree|2015-06-21|8|frozen|strawberries, barley, spinach|[wheat]|1|4152169086|37.76686|-122.4475
-Peas And Carrots|lumpy_puree|2015-01-21|8|fresh|peas and carrots|[]|2||37.7721|-122.4021
-Yams|lumpy_puree|2015-02-21|8|frozen|mashed yams|[]|2||37.7722|-122.4022
-Banana Smoothie|smooth_puree|2015-03-21|8|frozen|bananas, milk, yogurt|[dairy]|2||37.7723|-122.4023
-Brocolli And Potatoes|lumpy_puree|2015-04-21|8|frozen|brocolli and potatoes|[]|2||37.7724|-122.4024
-Chicken Curry|diced|2015-05-21|8|fresh|chicken, yams, coconut milk|[treenuts]|2||37.7725|-122.4025
-Barley and Spinach|smooth_puree|2015-06-21|8|frozen|strawberries, barley, spinach|[wheat]|2||37.7726|-122.4026
-Peas And Carrots|lumpy_puree|2015-01-21|8|fresh|peas and carrots|[]|3||37.7751|-122.4361
-Yams|lumpy_puree|2015-02-21|8|frozen|mashed yams|[]|3||37.7752|-122.4362
-Brocolli And Potatoes|lumpy_puree|2015-04-21|8|frozen|brocolli and potatoes|[]|3||37.7753|-122.4363
-Chicken Curry|diced|2015-05-21|8|fresh|chicken, yams, coconut milk|[treenuts]|3||37.7754|-122.4364
-Strawberry Fields|smooth_puree|2015-06-21|8|frozen|strawberries, barley, spinach|[wheat]|3||37.7755|-122.4365
-Banana Smoothie|smooth_puree|2015-03-21|8|frozen|bananas, milk, yogurt|[dairy]|3||37.7756|-122.4366
-Peas And Carrots|lumpy_puree|2015-01-21|8|fresh|peas and carrots|[]|4||37.7741|-122.4541
-Yams|lumpy_puree|2015-02-21|8|frozen|mashed yams|[]|4||37.7742|-122.4542
-Banana Smoothie|smooth_puree|2015-03-21|8|frozen|bananas, milk, yogurt|[dairy]|4||37.7743|-122.4543
-Brocolli And Potatoes|lumpy_puree|2015-04-21|8|frozen|brocolli and potatoes|[]|4||37.7744|-122.4544
-Strawberry Fields|smooth_puree|2015-06-21|8|frozen|strawberries, barley, spinach|[wheat]|4||37.7745|-122.4545
-Chicken Curry|diced|2015-05-21|8|fresh|chicken, yams, coconut milk|[treenuts]|4||37.7746|-122.4546
-Yams|lumpy_puree|2015-02-21|8|frozen|mashed yams|[]|5||37.7541|-122.4141
-Banana Smoothie|smooth_puree|2015-03-21|8|frozen|bananas, milk, yogurt|[dairy]|5||37.7542|-122.4142
-Brocolli And Potatoes|lumpy_puree|2015-04-21|8|frozen|brocolli and potatoes|[]|5||37.7543|-122.4143
-Chicken Curry|diced|2015-05-21|8|fresh|chicken, yams, coconut milk|[treenuts]|5||37.7544|-122.4144
-Strawberry Fields|smooth_puree|2015-06-21|8|frozen|strawberries, barley, spinach|[wheat]|5||37.7545|-122.4145
-Peas And Carrots|lumpy_puree|2015-01-21|8|fresh|peas and carrots|[]|5||37.7546|-122.4146
+Apricot Cherries and Ginger|lumpy_puree|2015-01-21|8|fresh|Steamed apricots, cherries and ginger with yogurt|[dairy]|1|4152169086|37.76681|-122.4471
+Yams|lumpy_puree|2015-02-21|8|frozen|Mashed yams|[]|1|4152169086|37.76682|-122.4476
+Banana Smoothie|smooth_puree|2015-03-21|8|frozen|Bananas, milk, yogurt|[dairy]|1|4152169086|37.76683|-122.4472
+Brocolli And Potatoes|lumpy_puree|2015-04-21|8|frozen|Brocolli and potatoes|[]|1|4152169086|37.76683|-122.4473
+Chicken Curry|diced|2015-05-21|8|fresh|Chicken, yams, coconut milk|[treenuts]|1|4152169086|37.76684|-122.4474
+Strawberry Fields|smooth_puree|2015-06-21|8|frozen|Strawberries, barley, spinach|[wheat]|1|4152169086|37.76686|-122.4475
+Peas And Carrots|lumpy_puree|2015-01-21|8|fresh|Peas and carrots|[]|2||37.7721|-122.4021
+Carrots and nutmeg|lumpy_puree|2015-02-21|8|frozen|Steamed carrots with a pinch nutmeg|[]|2||37.7722|-122.4022
+Salmon, Sweet Potato and Apricot with Sage|smooth_puree|2015-03-21|8|frozen|Baked salmon with steamed sweet potato and apricots with fresh sage|[fish]|2||37.7723|-122.4023
+Raspberry, Cherry and Banana with Cinnamon|lumpy_puree|2015-04-21|8|frozen|Steamed raspberries, cherries with banana and a pinch of cinnamon|[]|2||37.7724|-122.4024
+Mango and Kale with Ginger|diced|2015-05-21|8|fresh|Steamed mango and kale with fresh ginger|[]|2||37.7725|-122.4025
+Beet, Blackberry and Apple with Mint|smooth_puree|2015-06-21|8|frozen|Steamed beets, blackberry and apples with fresh mint|[]|2||37.7726|-122.4026
+Turkey, Zucchini and Corn with Chives|lumpy_puree|2015-01-21|8|fresh|Steamed turkey, zucchini and corn with fresh chives|[]|3||37.7751|-122.4361
+Avocado, Pear and Kiwi|lumpy_puree|2015-02-21|8|frozen|Fresh avocado, pears and kiwi|[]|3||37.7752|-122.4362
+Apple, Spinach and Peas|lumpy_puree|2015-04-21|8|frozen|Steamed apples, spinach and peas|[]|3||37.7753|-122.4363
+Oats, Spinach and Avocado|diced|2015-05-21|8|fresh|Oats with steamed spinach and fresh avocado|[]|3||37.7754|-122.4364
+Blueberry, Chickpea and Rosemary|smooth_puree|2015-06-21|8|frozen|Organic blueberries, chickpeas and fresh rosemary|[]|3||37.7755|-122.4365
+Indian Yellow Dal|lumpy_puree|2015-03-21|8|frozen|Yellow split peas, bay leaf, butter, olive oil, onion, ginger, panch puran, turmeric, garam masala, garlic, chicken stock, spinach, yogurt|[dairy]|3||37.7756|-122.4366
+Applesauce|lumpy_puree|2015-01-21|8|fresh|Roasted apples and a pinch of cinnamon|[]|4||37.7741|-122.4541
+Beets|lumpy_puree|2015-02-21|8|frozen|Roasted beets|[]|4||37.7742|-122.4542
+Carrots with Star Pasta|smooth_puree|2015-03-21|8|frozen|Steamed, pureed carrots with boiled star pasta, lime and coriander|[wheat]|4||37.7743|-122.4543
+Pumpkin with Thyme|lumpy_puree|2015-04-21|8|frozen|Roasted pumpkin with thyme|[]|4||37.7744|-122.4544
+Carrot, Apricots with Quinoa|smooth_puree|2015-06-21|8|frozen|Steamed chicken and apricots with quinoa and curry|[]|4||37.7745|-122.4545
+Banana, Tofu and Pear|lumpy_puree|2015-05-21|8|fresh|Banana, tofu and pears|[soy]|4||37.7746|-122.4546
+Pumpkin, Yogurt and Prune|lumpy_puree|2015-02-21|8|frozen|Mashed, steamed pumpkin with yogurt and prunes|[dairy]|5||37.7541|-122.4141
+Sweet Potato, Pear and Red Pepper|smooth_puree|2015-03-21|8|frozen|Steamed sweet potato, pears and a little red pepper|[]|5||37.7542|-122.4142
+Chocolate banana peanutbutter smoothie|smooth_puree|2015-04-21|8|frozen|Blended banana, peanut butter, cocoa and milk|[peanuts, dairy]|5||37.7543|-122.4143
+Peaches and cream|smooth_puree|2015-05-21|8|fresh|Peaches and yogurt|[dairy]|5||37.7544|-122.4144
+Green beans|smooth_puree|2015-06-21|8|frozen|Steamed green beans. Frozen in 1 oz portions|[]|5||37.7545|-122.4145
+Blackberry, kale and apple|lumpy_puree|2015-01-21|8|fresh|Blackberries with kale and apple, steamed and pureed until not-quite smooth|[]|5||37.7546|-122.4146

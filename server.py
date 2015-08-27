@@ -294,6 +294,8 @@ def display_listings():
     			"title": (location.foods[0]).title,
     			"date_posted": (location.foods[0]).post_date.strftime("%Y-%m-%d"),
     			"posting_user": (location.foods[0]).user.fname,
+    			"posting_user_id": (location.foods[0]).user_id,
+    			"food_id": (location.foods[0]).food_id,
     			"latitude": location.latitude,
     			"longitude": location.longitude
     		}
