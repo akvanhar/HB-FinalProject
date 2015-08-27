@@ -28,6 +28,7 @@ class User(db.Model):
 	@classmethod
 	def add_user(cls, email, fname, lname, password=None, fb_id=None):
 		"""Insert a new user into the users table"""
+
 		user = cls(email=email, password=password, fname=fname, lname=lname, fb_id=fb_id)
 		db.session.add(user)
 		db.session.commit()
@@ -117,7 +118,8 @@ class Food(db.Model):
 		this_food.title = title
 		this_food.texture = texture
 		this_food.datemade = datemade
-		this_food.quantity = int(quantity)
+		if this_food.quantity:
+			this_food.quantity = int(quantity)
 		this_food.freshfrozen = freshfrozen
 		this_food.description = description
 		this_food.active = active
@@ -329,6 +331,15 @@ class Location(db.Model):
 		self.lng = lng
 		db.session.commit()
 
+	def test_no_route(self):
+		"""test that a user gets a 404 error when trying to access a nonexistant route."""
+
+		response = self.test_client.get('/thisdoesntexist')
+		assert response.status_code == 404
+
+	def tearDown(self):
+		os.close(self.db_fd)
+		os.unlink(self.db_filename)
 
 ################################################################################
 #Helper functions

@@ -36,13 +36,13 @@ def home():
 		return redirect('/login')
 
 	else:
-		user, new_messages = info_for_base()
+		user = get_user()
+		new_messages = get_new_messages(session['user_id'])
 		user_friends = user.friendships
 
 		if user_friends:
 			friend_ids = [friend.friend_id for friend in user_friends] #get this user's friend ids
 			friends_fb_ids = db.session.query(User.user_id, User.fb_id).filter(User.user_id.in_(friend_ids)).all()
-			# friends_fb_ids = [(int(x[0]), int(x[1])) for x in friends_fb_ids]
 
 			#get all their friend's listings
 			friends_listings = Food.query.filter_by(active=1).filter(Food.user_id.in_(friend_ids)).order_by(desc('post_date')).all() 
@@ -104,14 +104,15 @@ def facebook_login():
 	"""
 	Handles the login from the facebook login button
 	"""
-	
+
 	fb_user_id = request.form.get('fbUserId')
 	fb_fname = request.form.get('fbFname')
 	fb_lname = request.form.get('fbLname')
 	fb_email = request.form.get('fbEmail')
 	current_acces_token = request.form.get('accessToken')
-	fb_friends = json.loads(request.form.get('fbFriends'))
+	fb_friends = request.form.get('fbFriends')
 
+	fb_friends = json.loads(fb_friends)
 	fb_user = User.query.filter_by(fb_id=fb_user_id).first()
 
 
@@ -253,7 +254,7 @@ def postlisting():
 
 	Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id, location_id, phone_number)
 
-	flash('Your listing has been successfully posted!')
+	flash('Your mush has been successfully posted!')
 
 	return redirect('/')
 
@@ -267,7 +268,8 @@ def map():
 		return redirect('/login')
 
 	else:
-		user, new_messages = info_for_base()
+		user = get_user()
+		new_messages = get_new_messages(session['user_id'])
 
 		API_KEY = google_api
 
@@ -309,7 +311,8 @@ def listings():
 		return redirect('/login')
 
 	else:
-		user, new_messages = info_for_base()
+		user = get_user()
+		new_messages = get_new_messages(session['user_id'])
 		user_friends = user.friendships
 
 		if user_friends:
@@ -343,7 +346,8 @@ def food_info(food_id):
     else:
     	#get specific listing from db.
     	food_listing = Food.query.get(food_id)
-    	user, new_messages = info_for_base()
+    	user = get_user()
+    	new_messages = get_new_messages(session['user_id'])
 
     	return render_template('food_info.html', food_listing=food_listing, user=user, new_messages=new_messages)
 
@@ -357,7 +361,9 @@ def user_listings():
 		return redirect('/login')
 	else:
 		#show user's listings.
-		user, new_messages = info_for_base()
+		user = get_user()
+		new_messages = get_new_messages(session['user_id'])
+		user_id = session['user_id']
 		active_user_listings = Food.query.filter(Food.user_id == user_id, Food.active == 1).order_by(desc('post_date')).all()
 		old_listings = Food.query.filter(Food.user_id == user_id, Food.active == 0).order_by(desc('post_date')).all()
 
@@ -376,7 +382,8 @@ def edit_food(food_id):
 		return redirect('/login')
 	else:
 		#show user listing and allow them to make changes.
-		user, new_messages = info_for_base()
+		user = get_user()
+		new_messages = get_new_messages(session['user_id'])
 		food_listing = Food.query.get(food_id)
 
 		return render_template('editfood.html', food_listing=food_listing, user=user, new_messages=new_messages)
@@ -387,39 +394,36 @@ def update_listing():
 	Update an existing listing in the database.
 	"""
 
-	if check_login('Please login to update your post.') == 'not_logged_in':
-		return redirect('/login')
+	title = request.form.get('title')
+	title = titlecase(title)
+	texture = request.form.get('texture')
+	datemade = request.form.get('datemade')
+	quantity = request.form.get('quantity')
+	freshfrozen = request.form.get('freshfrozen')
+	description = request.form.get('description')
+	allergen_list = request.form.getlist('allergens')
+	user_id = session['user_id']
+	food_id = request.form.get('food_id')
+	deactivate = request.form.get('deactivate')
+	allergen_id = request.form.get('allergen_id')
+	shared_with_fname = request.form.get('shared_with_fname')
+	shared_with_lname = request.form.get('shared_with_lname')
+
+	if deactivate:
+		active = 0
 	else:
-		title = request.form.get('title')
-		title = titlecase(title)
-		texture = request.form.get('texture')
-		datemade = request.form.get('datemade')
-		quantity = request.form.get('quantity')
-		freshfrozen = request.form.get('freshfrozen')
-		description = request.form.get('description')
-		allergen_list = request.form.getlist('allergens')
-		user_id = session['user_id']
-		food_id = request.form.get('food_id')
-		deactivate = request.form.get('deactivate')
-		allergen_id = request.form.get('allergen_id')
-		shared_with_fname = request.form.get('shared_with_fname')
-		shared_with_lname = request.form.get('shared_with_lname')
+		active = 1
 
-		if deactivate:
-			active = 0
-		else:
-			active = 1
+	this_allergen = Allergen.query.get(allergen_id)
+	this_allergen.update_allergen(allergen_id, allergen_list)
 
-		this_allergen = Allergen.query.get(allergen_id)
-		this_allergen.update_allergen(allergen_id, allergen_list)
+	shared_with = shared_with_fname +" "+ shared_with_lname
 
-		shared_with = shared_with_fname +" "+ shared_with_lname
+	this_food = Food.query.get(food_id)
+	this_food.update_food(food_id, title, texture, datemade, quantity,
+			 freshfrozen, description, active, shared_with)
 
-		this_food = Food.query.get(food_id)
-		this_food.update_food(food_id, title, texture, datemade, quantity,
-				 freshfrozen, description, active, shared_with)
-	
-		flash('Your listing has been successfully updated!')
+	flash('Your listing has been successfully updated!')
 
 	return redirect('/mylistings')
 
@@ -433,7 +437,8 @@ def user_info(food_user_id):
 		return redirect('/login')
     else:
     	#get specific listing from db.
-    	user, new_messages = info_for_base()
+    	user = get_user()
+    	new_messages = get_new_messages(session['user_id'])
     	this_user = User.query.get(food_user_id)
     	food_listings = Food.query.filter_by(user_id = food_user_id)
 
@@ -449,12 +454,13 @@ def messages():
 		return redirect('/login')
 	else:
 		#Get the messages for that particular user.
-		user, new_messages = info_for_base()
+		user = get_user()
+		new_messages = get_new_messages(session['user_id'])
 
-		unread_messages = Message.query.filter_by(receiver_id=user_id, read_status=0)
+		unread_messages = Message.query.filter_by(receiver_id=session['user_id'], read_status=0)
 		unread_messages_by_date = unread_messages.order_by(desc('datetime_sent')).all()		
 
-		read_messages = Message.query.filter_by(receiver_id=user_id, read_status=1)
+		read_messages = Message.query.filter_by(receiver_id=session['user_id'], read_status=1)
 		read_messages_by_date = read_messages.order_by(desc('datetime_sent')).all()
 
 		all_messages = unread_messages_by_date+read_messages_by_date
@@ -502,7 +508,8 @@ def change_read_status():
 	message = Message.query.get(message_id)
 
 	message.delete_message()
-	user, new_messages = info_for_base()
+	user = get_user()
+	new_messages = get_new_messages(session['user_id'])
 
 	return jsonify(new_messages=new_messages)
 
@@ -529,7 +536,7 @@ def send_sms_message():
 	number = request.form.get('number')
 	message = request.form.get('message')
 	send_text(number, message)
-	
+
 	return "Message sent"
 
 @app.route('/toggle_read', methods=['POST'])
@@ -541,22 +548,25 @@ def toggle_read():
 	message_id = request.form.get('message_id')
 	message = Message.query.get(message_id)
 	message.toggle_read()
-	user_id = session['user_id']
-	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+	new_messages = get_new_messages(session['user_id'])
 
 	return jsonify(read_status=message.read_status, new_messages=new_messages)
 
 #############  Helper functions   ##############################################
 
-def info_for_base():
+def get_user():
 	"""
 	Preps new_messages count, user object, and session for base.html.
 	"""
 	user_id = session['user_id']
 	user = User.query.get(user_id)
-	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
 
-	return user, new_messages
+	return user
+
+def get_new_messages(user_id):
+	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
+	print new_messages
+	return new_messages
 
 def check_login(message):
 	"""

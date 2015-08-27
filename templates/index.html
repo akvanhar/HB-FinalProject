@@ -2,17 +2,13 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <script src="/static/bootstrap-formhelpers-phone.js"></script>
-<script>
-	    $("#homeButton").attr("class", 'active');
-</script>
-<div id="messageSent" class="alert alert-success" role="alert" style="display: none"></div>
+<script>$("#homeButton").attr("class", 'active');</script>
+
 {% for message in get_flashed_messages() %}
-	{{message}}
+	<div class="flashMessage alert alert-success" role="alert">{{message}}</div>
+	<script>$('.flashMessage').delay(3000).fadeOut();</script>
 {% endfor %}
 
-	{% if 'user_id' not in session %}
-		<h3>Don't forget to login before posting or checking out the Make Less Mush listings!</h3>
-	{% endif %}
 	<div class="row">
 		<div class="container">
 			<div id="formCol" class="col-sm-7" style="margin-right: 1">
