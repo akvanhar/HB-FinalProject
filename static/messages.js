@@ -69,7 +69,6 @@ function sendText(evt) {
 	targetMessage = $(evt.currentTarget).data().id;
 	var thisMessageId = targetMessage.slice(4);
 	var messageId = { message_id: thisMessageId };
-
 }
 
 $('.textButton').click(sendText);

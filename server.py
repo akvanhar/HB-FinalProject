@@ -27,6 +27,14 @@ google_api = os.environ['GOOGLE_MAPS_API_KEY']
 app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
+def spalsh():
+	"""
+	splash page for Make Less Msuh
+	"""
+
+	return render_template('splash.html')
+
+@app.route('/home')
 def home():
 	"""
 	homepage
@@ -101,7 +109,7 @@ def login_portal():
 		user_id = user.user_id
 		session['user_id'] = user_id
 		flash('Login successful!')
-		return redirect('/')
+		return redirect('/home')
 	else:
 		flash('Login unsuccessful. Please try again')
 		return redirect('/login')
@@ -147,7 +155,7 @@ def facebook_login():
 
 		flash('Login successful!')
 
-		return redirect('/')
+		return redirect('/home')
 	else:
 		# First time for user logging into MLM
 		# add the user to the database
@@ -161,7 +169,7 @@ def facebook_login():
 		
 		flash('Thanks for creating an account with Make Less Mush')
 		
-		return redirect('/')
+		return redirect('/home')
 
 @app.route('/logbutton')
 def logbutton():
@@ -208,7 +216,7 @@ def signup_portal():
 	session['user_id'] = user_id
 	flash('Account successfully created. Welcome to Make Less Mush!')
 
-	return redirect('/')
+	return redirect('/home')
 
 @app.route('/fblogout_portal')
 def logout_portal():
@@ -260,7 +268,7 @@ def postlisting():
 
 	flash('Your mush has been successfully posted!')
 
-	return redirect('/')
+	return redirect('/home')
 
 @app.route('/map')
 def map():
@@ -505,7 +513,7 @@ def send_message():
 
 	flash('Your message has been sent.')
 
-	return redirect('/')
+	return redirect('/home')
 
 @app.route('/delete_message', methods=['POST'])
 def change_read_status():
