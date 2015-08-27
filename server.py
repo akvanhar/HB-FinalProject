@@ -333,7 +333,9 @@ def listings():
 		else:
 			foods = Food.query.filter_by(active=1).order_by(desc('post_date')).all()
 
-		return render_template('listings.html', foods=foods, user=user, new_messages=new_messages)
+		API_KEY = google_api
+
+		return render_template('listings.html', foods=foods, user=user, new_messages=new_messages, API_KEY=API_KEY)
 
 @app.route('/listings/<int:food_id>')
 def food_info(food_id):
