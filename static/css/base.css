@@ -19,3 +19,12 @@
 .readMessage {
 	font-weight: normal;
 }
+
+body {
+	background-image: url("/static/images/splashpicture.jpg");
+	background-size: 100% auto;
+}
+
+.outmostBox {
+	background-color: rgba(255,255,255,0.8);
+}
