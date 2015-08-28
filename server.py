@@ -242,14 +242,14 @@ def postlisting():
 	description = request.form.get('description')
 	allergens = request.form.getlist('allergens')
 	user_id = session['user_id']
-	phone_number = str(request.form.get('phone_number'))
+	phone_number = request.form.get('phone_number')
 	geoCheckbox = request.form.get('geoCheckbox')
 
 	if len(phone_number) == 17:
 
 		print "in if", phone_number
 		phone_number = phone_number[4:7]+phone_number[9:12]+phone_number[13:]
-		print type(phone_number)
+		print phone_number
 	else:
 		phone_number = None
 
@@ -263,6 +263,8 @@ def postlisting():
 		location_id = location.location_id
 	else:
 		location_id = None
+
+	print allergen_id, user_id, location_id
 
 	Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id, location_id, phone_number)
 

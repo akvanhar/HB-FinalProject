@@ -94,16 +94,17 @@ class Food(db.Model):
 
 	@classmethod
 	def add_food(cls, title, texture, datemade, quantity,
-				 freshfrozen, description, allergen_id, user_id, phone_number, location, shared_with=""):
+				 freshfrozen, description, allergen_id, user_id, location_id, phone_number, shared_with=""):
 		"""Insert a new food listing into the foods table"""
 
 		datemade = datetime.strptime(datemade, "%Y-%m-%d")
+		print phone_number
 
 		food = cls(title=title, texture=texture, 
 				   datemade=datemade, quantity=quantity, 
 				   freshfrozen=freshfrozen, description=description, 
 				   allergen_id=allergen_id, user_id=user_id, 
-				   phone_number=phone_number, location=location, shared_with=shared_with)
+				   phone_number=phone_number, location_id=location_id, shared_with=shared_with)
 
 		db.session.add(food)
 		db.session.commit()
