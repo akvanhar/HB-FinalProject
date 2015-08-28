@@ -37,7 +37,6 @@
 	      
 	      <ul class="nav navbar-nav navbar-right">
 	      		<p class="navbar-text navbar-centre">Signed in as {{ user.fname }} {{ user.lname}}</p>
-	      		<!-- <img class="thumbnail" src="//graph.facebook.com/{{user.fb_id}}/picture" alt="Facebook profile picture"> -->
 	      	{% if 'user_id' in session %}
 	      		<li><a href='/logbutton'>Logout</a></li>
     		{% else %}

@@ -4,7 +4,6 @@ import os
 TWILIO_ACCOUNT_SID=os.environ['TWILIO_ACCOUNT_SID']
 TWILIO_AUTH_TOKEN=os.environ['TWILIO_AUTH_TOKEN']
 TWILIO_NUMBER=os.environ['TWILIO_NUMBER']
-#authenticated TwilioRestClient
 
 client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
