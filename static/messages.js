@@ -11,6 +11,7 @@ function deleteMessage(evt) {
 		$("#message"+thisMessage).remove();
 		$("#messageCount").html(result['new_messages']);
 		});
+	return messageId;
 }
 $('.deleteButton').click(deleteMessage);
 

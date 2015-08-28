@@ -62,7 +62,7 @@ def home():
 			friends_food_ids = [food.food_id for food in friends_listings]
 
 			#get all the other active listings
-			other_listings = Food.query.filter_by(active=1).filter(~Food.food_id.in_(friends_food_ids)).order_by(desc('post_date')).all()
+			other_listings = Food.query.filter_by(active=1).filter((~Food.food_id.in_(friends_food_ids)), ~(Food.user_id==session['user_id'])).order_by(desc('post_date')).all()
 
 			#combine listings so that the friends listings come first
 			this_users_listings = friends_listings + other_listings
@@ -528,10 +528,10 @@ def change_read_status():
 	message = Message.query.get(message_id)
 	message.delete_message()
 
-	# user = get_user()
-	# new_messages = get_new_messages(session['user_id'])
+	user = get_user()
+	new_messages = get_new_messages(session['user_id'])
 
-	return "we made it!" #jsonify(new_messages=new_messages)
+	return jsonify(new_messages=new_messages)
 
 @app.route('/reply_to_message', methods=['POST'])
 def reply_to():
