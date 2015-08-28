@@ -523,14 +523,15 @@ def change_read_status():
 	"""
 	Delete a message.
 	"""
+	print "hitting delete request"
 	message_id = request.form.get('message_id')
 	message = Message.query.get(message_id)
-
 	message.delete_message()
-	user = get_user()
-	new_messages = get_new_messages(session['user_id'])
 
-	return jsonify(new_messages=new_messages)
+	# user = get_user()
+	# new_messages = get_new_messages(session['user_id'])
+
+	return "we made it!" #jsonify(new_messages=new_messages)
 
 @app.route('/reply_to_message', methods=['POST'])
 def reply_to():
