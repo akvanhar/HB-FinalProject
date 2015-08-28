@@ -242,12 +242,14 @@ def postlisting():
 	description = request.form.get('description')
 	allergens = request.form.getlist('allergens')
 	user_id = session['user_id']
-	contact = request.form.getlist('contact')
+	phone_number = str(request.form.get('phone_number'))
 	geoCheckbox = request.form.get('geoCheckbox')
 
-	if 'text' in contact:
-		phone_number = request.form.get('phone_number')
+	if len(phone_number) == 17:
+
+		print "in if", phone_number
 		phone_number = phone_number[4:7]+phone_number[9:12]+phone_number[13:]
+		print type(phone_number)
 	else:
 		phone_number = None
 
@@ -257,9 +259,7 @@ def postlisting():
 	if geoCheckbox:
 		lat = request.form.get('lat')
 		lng = request.form.get('lng')
-		print lat, lng
 		location = Location.add_location(lat, lng)
-		print location
 		location_id = location.location_id
 	else:
 		location_id = None
@@ -302,6 +302,7 @@ def display_listings():
     	locations = {}
 
     	for location in location_results:
+    		print location.foods
     		locations[location.location_id] = {
     			"title": (location.foods[0]).title,
     			"date_posted": (location.foods[0]).post_date.strftime("%Y-%m-%d"),
