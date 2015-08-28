@@ -13,18 +13,18 @@ Built With
 Author
 Alyson graduated from an accelerated nursing program with a Bachelor of Science in Nursing. While pursuing this career, Alyson was drawn to the rapidly changing, creative aspect of the technical industry. Alyson spent time talking to software engineers, who pointed her towards Hackbright Academy. Alyson is excited to bring the skill of fast-paced problem-solving that she developed as a nurse to her software development. Developing software has given Alyson another medium in which to express her creativity. Alyson also expresses this passion for creativity in her hobbies as a potter, a knitter and a baker.
 
-Buit With
-Python
-Flask
-Javascript / jQuery
-AJAX
-SQLite / SQLAlchemy
-Google Maps API
-Facebook Graph API
-Twilio API
-HTML / CSS
-Bootstrap
-Python unittest
+Buit With:
+- Python
+- Flask
+- Javascript / jQuery
+- AJAX
+- SQLite / SQLAlchemy
+- Google Maps API
+- Facebook Graph API
+- Twilio API
+- HTML / CSS
+- Bootstrap
+- Python unittest
 
-Contact
+Contact:
 avanhardenberg@gmail.com
