@@ -52,11 +52,11 @@
 					</div>
 				</td>
 				{% if message.read_status == 0 %}
-					<td><button data-id='read{{ message.message_id }}' class="readStatusButton btn btn-xs">Mark as read</button></td>
+					<td><button data-id='read{{ message.message_id }}' class="readStatusButton btn btn-sm">Mark as read</button></td>
 				{% else %}
-					<td><button data-id='read{{ message.message_id }}' class="readStatusButton btn btn-xs">Mark as unread</button></td>
+					<td><button data-id='read{{ message.message_id }}' class="readStatusButton btn btn-sm">Mark as unread</button></td>
 				{% endif %}
-				<td><button class="deleteButton btn btn-xs" data-id='delete{{ message.message_id }}'>Delete</button></td>
+				<td><button class="deleteButton btn btn-sm" data-id='delete{{ message.message_id }}'>Delete</button></td>
 			</tr>
 		{% endfor %}
 		</tbody>
