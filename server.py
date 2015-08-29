@@ -98,12 +98,9 @@ def login_portal():
 	"""
 
 	email = request.form.get('email')
-	print email
 	password = request.form.get('password')
 	password = hash(password)
-	print password
 	user = User.query.filter_by(email=email, password=password).first()
-	print user
 
 	if user:
 		user_id = user.user_id
@@ -246,10 +243,7 @@ def postlisting():
 	geoCheckbox = request.form.get('geoCheckbox')
 
 	if len(phone_number) == 17:
-
-		print "in if", phone_number
 		phone_number = phone_number[4:7]+phone_number[9:12]+phone_number[13:]
-		print phone_number
 	else:
 		phone_number = None
 
@@ -264,30 +258,11 @@ def postlisting():
 	else:
 		location_id = None
 
-	print allergen_id, user_id, location_id
-
 	Food.add_food(title, texture, datemade, quantity, freshfrozen, description, allergen_id, user_id, location_id, phone_number)
 
 	flash('Your mush has been successfully posted!')
 
 	return redirect('/home')
-
-@app.route('/map')
-def map():
-	"""
-	Show all listings on a map
-	"""
-
-	if check_login('Please login.') == 'not_logged_in':
-		return redirect('/login')
-
-	else:
-		user = get_user()
-		new_messages = get_new_messages(session['user_id'])
-
-		API_KEY = google_api
-
-		return render_template('map.html', API_KEY=API_KEY, new_messages=new_messages, user=user)
 
 @app.route('/listings.json')
 def display_listings():
@@ -304,7 +279,6 @@ def display_listings():
     	locations = {}
 
     	for location in location_results:
-    		print location.foods
     		locations[location.location_id] = {
     			"title": (location.foods[0]).title,
     			"date_posted": (location.foods[0]).post_date.strftime("%Y-%m-%d"),
@@ -314,7 +288,6 @@ def display_listings():
     			"latitude": location.latitude,
     			"longitude": location.longitude
     		}
-    	print locations
 
 	return jsonify(locations)
 
@@ -523,7 +496,7 @@ def change_read_status():
 	"""
 	Delete a message.
 	"""
-	print "hitting delete request"
+
 	message_id = request.form.get('message_id')
 	message = Message.query.get(message_id)
 	message.delete_message()
@@ -585,7 +558,6 @@ def get_user():
 
 def get_new_messages(user_id):
 	new_messages = Message.query.filter_by(receiver_id=user_id, read_status=0).count()
-	print new_messages
 	return new_messages
 
 def check_login(message):

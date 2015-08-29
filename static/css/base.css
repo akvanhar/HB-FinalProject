@@ -38,3 +38,11 @@ body {
 	margin-left: 50px;
 	margin-right: 50px;
 }
+
+#map { 
+	padding: 10px; height: 600px; width: 100%; 
+}
+
+#listingsMap { 
+	padding: 10px; height: 600px; width: 100%;
+}
