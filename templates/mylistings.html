@@ -4,56 +4,60 @@
 <script>
 	$("#myListingsButton").attr("class", 'active');
 </script>
-
-<h2>Listings for {{ user.fname }} {{ user.lname }}</h2>
-{% if user_listings %}
-	<table class="table table-condensed table-hover">
-		<thead>
-			<tr>Active listings</tr>
-			<tr>
-				<th>Date posted</th>
-				<th>Title</th>
-				<th>Description</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for food in user_listings %}
-				<tr>
-					<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
-					<td>{{ food.title }}</td>
-					<td>{{ food.description }}</td>
-					<td>
-						<a href="/listings/edit/{{food.food_id}}">update</a>
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<table class="table table-condensed table-hover">
-		<thead>
-			<tr>Deactivated listings</tr>
-			<tr>
-				<th>Date posted</th>
-				<th>Title</th>
-				<th>Description</th>
-				<th>Shared with</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for food in old_listings %}
-				<tr>
-					<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
-					<td>{{ food.title }}</td>
-					<td>{{ food.description }}</td>
-					<td>{{ food.shared_with }}</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-{% else %}
-	<p>Sorry. You haven't posted any listings yet.</p>
-	<p>If you would like to add a listing, <a href="/home">return to the home page.</a></p>
-{% endif %}
-
+<div id="myListings" class="container">
+	<div class="row">
+		<div id="myListingsHeader">
+			<h2>Listings for {{ user.fname }} {{ user.lname }}</h2>
+		</div>
+		{% if user_listings %}
+			<table id="myListingsTable" class="table table-condensed table-hover">
+				<thead>
+					<tr>Active listings</tr>
+					<tr>
+						<th>Date posted</th>
+						<th>Title</th>
+						<th>Description</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for food in user_listings %}
+						<tr>
+							<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
+							<td>{{ food.title }}</td>
+							<td>{{ food.description }}</td>
+							<td>
+								<a href="/listings/edit/{{food.food_id}}">update</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<table class="table table-condensed table-hover">
+				<thead>
+					<tr>Deactivated listings</tr>
+					<tr>
+						<th>Date posted</th>
+						<th>Title</th>
+						<th>Description</th>
+						<th>Shared with</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for food in old_listings %}
+						<tr>
+							<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
+							<td>{{ food.title }}</td>
+							<td>{{ food.description }}</td>
+							<td>{{ food.shared_with }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>Sorry. You haven't posted any listings yet.</p>
+			<p>If you would like to add a listing, <a href="/home">return to the home page.</a></p>
+		{% endif %}
+	</div>
+</div>
 {% endblock %}

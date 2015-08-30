@@ -46,3 +46,10 @@ body {
 #listingsMap { 
 	padding: 10px; height: 600px; width: 100%;
 }
+
+#myListingsheader {
+	margin-left: 50px;
+	margin-right: 50px;
+	padding-left: 50px;
+	padding-right: 50px;
+}
