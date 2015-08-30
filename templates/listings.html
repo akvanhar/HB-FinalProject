@@ -28,28 +28,28 @@
 					<td>{{ food.description }}</td>
 					<td>
 					{% if food.allergen.eggs %}
-						<img class="img-circle" src="/static/images/eggs.png" alt="eggs">
+						<img class="img-circle" src="/static/images/eggs.png" alt="eggs" title="eggs">
 					{% endif %}
 					{% if food.allergen.wheat %}
-						<img class="img-circle" src="/static/images/wheat.png" alt="wheat">
+						<img class="img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat">
 					{% endif %}
 					{% if food.allergen.dairy %}
-						<img class="img-circle" src="/static/images/dairy.png" alt="dairy">
+						<img class="img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy">
 					{% endif %}
 					{% if food.allergen.peanuts %}
-						<img class="img-circle" src="/static/images/peanuts.png" alt="peanuts">
+						<img class="img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts">
 					{% endif %}
 					{% if food.allergen.soy %}
-						<img class="img-circle" src="/static/images/soy.png" alt="soy">
+						<img class="img-circle" src="/static/images/soy.png" alt="soy" title="soy">
 					{% endif %}
 					{% if food.allergen.treenuts %}
-						<img class="img-circle" src="/static/images/treenuts.png" alt="treenuts">
+						<img class="img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts">
 					{% endif %}
 					{% if food.allergen.fish %}
-						<img class="img-circle" src="/static/images/fish.png" alt="fish">
+						<img class="img-circle" src="/static/images/fish.png" alt="fish" title="fish">
 					{% endif %}
 					{% if food.allergen.shellfish %}
-						<img class="img-circle" src="/static/images/shellfish.png" alt="shellfish">
+						<img class="img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish">
 					{% endif %}
 					</td>
 					<td><a href="/user/{{ food.user_id }}">{{ food.user.fname }} {{ food.user.lname }}</a></td>
