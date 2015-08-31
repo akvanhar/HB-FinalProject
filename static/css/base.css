@@ -1,7 +1,3 @@
-* {
-	font-family: 'Raleway', sans-serif;
-}
-
 #mlmlogo {
 	width: 50px;
 	height: 50px;
@@ -25,13 +21,20 @@
 }
 
 body {
-	background-image: url("/static/images/blueberriesBlur.jpg");
-	background-size: 100% auto;
+	height: 100%;
+	background-image: url("/static/images/blueberriesLittleBlur.jpg");
+ 	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	font-family: 'Raleway', sans-serif;
 }
 
 .outmostBox {
-	background-color: rgba(255,255,255,0.9);
+	background-color: rgba(255,255,255,0.88);
 	min-height: 675px;
+	width: 95%;
+	margin: auto;
+	border-radius: 5px;
 }
 
 #bodyContainerFluid {
@@ -67,3 +70,25 @@ body {
 #mapHeading{
     margin-top: -35px
 }
+
+#flashMessage{
+	background-color: rgba(150, 185, 217, 0.4);
+}
+
+.navbar {
+	background-color: rgba(235, 238, 242, 0.9);
+}
+
+#descriptionBox {
+	width: 73%;
+}
+
+#formContainer {
+	margin-right: 30px;
+}
+
+#geoCheckbox {
+	height: 28px;
+
+}
+

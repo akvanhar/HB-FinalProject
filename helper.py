@@ -1,4 +1,5 @@
-from flask import session
+from flask import session, flash
+
 from model import (db,
                    connect_to_db,
                    User,

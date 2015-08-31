@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Messages - {% endblock %}
 {% block content %}
-<h3>New Messages:</h3>
+<style>
+#messagesLink {
+	background-color: #CCD1D9;
+	margin: 0;
+}
+</style>
 <div id="messageSent" class="alert alert-success" role="alert" style="display: none"></div>
+<h3>New Messages:</h3>
 {% if all_messages %}
 	<table class="table table-condensed table-hover">
 		<thead>

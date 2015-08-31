@@ -3,15 +3,21 @@
 {% block content %}
 <script src="/static/bootstrap-formhelpers-phone.js"></script>
 <script>$("#homeButton").attr("class", 'active');</script>
+<style>
+#homeLink {
+	background-color: #CCD1D9;
+	margin: 0;
+}
+</style>
 
 {% for message in get_flashed_messages() %}
-	<div class="flashMessage alert alert-success" role="alert">{{message}}</div>
+	<div id="flashMessage" class="flashMessage alert" role="alert">{{message}}</div>
 	<script>$('.flashMessage').delay(3000).fadeOut();</script>
 {% endfor %}
 
-	<div class="row">
+	<div id="homePage" class="row">
 		<div class="container">
-			<div id="formCol" class="col-sm-7" style="margin-right: 1">
+			<div id="formContainer" class="col-sm-6">
 				<h3>Share some mush:</h3>
 
 				<form id='postForm' class="form-horizontal" action='/postlisting' method='post'>
@@ -19,7 +25,7 @@
 						<div class="form-group form-group-lg">
 							<label class="col-sm-3 control-label" for="foodTitle">Title: </label>
 					    		<div class="col-sm-9">
-					      			<input class="form-control" type="text" id="foodTitle" placeholder="Your recipe title" name='title'>
+					      			<input class="form-control" type="text" id="foodTitle" placeholder="Your recipe title" name='title' value="Pumpkin Pie">
 					    		</div>
 						</div>
 					</div>
@@ -48,7 +54,7 @@
 						<div class="form-group form-group-md">
 							<label class="col-sm-3 control-label" for="quantity">Quantity (oz): </label>
 					    		<div class="col-sm-9">
-					      			<input class="form-control" type='number' min='0' name='quantity' placeholder='8 oz.'>
+					      			<input class="form-control" type='number' min='0' name='quantity' placeholder='8 oz.' value="8">
 					    		</div>
 						</div>
 					</div>
@@ -56,7 +62,7 @@
 						<div class="form-group form-group-md">
 							<label class="col-sm-3 control-label">Fresh or Frozen:</label>
 							<label class="col-sm-3 control-label" for="freshfrozen">Fresh </label>
-								<input class="col-sm-1 radio-inline" type="radio" name="freshfrozen" value="fresh">
+								<input class="col-sm-1 radio-inline" type="radio" name="freshfrozen" value="fresh" checked>
 							<label class="col-sm-3 control-label" for="freshfrozen">Frozen </label>
 								<input class="col-sm-1 radio-inline" type="radio" name="freshfrozen" value="frozen">
 							<div class="col-sm-1"></div>
@@ -70,12 +76,12 @@
 								
 								<div class="col-sm-2">
 									<label class="checkbox-inline">
-										<input type='checkbox' name='allergens' value='eggs'>
+										<input type='checkbox' name='allergens' value='eggs' checked>
 									Eggs</label>
 								</div>
 								<div class="col-sm-2">
 									<label class="checkbox-inline">
-										<input type='checkbox' name='allergens' value='dairy'>
+										<input type='checkbox' name='allergens' value='dairy' checked>
 									Dairy</label>
 								</div>
 								<div class="col-sm-2">
@@ -117,27 +123,33 @@
 					</div>
 
 					<!-- Description -->
-					<div class="form-group form-group-md">
-						<div class="row">
-								<label class="col-sm-3">Description:</label>
-									<textarea class="form-control col-sm-9" name='description' rows='3' placeholder='Please include ingredients, what you would like to swap for, and your preferred method of contact'></textarea>
+					<div class="row">
+						<div class="form-group form-group-md">
+							<label class="col-sm-3 control-label" for="descriptionBox">Description:</label>
+								<textarea id="descriptionBox" class="form-control col-sm-9" name='description' rows='3' placeholder='Please include ingredients, what you would like to swap for, and your preferred method of contact'>A custard made of pumpkin, eggs, milk, and pumpkin pie spice</textarea>
 						</div>
 					</div>
-					
 
 					<!-- text message notifications -->
-					<div class="form-group form-group-md">
-						<div class="row">
-							<label class="col-sm-9 control-label">To receive a text message when someone is interested in your mush, enter a phone number:</label>
-							<input type="text" class="input-medium bfh-phone col-sm-3" data-format="+1 (ddd) ddd-dddd" name="phone_number">
+					<div class="row">
+						<div class="form-group form-group-md">
+							<label class="col-sm-8 control-label" for="phoneNumber">To receive a text message when someone is<br>interested in your mush, enter a phone number:</label>
+							<div class="col-sm-4">
+								<input id="phoneNumber" type="text" class="form-control bfh-phone" data-format="+1 (ddd) ddd-dddd" name="phone_number" value="4152169086">
+							</div>
 						</div>
 					</div>
 
 					<!-- location checkbox -->
-					<div class="form-group form-group-md">
-					<input type="checkbox" id="geoCheckbox" name="geoCheckbox">Share location
-						<div id="geoMessage"></div>
+					<div class="row">
+						<div class="form-group form-group-md">
+							<label class="checkbox-inline col-sm-3">Share location</label>
+								<input class="col-sm-1" type="checkbox" id="geoCheckbox" name="geoCheckbox">
+						</div>
 					</div>
+					
+					<div id="geoMessage"></div>
+					
 					<input type='hidden' id="hideLat" name="lat">
 					<input type='hidden' id="hideLng" name="lng">
 
