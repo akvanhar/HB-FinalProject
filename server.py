@@ -223,11 +223,12 @@ def signup_portal():
     fname = titlecase(fname)
     lname = request.form.get('lname')
     lname = titlecase(lname)
-
+    print email, password, fname, lname
     User.add_user(email, fname, lname, password)
 
     # automatically sign in user after account creation
     user = User.query.filter_by(email=email, password=password).first()
+    print user
     user_id = user.user_id
     session['user_id'] = user_id
     flash('Account successfully created. Welcome to Make Less Mush!')
@@ -299,7 +300,6 @@ def display_listings():
         locations = {}
 
         for location in location_results:
-            print location.foods
             locations[location.location_id] = {
                 "title": (location.foods[0]).title,
                 "date_posted": (location.foods[0]

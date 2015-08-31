@@ -6,20 +6,18 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link href='https://fonts.googleapis.com/css?family=Raleway:700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 	<link rel="icon" href="/static/images/mlmlogo.jpg"> 
-	<link rel="stylesheet" href="/static/css/signup.css">
+	<link rel="stylesheet" href="/static/css/signupBlue.css">
 </head>
 <body>
-<div id="outer">
-	<div id="container">
-	  	<div>
-	    	<h1>Make Less Mush</h1>
-	    </div>
-	    <div>
-	    	<h4>To create an account, please fill out the following form:</h4>
-	    </div>
-		<div class="row"></div>
-	    <form class="form-signin" action='login_portal' method='post'>
+<div class="site-wrapper">
+	<div class="site-wrapper-inner">
+		<div class="cover-container">
+			<div id="box" class="inner cover">
+	    		<h1 class="signupHeading cover-heading">Sign Up For<br>Make Less Mush</h1>
+	    		<p class="signupPara">To create an account, please fill out the following form:</p>
+	    		<form class="form-signin" action='/signup_portal' method='post'>
 		        <label for="inputEmail" class="sr-only">Email address</label>
 		        	<input type="email" id="inputEmail" class="form-control" name='email' placeholder="username@email.com" required autofocus>
 		        <label for="inputPassword" class="sr-only" type='password'>Password</label>
@@ -29,7 +27,7 @@
 		        <label for="inputLastName" class="sr-only" type='text'>Last Name</label>
 		        	<input type="text" id="inputLastName" class="form-control" name='lname' placeholder="Last Name" required>
 		        <br>
-	        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Create Account">
+	        <input id="signUpButton" class="btn btn-lg btn-primary btn-block" type="submit" value="Create Account">
 		</form>
 	</div>
 </div>
