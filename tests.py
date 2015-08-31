@@ -61,7 +61,7 @@ class ServerTestCase(unittest.TestCase):
         food = Food.query.get(1)
         message = Message.query.get(1)
         assert user.email == "avanhardenberg@gmail.com"
-        assert food.title == "Peas And Carrots"
+        assert food.title == "Apricot Cherries and Ginger"
         assert message.message_sent == "I would like your mush."
 
     def test_add_user(self):
