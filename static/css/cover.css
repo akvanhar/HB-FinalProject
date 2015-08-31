@@ -28,9 +28,10 @@ a:hover {
 html,
 body {
   height: 100%;
-  /*background-color: #333;*/
   background-image: url("/static/images/blueberriesLittleBlur.jpg");
-  background-size: 100% auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   font-family: 'Raleway', sans-serif;
 }
 body {
@@ -175,11 +176,33 @@ body {
   }
 }
 
+/* Css by Alyson */
 #box {
-  background-color: rgba(204, 209, 217, 0.75);
+  background-color: rgba(204, 209, 217, 0.65);
   color: #37538C;
+  border-radius: 20px;
+  width: 600px;
+  padding: 10px;
+  margin: auto;
 }
 
 #splashfooter {
+  color: #CCD1D9;
+  font-size: 16px;
+}
+
+.splashHeading {
+  font-family: 'Pacifico', cursive;
+  font-size: 64px;
+}
+
+#loginbutton,
+#signupbutton {
   color: #37538C;
+  width: 125px;
+  font-size: 22px;
+}
+
+.splashPara {
+  font-size: 28px;
 }
