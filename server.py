@@ -64,24 +64,32 @@ def home():
             for friend in friend_ids:
                 listing = Food.query.filter_by(active=1
                                                ).filter(
-                                               Food.user_id.in_(friend_ids)
+                                               Food.user_id == friend
                                                ).order_by(desc('post_date')
                                                           ).first()
-                friends_listings.append(listing)
+                if listing:
+                    friends_listings.append(listing)
 
             # get the food ids so they can be filtered out
             friends_food_ids = [food.food_id for food in friends_listings]
+
+            #get user's listings
+            user_listings = Food.query.filter_by(active=1,
+                                                 user_id=session['user_id']).all()
+            # get the food ids so they can be filtered out
+            user_food_ids = [food.food_id for food in user_listings]
 
             # get all the other active listings
             other_listings = Food.query.filter_by(active=1
                                                   ).filter(
                                                   (~Food.food_id.in_(friends_food_ids)),
-                                                  (~Food.user_id == session['user_id'])
+                                                  (~Food.food_id.in_(user_food_ids))
                                                   ).order_by(desc('post_date')).all()
 
             # combine listings so that the friends listings come first
             this_users_listings = friends_listings + other_listings
             short_list = this_users_listings[:5]
+            print "short_list", short_list
         else:
             short_list = Food.query.filter_by(active=1
                                               ).order_by(desc('post_date')

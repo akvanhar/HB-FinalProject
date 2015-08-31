@@ -190,7 +190,7 @@
 					{% if friends_fb_ids %}
 					{% for friend in friends_fb_ids %}
 						<div class="col-sm-1"></div>
-						<div class="col-sm-1"><a href='/user/{{friend[0]}}'><img class="thumbnail" src="//graph.facebook.com/{{friend[1]}}/picture" alt="Facebook profile picture"></a></div>
+						<div class="col-sm-1"><a href='/user/{{friend}}'><img class="thumbnail" src="//graph.facebook.com/{{friend[1]}}/picture" alt="Facebook profile picture"></a></div>
 					{% endfor %}
 					{% else %}
 						<div class="col-sm-1"></div><p class="col-sm-11">Sorry! None of your FaceBook friends have signed up for Make Less Mush yet!

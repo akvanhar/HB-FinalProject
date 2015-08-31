@@ -9,6 +9,8 @@ import flask
 from model import (db, connect_to_db, User, Friendship,
                    Food, Message, Allergen, Location)
 from server import app, db, get_new_messages
+from helper import (get_user, get_new_messages,
+                   check_login, get_messages)
 import seed
 
 
@@ -42,7 +44,7 @@ class ServerTestCase(unittest.TestCase):
 
         return client.post('/login_portal', data=dict(
                 email="avanhardenberg@gmail.com",
-                password="alyson"
+                password=-5036420123371638354
                 ), follow_redirects=True)
 
     def test_login(self):
@@ -103,7 +105,5 @@ class ServerTestCase(unittest.TestCase):
         os.unlink(self.db_filename)
 
 if __name__ == '__main__':
-    from server import app
-    from model import connect_to_db
     connect_to_db(app)
     unittest.main()

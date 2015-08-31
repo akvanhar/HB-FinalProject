@@ -4,32 +4,32 @@
 	
 	<h2>Listing for: </h2><h3>{{ food_listing.title }}</h3>
 	<p>Description: {{ food_listing.description }}</p>
-	<p>Posting user: {{ food_listing.user.fname }} {{ food_listing.user.lname }} <img class="img-circle" src="//graph.facebook.com/{{ food_listing.user.fb_id }}/picture" alt="Facebook profile picture"></p>
 	<p>Allergens: {% if food_listing.allergen.eggs %}
-						<img class="img-circle" src="/static/images/eggs.png" alt="eggs" title="eggs">
+						<img class="allergen img-circle" src="/static/images/eggs.png" alt="eggs" title="eggs">
 					{% endif %}
 					{% if food_listing.allergen.wheat %}
-						<img class="img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat">
+						<img class="allergen img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat"></span>
 					{% endif %}
 					{% if food_listing.allergen.dairy %}
-						<img class="img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy">
+						<img class="allergen img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy">
 					{% endif %}
 					{% if food_listing.allergen.peanuts %}
-						<img class="img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts">
+						<img class="allergen img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts">
 					{% endif %}
 					{% if food_listing.allergen.soy %}
-						<img class="img-circle" src="/static/images/soy.png" alt="soy" title="soy">
+						<img class="allergen img-circle" src="/static/images/soy.png" alt="soy" title="soy">
 					{% endif %}
 					{% if food_listing.allergen.treenuts %}
-						<img class="img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts">
+						<img class="allergen img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts">
 					{% endif %}
 					{% if food_listing.allergen.fish %}
-						<img class="img-circle" src="/static/images/fish.png" alt="fish" title="fish">
+						<img class="allergen img-circle" src="/static/images/fish.png" alt="fish" title="fish">
 					{% endif %}
 					{% if food_listing.allergen.shellfish %}
-						<img class="img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish">
+						<img class="allergen img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish">
 					{% endif %}
 	</p>
+	<p>Posting user: {{ food_listing.user.fname }} {{ food_listing.user.lname }} <img class="img-circle" src="//graph.facebook.com/{{ food_listing.user.fb_id }}/picture" alt="Facebook profile picture"></p>
 	<h5>Interested? Send {{ food_listing.user.fname }} a message:</h5>
 	<h6>Don't forget to include your preferred method of contact!!</h6>
 	

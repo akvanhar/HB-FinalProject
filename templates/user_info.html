@@ -22,6 +22,32 @@
                 	</a>
                 </td>
 				<td>{{ food.description }}</td>
+				<td>{{ food.description }} 
+					{% if food.allergen.eggs %}
+						<img class="allergen img-circle" src="/static/images/eggs.png" alt="eggs" title="eggs">
+					{% endif %}
+					{% if food.allergen.wheat %}
+						<img class="allergen img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat"></span>
+					{% endif %}
+					{% if food.allergen.dairy %}
+						<img class="allergen img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy">
+					{% endif %}
+					{% if food.allergen.peanuts %}
+						<img class="allergen img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts">
+					{% endif %}
+					{% if food.allergen.soy %}
+						<img class="allergen img-circle" src="/static/images/soy.png" alt="soy" title="soy">
+					{% endif %}
+					{% if food.allergen.treenuts %}
+						<img class="allergen img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts">
+					{% endif %}
+					{% if food.allergen.fish %}
+						<img class="allergen img-circle" src="/static/images/fish.png" alt="fish" title="fish">
+					{% endif %}
+					{% if food.allergen.shellfish %}
+						<img class="allergen img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish">
+					{% endif %}
+					</td>
 				<td><a href="/listings/{{ food.food_id }}">
 					<button>I'm interested!</button>
 					</a>

@@ -127,7 +127,6 @@ class Food(db.Model):
         # Insert a new food listing into the foods table
 
         datemade = datetime.strptime(datemade, "%Y-%m-%d")
-        print phone_number
 
         food = cls(title=title, texture=texture,
                    datemade=datemade, quantity=quantity,

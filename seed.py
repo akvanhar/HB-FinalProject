@@ -45,9 +45,8 @@ def load_listings():
                       description,
                       allergen.allergen_id,
                       user_id,
-                      phone_number,
-                      location)
-
+                      location.location_id,
+                      phone_number)
 
 def load_messages():
     # Load messages from samplemessages into database
@@ -63,5 +62,5 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # load_users()
-    # load_listings()
-    load_messages()
+    load_listings()
+    # load_messages()
