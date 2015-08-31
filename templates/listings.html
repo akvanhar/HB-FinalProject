@@ -6,8 +6,11 @@
 </script>
 <button id="tableButton" class="btn btn-default">Table</button>
 <button id="mapButton" class="btn btn-default active" autofocus>Map</button>
-<div id="listingsTable" style="display: none">
-	<table class="table table-condensed table-hover">
+<div id="listingsTable" class="container" style="display: none">
+	<div id="listingsHeader">
+		<h2>All Mush Listings</h2>
+	</div>
+	<table id="listingsTable" class="table table-condensed table-hover">
 		<thead>
 			<tr>
 				<th>Date posted</th>
@@ -60,6 +63,9 @@
 </div>
 <div id="listingsMap" style="display: block">
 	<div class="container-fluid">
+		<div id="listingsHeader">
+			<center><h2 id="mapHeading">Mush Listings By Location</h2></center>
+		</div>
 	  <div class="row">
 	    <div class="col-sm-12">
 	      <div id="map"></div>
@@ -72,25 +78,5 @@
 <script async defer
       src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&callback=initMap">
 </script>
-<script>
-function loadMap(evt){
-	$("#tableButton").removeClass('active');
-	$("#tableButton").removeAttr('autofocus');
-	$("#mapButton").attr('autofocus');
-	$("#mapButton").addClass('active');
-	$("#listingsTable").css("display", "none");
-	$("#listingsMap").css("display", "block");
-}
-$("#mapButton").on('click', loadMap);
-
-function loadTable(evt){
-	$("#mapButton").removeClass('active');
-	$("#mapButton").removeAttr('autofocus');
-	$("#tableButton").attr('autofocus');
-	$("#tableButton").addClass('active');
-	$("#listingsTable").css("display", "block");
-	$("#listingsMap").css("display", "none");
-}
-$("#tableButton").on('click', loadTable);
-</script>
+<script type="text/javascript" src="static/listings.js"></script>
 {% endblock %}

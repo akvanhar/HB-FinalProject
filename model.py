@@ -360,8 +360,8 @@ class Location(db.Model):
     def __repr__(self):
         # A helpful representation of the location
 
-        return "<location: latitude:\
-                %s longitude: %s>" % (self.latitude,
+        return ("<location %s: latitude:" +
+                "%s longitude: %s>") % (self.location_id, self.latitude,
                                       self.longitude)
 
     @classmethod

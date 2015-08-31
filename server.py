@@ -73,17 +73,13 @@ def home():
             # get the food ids so they can be filtered out
             friends_food_ids = [food.food_id for food in friends_listings]
 
-            #get user's listings
-            user_listings = Food.query.filter_by(active=1,
-                                                 user_id=session['user_id']).all()
-            # get the food ids so they can be filtered out
-            user_food_ids = [food.food_id for food in user_listings]
+            user_id = session['user_id']
 
-            # get all the other active listings
+            # get all the other active listings, leaving out friend and user listings
             other_listings = Food.query.filter_by(active=1
                                                   ).filter(
-                                                  (~Food.food_id.in_(friends_food_ids)),
-                                                  (~Food.food_id.in_(user_food_ids))
+                                                  (~Food.user_id.in_(friend_ids)),
+                                                  (~(Food.user_id == user_id))
                                                   ).order_by(desc('post_date')).all()
 
             # combine listings so that the friends listings come first
@@ -303,6 +299,7 @@ def display_listings():
         locations = {}
 
         for location in location_results:
+            print location.foods
             locations[location.location_id] = {
                 "title": (location.foods[0]).title,
                 "date_posted": (location.foods[0]

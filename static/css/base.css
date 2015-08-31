@@ -54,6 +54,16 @@ body {
 	padding-right: 50px;
 }
 
+#listingsheader {
+	margin-left: 50px;
+	margin-right: 50px;
+	padding-left: 50px;
+	padding-right: 50px;
+}
 .allergen {
 	width: 25px;
+}
+
+#mapHeading{
+    margin-top: -35px
 }
