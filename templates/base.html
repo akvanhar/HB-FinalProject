@@ -41,11 +41,13 @@
 	      
 	      <ul class="nav navbar-nav navbar-right">
 	      		<p class="navbar-text navbar-centre">Signed in as {{ user.fname }} {{ user.lname}}</p>
+	      	<div style="display: none"
 	      	{% if 'user_id' in session %}
 	      		<li><a href='/logbutton'>Logout</a></li>
     		{% else %}
 		    	<li><a href='/logbutton'><button type="button" class="btn btn-default navbar-btn">Login</button></a></li>
     		{% endif %}
+    		</div>
 	        <li class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="true" scope='public_profile,email,user_friends'></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
