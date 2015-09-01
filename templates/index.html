@@ -19,10 +19,10 @@
 	<div id="homePage" class="row">
 		<div class="container">
 			<div id="formContainer" class="col-sm-6">
-				<h3 id="formHeading">Share some mush:</h3>
+				<h3 id="formHeading">Share some mush</h3>
 				<form id='postForm' class="form-horizontal" action='/postlisting' method='post'>
 				<div class="row">
-					<div class="col-sm-6">
+					<div class="col-sm-7">
 						<div class="row">
 							<div class="form-group form-group-md">
 								<label id="title" class="col-sm-5 control-label" for="foodTitle">Title: </label>
@@ -60,7 +60,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6">
+					<div class="col-sm-5">
 						<!-- Allergens -->
 						<div class="row">
 							<div id="allergenGroup" class="form-group form-group-md">
@@ -69,48 +69,46 @@
 									<div class="col-sm-6">
 										<label class="checkbox-inline">
 											<input type='checkbox' name='allergens' value='eggs' checked>
-										Eggs <img class="allergen img-circle" src="/static/images/egg.png" alt="eggs" title="eggs"></label>
+										Eggs</label>
 									</div>
 									<div class="col-sm-6">
 										<label class="checkbox-inline">
 											<input type='checkbox' name='allergens' value='dairy' checked>
-										Dairy <img class="allergen img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy"></label>
+										Dairy</label>
 									</div>
 								</div>
 								<div class="allergenRow row">
 									<div class="col-sm-6">
 										<label class="checkbox-inline">
 											<input type='checkbox' name='allergens' value='fish'>
-										Fish <img class="allergen img-circle" src="/static/images/fish.png" alt="fish" title="fish"></label>
+										Fish</label>
 									</div>
 									<div class="col-sm-6">
 										<label class="checkbox-inline">
 											<input type='checkbox' name='allergens' value='peanuts'>
-										Peanuts <img class="allergen img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts"></label>	
+										Peanuts</label>	
 									</div>
 								</div>
 								<div class="allergenRow row">
 									<div class="col-sm-6">
 										<label class="checkbox-inline">
 											<input type='checkbox' name='allergens' value='shellfish'>
-										Shellfish <img class="allergen img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish"></label>
+										Shellfish</label>
 									</div>
 									<div class="col-sm-6">
 										<label class="checkbox-inline">
 											<input type='checkbox' name='allergens' value='wheat'>
-										Wheat <img class="allergen img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat"></label>
+										Wheat</label>
 									</div>
 								</div>
 								<div class="allergenRow row">
 									<div class="col-sm-6">
 										<label class="checkbox-inline">
 											<input type='checkbox' name='allergens' value='treenuts'>
-										Tree-nuts <img class="allergen img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts"></label>
+										Tree-nuts</label>
 									</div>
 									<div class="col-sm-6">
-										<label class="checkbox-inline">
-											<input type='checkbox' name='allergens' value='soy'>
-										Soy <img class="allergen img-circle" src="/static/images/soy.png" alt="soy" title="soy"></label>
+										<label class="checkbox-inline" for="soy"><input id="soy" type='checkbox' name='allergens' value='soy'>Soy</label>
 									</div>
 								</div>
 							</div>
@@ -164,7 +162,7 @@
 
 					<!-- submit -->
 					<div class="form-group">
-						<input id="submitButton" class="col-sm-2 col-sm-offset-10 btn btn-default" type='submit' value='Share Mush!'>
+						<input id="submitButton" class="col-sm-2 col-sm-offset-9 btn btn-default" type='submit' value='Share Your Mush!'>
 					</div>
 				</form>
 			</div>
@@ -172,11 +170,11 @@
 <!-- listings table -->
 
 			<div id="listingsCol "class="col-sm-5">
-					<div class="row">
-						<h3 class="col-sm-12" id="tableHeading">Get some mush:</h3>
-					</div>
-					<div id="verticalDivide">
-						<div id="horizontalDivide">
+				<div class="row">
+					<h3 class="col-sm-12" id="tableHeading">Get some mush</h3>
+				</div>
+				<div id="verticalDivide">
+					<div id="horizontalDivide">
 						<table id="listingsTable" class="table table-condensed table-hover">
 							<div class="row">
 								<thead>
@@ -204,13 +202,12 @@
 							</tbody>
 						</table>
 						<div class="row">
-							<a href='/listings'><button id="viewAll" class="col-sm-2 col-sm-offset-10 btn btn-default">View all</button></a>
+							<a href='/listings'><button id="viewButton" class="col-sm-2 col-sm-offset-8 btn btn-default">See All Mush!</button></a>
 						</div>
 					</div>
-
 					<div class="row">
 						<div class="col-sm-1"></div>
-						<h4 class="col-sm-11"><b>Your Facebook friends on Make Less Mush:</b></h4>
+						<h4 class="col-sm-11"><b>Your Facebook friends on Make Less Mush</b></h4>
 						{% if friends_fb_ids %}
 						{% for friend in friends_fb_ids %}
 							<div class="col-sm-1"></div>

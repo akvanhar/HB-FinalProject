@@ -122,6 +122,7 @@ h3 {
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	border-bottom-color: #CCD1D9; 
+	padding-bottom: 15px;
 }
 
 #tableHeading {
@@ -130,10 +131,6 @@ h3 {
 
 #formHeading {
 	padding-bottom: 15px;
-}
-
-#viewAll {
-	margin-bottom: 15px;
 }
 
 #listingsTable {
@@ -165,4 +162,21 @@ h3 {
 
 #datemade {
 	font-size: 14px;
+}
+
+#soy {
+	height: 28px;
+	padding-right: 0px;
+}
+
+#submitButton,
+#viewButton {
+	width: 150px;
+	background-color: #F32658;
+	color: white;
+	font-weight: 700;
+}
+
+#listingsCol {
+	width: 700px;
 }
