@@ -7,6 +7,7 @@
 	margin: 0;
 }
 </style>
+<div class="outmostBox">
 <div id="messageSent" class="alert" role="alert" style="display: none"></div>
 {% if all_messages %}
 	<div id="messagesTable" class="container">
@@ -78,5 +79,6 @@
 {% else %}
 	<p>You have new messages</p>
 {% endif %}
+</div>
 <script src="/static/messages.js"></script>
 {% endblock %}
