@@ -1,12 +1,12 @@
 Make Less Mush
 ===========
 
-<i>A Hackbright Final Project</i>
+*A Hackbright Final Project*
 
-created by: ![Alyson van Hardenberg](https://www.linkedin.com/in/akvanhar)
+created by: [Alyson van Hardenberg](https://www.linkedin.com/in/akvanhar)
 Contact: avanhardenberg@gmail.com
 
-Having a baby is a full time job, and making them a wide variety of healthy, nutritious food is a lot of work! Make Less Mush is a full-stack web application that endeavors to make this job easier by providing a social-media based food sharing/messaging service. Using the Facebook Graph API, Twilio API and Google Maps API, users can choose their food-sharing experience. They can personalize it by logging in with Facebook and viewing their friends postings, they can view a map of posts to see what's in their local viscinity, and they can choose to receive text messages when someone sends them a message about their mush.
+Having a baby is a full time job, and making them a wide variety of healthy, nutritious food is a lot of work! *Make Less Mush* is a full-stack web application that endeavors to make this job easier by providing a social-media based food sharing/messaging service. Using the Facebook Graph API, Twilio API and Google Maps API, users can choose their food-sharing experience. They can personalize it by logging in with Facebook and viewing their friends postings, they can view a map of posts to see what's in their local viscinity, and they can choose to receive text messages when someone sends them a message about their mush.
 
 ![Home screen image](link to image here)
 ![Map of Mush](link to map image)
@@ -30,27 +30,8 @@ Alyson graduated from an accelerated nursing program with a Bachelor of Science 
 
 (Dependencies are listed in requirements.txt)
 
-### Structure
-
-#####server.py
-Core of the flask app, lists all routes, and queries the database.
-
-#####model.py
-All database queries made by the flask app.
-
-####helper.py
-Functions that help out the server.
-
-####twilio_send_sms.py
-Use this function to send a text to the user.
-
-#####tests.py
-Unittest for model.py and helper.py functions
-
-(Dependencies are listed in requirements.txt)
-
 ##### Database
-Make Less Mush users post listings and messages to a sqlite database.  During this encapsulated process, the server handles the form inputs, allocating the appropriate datafields to the correct datatable so that subsequent users can see the posted mush and messages.
+*Make Less Mush* users post listings and messages to a sqlite database.During this encapsulated process, the server handles the form inputs, allocating the appropriate datafields to the correct datatable so that subsequent users can see the posted mush and messages.
 The database tables utilize foreign keys in order to establish relationships between tables.
 The server passes the queried database information to the browser using Jinja templating. This allows the user to have a dynamic experience while interacting with the site.
 
@@ -62,4 +43,4 @@ Location is shared via HTML5 Geolocation. These locations are stored in the data
 
 ![picture of map]
 
-###### Improvements
+###### Plans For Version 2.0
