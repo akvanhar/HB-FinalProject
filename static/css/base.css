@@ -59,17 +59,12 @@ body {
 	padding-right: 50px;
 }
 
-#listingsheader {
-	margin-left: 50px;
-	margin-right: 50px;
-	padding-left: 50px;
-	padding-right: 50px;
-}
 .allergen {
 	width: 25px;
 }
 
-#mapHeading{
+#mapHeading,
+#listingsHeader {
     margin-top: -35px
 }
 
@@ -179,4 +174,14 @@ h3 {
 
 #listingsCol {
 	width: 700px;
+}
+
+#tableButton,
+#mapButton {
+	margin-top: 15px;
+	margin-bottom: 0;
+}
+
+#tableButton {
+	margin-left: 25px;
 }

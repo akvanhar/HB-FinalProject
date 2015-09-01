@@ -6,6 +6,9 @@
 	background-color: #CCD1D9;
 	margin: 0;
 }
+.outmostBox {
+	min-height: 685px;
+}
 </style>
 <script>
 	$("#listingsButton").attr("class", 'active');
@@ -13,70 +16,77 @@
 <button id="tableButton" class="btn btn-default">Table</button>
 <button id="mapButton" class="btn btn-default active" autofocus>Map</button>
 <div id="listingsTable" class="container" style="display: none">
-	<div id="listingsHeader">
-		<h2>All Mush Listings</h2>
+	<div class="container-fluid">
+		<div id="listingsHeader">
+			<center><h3>All The Mush</h3></center>
+		</div>
+		<table id="listingsTable" class="table table-condensed table-hover">
+			<thead>
+				<div class="row">
+					<tr>
+						<th class="col-sm-1">Date posted</th>
+						<th class="col-sm-3">Title</th>
+						<th class="col-sm-4">Description</th>
+						<th class="col-sm-1">Allergens</th>
+						<th class="col-sm-3" colspan="2">Posting user</th>
+					</tr>
+				</div>
+			</thead>
+			<tbody>
+				{% for food in foods %}
+				<div class="row">
+					<tr>
+						<td class="col-sm-1">{{ food.post_date.strftime("%b %d, %Y") }}</td>
+						<td class="col-sm-3"><a href="/listings/{{ food.food_id }}">
+		                    {{ food.title }}
+		                	</a>
+		                </td>
+						<td class="col-sm-4">{{ food.description }}</td>
+							<td class="col-sm-1">
+							{% if food.allergen.eggs %}
+								<img class="allergen img-circle" src="/static/images/egg.png" alt="eggs" title="eggs">
+							{% endif %}
+							{% if food.allergen.wheat %}
+								<img class="allergen img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat">
+							{% endif %}
+							{% if food.allergen.dairy %}
+								<img class="allergen img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy">
+							{% endif %}
+							{% if food.allergen.peanuts %}
+								<img class="allergen img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts">
+							{% endif %}
+							{% if food.allergen.soy %}
+								<img class="allergen img-circle" src="/static/images/soy.png" alt="soy" title="soy">
+							{% endif %}
+							{% if food.allergen.treenuts %}
+								<img class="allergen img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts">
+							{% endif %}
+							{% if food.allergen.fish %}
+								<img class="allergen img-circle" src="/static/images/fish.png" alt="fish" title="fish">
+							{% endif %}
+							{% if food.allergen.shellfish %}
+								<img class="allergen img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish">
+							{% endif %}
+						</td>
+						<td class="col-sm-2"><a href="/user/{{ food.user_id }}">{{ food.user.fname }} {{ food.user.lname }}</a></td>
+						<td class="col-sm-1"><img class="img-circle" src="//graph.facebook.com/{{ food.user.fb_id }}/picture" alt="Facebook profile picture"></td>
+					</tr>
+				</div>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
-	<table id="listingsTable" class="table table-condensed table-hover">
-		<thead>
-			<tr>
-				<th>Date posted</th>
-				<th>Title</th>
-				<th>Description</th>
-				<th>Allergens</th>
-				<th colspan="2">Posting user</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for food in foods %}
-				<tr>
-					<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
-					<td><a href="/listings/{{ food.food_id }}">
-	                    {{ food.title }}
-	                	</a>
-	                </td>
-					<td>{{ food.description }}
-						{% if food.allergen.eggs %}
-							<img class="allergen img-circle" src="/static/images/egg.png" alt="eggs" title="eggs">
-						{% endif %}
-						{% if food.allergen.wheat %}
-							<img class="allergen img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat">
-						{% endif %}
-						{% if food.allergen.dairy %}
-							<img class="allergen img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy">
-						{% endif %}
-						{% if food.allergen.peanuts %}
-							<img class="allergen img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts">
-						{% endif %}
-						{% if food.allergen.soy %}
-							<img class="allergen img-circle" src="/static/images/soy.png" alt="soy" title="soy">
-						{% endif %}
-						{% if food.allergen.treenuts %}
-							<img class="allergen img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts">
-						{% endif %}
-						{% if food.allergen.fish %}
-							<img class="allergen img-circle" src="/static/images/fish.png" alt="fish" title="fish">
-						{% endif %}
-						{% if food.allergen.shellfish %}
-							<img class="allergen img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish">
-						{% endif %}
-					</td>
-					<td><a href="/user/{{ food.user_id }}">{{ food.user.fname }} {{ food.user.lname }}</a></td>
-					<td><img class="img-circle" src="//graph.facebook.com/{{ food.user.fb_id }}/picture" alt="Facebook profile picture"></td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
 </div>
 <div id="listingsMap" style="display: block">
 	<div class="container-fluid">
 		<div id="listingsHeader">
-			<center><h2 id="mapHeading">Mush Listings By Location</h2></center>
+			<center><h3 id="mapHeading">Where's The Mush?</h3></center>
 		</div>
-	  <div class="row">
-	    <div class="col-sm-12">
-	      <div id="map"></div>
-	    </div>
-	  </div> <!-- close row -->
+	  	<div class="row">
+		    <div class="col-sm-12">
+		      <div id="map"></div>
+		    </div>
+	  	</div> <!-- close row -->
 	</div> <!-- close container -->
 </div>
     
