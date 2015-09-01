@@ -97,7 +97,9 @@ h3 {
 }
 
 #freshLabel,
-#frozenLabel {
+#frozenLabel,
+#editfreshLabel,
+#editfrozenLabel {
 	font-weight: normal;
 }
 
@@ -170,6 +172,15 @@ h3 {
 #viewButton,
 .interestedButton {
 	width: 150px;
+	background-color: #F32658;
+	color: white;
+	font-weight: 700;
+}
+
+.replyButton,
+.readStatusButton,
+.deleteButton {
+	width: 100%;
 	background-color: #F32658;
 	color: white;
 	font-weight: 700;

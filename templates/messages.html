@@ -41,8 +41,8 @@
 							</a>
 						</td>
 						<td class="messageSent col-sm-4" style="vertical-align: middle;">{{ message.message_sent }}</td>
-						<td style="font-weight: normal" style="vertical-align: middle;">
-							<button id = "reply{{message.message_id}}" class="col-sm-1 btn btn-xs" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
+						<td style="font-weight: normal; vertical-align: middle;">
+							<button id="reply{{message.message_id}}" class="replyButton col-sm-1 btn btn-sm" data-toggle="modal" data-target="#myModal{{message.message_id}}">Reply</button>
 							<div class="replyModal modal fade" id="myModal{{message.message_id}}" tabindex="-1" role="dialog">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">

@@ -16,7 +16,7 @@ Having a baby is a full time job, and making them a wide variety of healthy, nut
 *Make Less Mush* was built by Alyson van Hardenberg over the course of 3 and half weeks as part of the Hackbright Academy Summer 2015 fellowship.
 
 ##### Technology:
-- Python
+- Python (passes pep8)
 - Flask
 - Javascript / jQuery
 - AJAX
