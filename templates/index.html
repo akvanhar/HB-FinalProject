@@ -10,6 +10,7 @@
 }
 </style>
 
+
 {% for message in get_flashed_messages() %}
 	<div id="flashMessage" class="flashMessage alert" role="alert">{{message}}</div>
 	<script>$('.flashMessage').delay(3000).fadeOut();</script>
@@ -19,7 +20,6 @@
 		<div class="container">
 			<div id="formContainer" class="col-sm-6">
 				<h3>Share some mush:</h3>
-
 				<form id='postForm' class="form-horizontal" action='/postlisting' method='post'>
 					<div class="row">
 						<div class="form-group form-group-lg">
@@ -54,17 +54,17 @@
 						<div class="form-group form-group-md">
 							<label class="col-sm-3 control-label" for="quantity">Quantity (oz): </label>
 					    		<div class="col-sm-9">
-					      			<input class="form-control" type='number' min='0' name='quantity' placeholder='8 oz.' value="8">
+					      			<input id="quantity" class="form-control" type='number' min='0' name='quantity' placeholder='8 oz.' value="8">
 					    		</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group form-group-md">
 							<label class="col-sm-3 control-label">Fresh or Frozen:</label>
-							<label class="col-sm-3 control-label" for="freshfrozen">Fresh </label>
-								<input class="col-sm-1 radio-inline" type="radio" name="freshfrozen" value="fresh" checked>
-							<label class="col-sm-3 control-label" for="freshfrozen">Frozen </label>
-								<input class="col-sm-1 radio-inline" type="radio" name="freshfrozen" value="frozen">
+							<label id="freshLabel" class="col-sm-3 control-label" for="fresh">Fresh </label>
+								<input id="fresh" class="col-sm-1 radio-inline" type="radio" name="freshfrozen" value="fresh" checked>
+							<label id="frozenLabel" class="col-sm-3 control-label" for="frozen">Frozen </label>
+								<input id="frozen" class="col-sm-1 radio-inline" type="radio" name="freshfrozen" value="frozen">
 							<div class="col-sm-1"></div>
 						</div>
 					</div>
@@ -143,7 +143,8 @@
 					<!-- location checkbox -->
 					<div class="row">
 						<div class="form-group form-group-md">
-							<label class="checkbox-inline col-sm-3">Share location</label>
+							<div class="col-sm-4"></div>
+							<label class="col-sm-7 control-label checkbox-inline"><b>Share location with other users:</b></label>
 								<input class="col-sm-1" type="checkbox" id="geoCheckbox" name="geoCheckbox">
 						</div>
 					</div>
@@ -163,51 +164,55 @@
 <!-- listings table -->
 
 			<div id="listingsCol "class="col-sm-5">
-				<div class="row">
-					<h3 class="col-sm-12">Get some mush:</h3>
-				</div>
-				<table class="table table-condensed table-hover">
 					<div class="row">
-						<thead>
-							<tr>
-								<th class="col-sm-3">Date posted</th>
-								<th class="col-sm-4">Title</th>
-								<th class="col-sm-5" colspan="2">Made by</th>
-							</tr>
-						</thead>
+						<h3 class="col-sm-12" id="tableHeading">Get some mush:</h3>
 					</div>
-					<tbody>
-						{% for food in user_listings %}
+					<div id="verticalDivide">
+						<div id="horizontalDivide">
+						<table class="table table-condensed table-hover">
 							<div class="row">
-								<tr>
-									<td class="col-sm-3">{{ food.post_date.strftime("%b %d, %Y") }}</td>
-									<td class="col-sm-4"><a href="/listings/{{ food.food_id }}">
-					                    {{ food.title }}
-					                	</a>
-					                </td>
-									<td class="col-sm-5"><a href='/user/{{ food.user_id }}'>{{ food.user.fname }}</a></td>
-									<td><a href='/user/{{ food.user_id }}'><img class="img-circle" src="//graph.facebook.com/{{ food.user.fb_id }}/picture" alt="Facebook profile picture"></a></td>
-								</tr>
+								<thead>
+									<tr>
+										<th class="col-sm-3">Date posted</th>
+										<th class="col-sm-4">Title</th>
+										<th class="col-sm-5" colspan="2">Made by</th>
+									</tr>
+								</thead>
 							</div>
-						{% endfor %}
-					</tbody>
-				</table>
-				<div class="row">
-					<a href='/listings'><button class="col-sm-2 col-sm-offset-10 btn btn-default">View all</button></a>
-				</div>
+							<tbody>
+								{% for food in user_listings %}
+									<div class="row">
+										<tr>
+											<td class="col-sm-3">{{ food.post_date.strftime("%b %d, %Y") }}</td>
+											<td class="col-sm-4"><a href="/listings/{{ food.food_id }}">
+							                    {{ food.title }}
+							                	</a>
+							                </td>
+											<td class="col-sm-5"><a href='/user/{{ food.user_id }}'>{{ food.user.fname }}</a></td>
+											<td><a href='/user/{{ food.user_id }}'><img class="img-circle" src="//graph.facebook.com/{{ food.user.fb_id }}/picture" alt="Facebook profile picture"></a></td>
+										</tr>
+									</div>
+								{% endfor %}
+							</tbody>
+						</table>
+						<div class="row">
+							<a href='/listings'><button id="viewAll" class="col-sm-2 col-sm-offset-10 btn btn-default">View all</button></a>
+						</div>
+					</div>
 
-				<div class="row">
-					<div class="col-sm-1"></div>
-					<h4 class="col-sm-11">Your facebook friends on Make Less Mush:</h4>
-					{% if friends_fb_ids %}
-					{% for friend in friends_fb_ids %}
+					<div class="row">
 						<div class="col-sm-1"></div>
-						<div class="col-sm-1"><a href='/user/{{friend[0]}}'><img class="thumbnail" src="//graph.facebook.com/{{friend[1]}}/picture" alt="Facebook profile picture"></a></div>
-					{% endfor %}
-					{% else %}
-						<div class="col-sm-1"></div><p class="col-sm-11">Sorry! None of your FaceBook friends have signed up for Make Less Mush yet!
-					{% endif %}
-				</div> <!-- end row -->
+						<h4 class="col-sm-11"><b>Your facebook friends on Make Less Mush:</b></h4>
+						{% if friends_fb_ids %}
+						{% for friend in friends_fb_ids %}
+							<div class="col-sm-1"></div>
+							<div class="col-sm-1"><a href='/user/{{friend[0]}}'><img class="thumbnail" src="//graph.facebook.com/{{friend[1]}}/picture" alt="Facebook profile picture"></a></div>
+						{% endfor %}
+						{% else %}
+							<div class="col-sm-1"></div><p class="col-sm-11">Sorry! None of your FaceBook friends have signed up for Make Less Mush yet!
+						{% endif %}
+					</div> <!-- end row -->
+				</div>
 			</div> <!-- end recent listings table -->
 		</div>
 	</div>

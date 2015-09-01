@@ -27,6 +27,8 @@ body {
 	background-repeat: no-repeat;
 	background-position: center center;
 	font-family: 'Raleway', sans-serif;
+	font-weight: 400px;
+	font-size: 14px;
 }
 
 .outmostBox {
@@ -77,6 +79,7 @@ body {
 
 .navbar {
 	background-color: rgba(235, 238, 242, 0.9);
+	font-size: 16px;
 }
 
 #descriptionBox {
@@ -89,6 +92,42 @@ body {
 
 #geoCheckbox {
 	height: 28px;
-
+	padding-right: 0px;
 }
 
+h3 {
+	font-family: 'Pacifico', cursive;
+	font-size: 32px;
+}
+
+#freshLabel,
+#frozenLabel {
+	font-weight: normal;
+}
+
+#fresh,
+#frozen {
+	margin-top: 8px;
+}
+
+#verticalDivide {
+	border-left-style: solid;
+    border-left-width: 1px; 
+    border-left-color: #CCD1D9;
+    margin-bottom: 40px;
+    padding-left: 30px;
+}
+
+#horizontalDivide {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #CCD1D9; 
+}
+
+#tableHeading {
+	padding-left: 30px;
+}
+
+#viewAll {
+	margin-bottom: 15px;
+}
