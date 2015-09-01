@@ -33,7 +33,7 @@ body {
 
 .outmostBox {
 	background-color: rgba(255,255,255,0.88);
-	min-height: 675px;
+	min-height: 625px;
 	width: 95%;
 	margin: auto;
 	border-radius: 5px;
@@ -125,9 +125,44 @@ h3 {
 }
 
 #tableHeading {
-	padding-left: 30px;
+	padding-left: 55px;
+}
+
+#formHeading {
+	padding-bottom: 15px;
 }
 
 #viewAll {
 	margin-bottom: 15px;
+}
+
+#listingsTable {
+	margin-top: 10px;
+}
+
+#allergensHeader {
+	font-weight: 700;
+    font-size: 14px;
+}
+
+#allergenGroup {
+	margin-left: 15px;
+}
+
+#phoneDiv {
+	margin-top: 25px;
+}
+
+#descriptionDiv {
+	margin-top: 25px;
+}
+
+.allergenRow {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 2px;
+}
+
+#datemade {
+	font-size: 14px;
 }

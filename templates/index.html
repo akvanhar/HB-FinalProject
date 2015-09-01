@@ -19,45 +19,106 @@
 	<div id="homePage" class="row">
 		<div class="container">
 			<div id="formContainer" class="col-sm-6">
-				<h3>Share some mush:</h3>
+				<h3 id="formHeading">Share some mush:</h3>
 				<form id='postForm' class="form-horizontal" action='/postlisting' method='post'>
-					<div class="row">
-						<div class="form-group form-group-lg">
-							<label class="col-sm-3 control-label" for="foodTitle">Title: </label>
-					    		<div class="col-sm-9">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="row">
+							<div class="form-group form-group-md">
+								<label id="title" class="col-sm-5 control-label" for="foodTitle">Title: </label>
+					    		<div class="col-sm-7">
 					      			<input class="form-control" type="text" id="foodTitle" placeholder="Your recipe title" name='title' value="Pumpkin Pie">
 					    		</div>
+							</div>
+					</div>
+						<div class="row">
+							<div class="form-group form-group-md">
+								<label class="col-sm-5 control-label" for="texture">Texture: </label>
+						    		<div class="col-sm-7">
+						      			<select class="form-control" id="texture" name='texture'>
+											<option class="form-control" value='smooth_puree'>Smooth puree
+											<option class="form-control" value='lumpy_puree'>Lumpy puree
+											<option class="form-control" value='diced'>Diced
+										</select>
+						    		</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group form-group-md">
+								<label class="col-sm-5 control-label" for="datemade">Date made: </label>
+						    		<div class="col-sm-7">
+						      			<input class="form-control" id="datemade" type='date' name='datemade' value='{{ current_date }}'>
+						    		</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group form-group-md">
+								<label class="col-sm-5 control-label" for="quantity">Amount (oz): </label>
+						    		<div class="col-sm-7">
+						      			<input id="quantity" class="form-control" type='number' min='0' name='quantity' placeholder='8 oz.' value="8">
+						    		</div>
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="form-group form-group-md">
-							<label class="col-sm-3 control-label" for="texture">Texture: </label>
-					    		<div class="col-sm-9">
-					      			<select class="form-control" id="texture" name='texture'>
-										<option class="form-control" value='smooth_puree'>Smooth puree
-										<option class="form-control" value='lumpy_puree'>Lumpy puree
-										<option class="form-control" value='diced'>Diced
-									</select>
-					    		</div>
-				    		</label>
+					<div class="col-sm-6">
+						<!-- Allergens -->
+						<div class="row">
+							<div id="allergenGroup" class="form-group form-group-md">
+								<h4 id="allergensHeader" class="col-sm-12">Allergens:</h4>
+								<div class="allergenRow row">
+									<div class="col-sm-6">
+										<label class="checkbox-inline">
+											<input type='checkbox' name='allergens' value='eggs' checked>
+										Eggs <img class="allergen img-circle" src="/static/images/egg.png" alt="eggs" title="eggs"></label>
+									</div>
+									<div class="col-sm-6">
+										<label class="checkbox-inline">
+											<input type='checkbox' name='allergens' value='dairy' checked>
+										Dairy <img class="allergen img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy"></label>
+									</div>
+								</div>
+								<div class="allergenRow row">
+									<div class="col-sm-6">
+										<label class="checkbox-inline">
+											<input type='checkbox' name='allergens' value='fish'>
+										Fish <img class="allergen img-circle" src="/static/images/fish.png" alt="fish" title="fish"></label>
+									</div>
+									<div class="col-sm-6">
+										<label class="checkbox-inline">
+											<input type='checkbox' name='allergens' value='peanuts'>
+										Peanuts <img class="allergen img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts"></label>	
+									</div>
+								</div>
+								<div class="allergenRow row">
+									<div class="col-sm-6">
+										<label class="checkbox-inline">
+											<input type='checkbox' name='allergens' value='shellfish'>
+										Shellfish <img class="allergen img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish"></label>
+									</div>
+									<div class="col-sm-6">
+										<label class="checkbox-inline">
+											<input type='checkbox' name='allergens' value='wheat'>
+										Wheat <img class="allergen img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat"></label>
+									</div>
+								</div>
+								<div class="allergenRow row">
+									<div class="col-sm-6">
+										<label class="checkbox-inline">
+											<input type='checkbox' name='allergens' value='treenuts'>
+										Tree-nuts <img class="allergen img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts"></label>
+									</div>
+									<div class="col-sm-6">
+										<label class="checkbox-inline">
+											<input type='checkbox' name='allergens' value='soy'>
+										Soy <img class="allergen img-circle" src="/static/images/soy.png" alt="soy" title="soy"></label>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<div class="form-group form-group-md">
-							<label class="col-sm-3 control-label" for="datemade">Date made: </label>
-					    		<div class="col-sm-9">
-					      			<input class="form-control" id="datemade" type='date' name='datemade' value='{{ current_date }}'>
-					    		</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group form-group-md">
-							<label class="col-sm-3 control-label" for="quantity">Quantity (oz): </label>
-					    		<div class="col-sm-9">
-					      			<input id="quantity" class="form-control" type='number' min='0' name='quantity' placeholder='8 oz.' value="8">
-					    		</div>
-						</div>
-					</div>
+				</div>
+
+					<!-- Fresh or frozen -->
 					<div class="row">
 						<div class="form-group form-group-md">
 							<label class="col-sm-3 control-label">Fresh or Frozen:</label>
@@ -69,69 +130,16 @@
 						</div>
 					</div>
 
-					<!-- Allergens -->
-					<div class="form-group form-group-md">
-						<div class="row">
-							<label class="control-label col-sm-3">Allergens:</label>
-								
-								<div class="col-sm-2">
-									<label class="checkbox-inline">
-										<input type='checkbox' name='allergens' value='eggs' checked>
-									Eggs</label>
-								</div>
-								<div class="col-sm-2">
-									<label class="checkbox-inline">
-										<input type='checkbox' name='allergens' value='dairy' checked>
-									Dairy</label>
-								</div>
-								<div class="col-sm-2">
-									<label class="checkbox-inline">
-										<input type='checkbox' name='allergens' value='fish'>
-									Fish</label>
-								</div>
-								<div class="col-sm-2">
-									<label class="checkbox-inline">
-										<input type='checkbox' name='allergens' value='peanuts'>
-									Peanuts</label>	
-								</div>
-							<div class="col-sm-1"></div>
-						</div>
-						<div class="row">
-							<div class="col-sm-3"></div>
-							<div class="col-sm-2">
-								<label class="checkbox-inline">
-									<input type='checkbox' name='allergens' value='soy'>
-									Soy</label>
-							</div>
-							<div class="col-sm-2">
-								<label class="checkbox-inline">
-									<input type='checkbox' name='allergens' value='treenuts'>
-								Tree-nuts</label>
-							</div>
-							<div class="col-sm-2">
-								<label class="checkbox-inline">
-									<input class="col-sm-1" type='checkbox' name='allergens' value='wheat'>
-								Wheat</label>
-							</div>
-							<div class="col-sm-2">
-								<label class="checkbox-inline col-sm-1">
-									<input class="col-sm-1" type='checkbox' name='allergens' value='shellfish'>
-								Shellfish</label>
-							</div>
-							<div class="col-sm-1"></div>
-						</div>
-					</div>
-
 					<!-- Description -->
-					<div class="row">
+					<div id="descriptionDiv" class="row">
 						<div class="form-group form-group-md">
 							<label class="col-sm-3 control-label" for="descriptionBox">Description:</label>
-								<textarea id="descriptionBox" class="form-control col-sm-9" name='description' rows='3' placeholder='Please include ingredients, what you would like to swap for, and your preferred method of contact'>A custard made of pumpkin, eggs, milk, and pumpkin pie spice</textarea>
+								<textarea id="descriptionBox" class="form-control col-sm-9" name='description' rows='2' placeholder='Please include ingredients, what you would like to swap for, and your preferred method of contact'>A custard made of pumpkin, eggs, milk, and pumpkin pie spice</textarea>
 						</div>
 					</div>
 
 					<!-- text message notifications -->
-					<div class="row">
+					<div id="phoneDiv" class="row">
 						<div class="form-group form-group-md">
 							<label class="col-sm-8 control-label" for="phoneNumber">To receive a text message when someone is<br>interested in your mush, enter a phone number:</label>
 							<div class="col-sm-4">
@@ -156,7 +164,7 @@
 
 					<!-- submit -->
 					<div class="form-group">
-						<input id="submitButton" class="col-sm-2 col-sm-offset-10 btn btn-default" type='submit' value='Post'>
+						<input id="submitButton" class="col-sm-2 col-sm-offset-10 btn btn-default" type='submit' value='Share Mush!'>
 					</div>
 				</form>
 			</div>
@@ -169,13 +177,13 @@
 					</div>
 					<div id="verticalDivide">
 						<div id="horizontalDivide">
-						<table class="table table-condensed table-hover">
+						<table id="listingsTable" class="table table-condensed table-hover">
 							<div class="row">
 								<thead>
 									<tr>
-										<th class="col-sm-3">Date posted</th>
-										<th class="col-sm-4">Title</th>
-										<th class="col-sm-5" colspan="2">Made by</th>
+										<th class="col-sm-4">Date posted</th>
+										<th class="col-sm-6">Title</th>
+										<th class="col-sm-2" colspan="2">Made by</th>
 									</tr>
 								</thead>
 							</div>
@@ -184,11 +192,11 @@
 									<div class="row">
 										<tr>
 											<td class="col-sm-3">{{ food.post_date.strftime("%b %d, %Y") }}</td>
-											<td class="col-sm-4"><a href="/listings/{{ food.food_id }}">
+											<td class="col-sm-6"><a href="/listings/{{ food.food_id }}">
 							                    {{ food.title }}
 							                	</a>
 							                </td>
-											<td class="col-sm-5"><a href='/user/{{ food.user_id }}'>{{ food.user.fname }}</a></td>
+											<td class="col-sm-3"><a href='/user/{{ food.user_id }}'>{{ food.user.fname }}</a></td>
 											<td><a href='/user/{{ food.user_id }}'><img class="img-circle" src="//graph.facebook.com/{{ food.user.fb_id }}/picture" alt="Facebook profile picture"></a></td>
 										</tr>
 									</div>
@@ -202,14 +210,14 @@
 
 					<div class="row">
 						<div class="col-sm-1"></div>
-						<h4 class="col-sm-11"><b>Your facebook friends on Make Less Mush:</b></h4>
+						<h4 class="col-sm-11"><b>Your Facebook friends on Make Less Mush:</b></h4>
 						{% if friends_fb_ids %}
 						{% for friend in friends_fb_ids %}
 							<div class="col-sm-1"></div>
 							<div class="col-sm-1"><a href='/user/{{friend[0]}}'><img class="thumbnail" src="//graph.facebook.com/{{friend[1]}}/picture" alt="Facebook profile picture"></a></div>
 						{% endfor %}
 						{% else %}
-							<div class="col-sm-1"></div><p class="col-sm-11">Sorry! None of your FaceBook friends have signed up for Make Less Mush yet!
+							<div class="col-sm-1"></div><p class="col-sm-11">Sorry! None of your Facebook friends have signed up for Make Less Mush yet!
 						{% endif %}
 					</div> <!-- end row -->
 				</div>
