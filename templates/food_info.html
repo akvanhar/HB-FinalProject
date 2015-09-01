@@ -1,50 +1,96 @@
 {% extends 'base.html' %}
 {% block title %}Mush Info - {% endblock %}
 {% block content %}
-<div class="outmostBox">
-	
-	<h2>Listing for: </h2><h3>{{ food_listing.title }}</h3>
-	<p>Description: {{ food_listing.description }}</p>
-	<p>Allergens: {% if food_listing.allergen.eggs %}
-						<img class="allergen img-circle" src="/static/images/eggs.png" alt="eggs" title="eggs">
-					{% endif %}
-					{% if food_listing.allergen.wheat %}
-						<img class="allergen img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat"></span>
-					{% endif %}
-					{% if food_listing.allergen.dairy %}
-						<img class="allergen img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy">
-					{% endif %}
-					{% if food_listing.allergen.peanuts %}
-						<img class="allergen img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts">
-					{% endif %}
-					{% if food_listing.allergen.soy %}
-						<img class="allergen img-circle" src="/static/images/soy.png" alt="soy" title="soy">
-					{% endif %}
-					{% if food_listing.allergen.treenuts %}
-						<img class="allergen img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts">
-					{% endif %}
-					{% if food_listing.allergen.fish %}
-						<img class="allergen img-circle" src="/static/images/fish.png" alt="fish" title="fish">
-					{% endif %}
-					{% if food_listing.allergen.shellfish %}
-						<img class="allergen img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish">
-					{% endif %}
-	</p>
-	<p>Posting user: {{ food_listing.user.fname }} {{ food_listing.user.lname }} <img class="img-circle" src="//graph.facebook.com/{{ food_listing.user.fb_id }}/picture" alt="Facebook profile picture"></p>
-	<h5>Interested? Send {{ food_listing.user.fname }} a message:</h5>
-	<h6>Don't forget to include your preferred method of contact!!</h6>
-	
-	<form action='/send_message', method='post'>
-		<input type='hidden' name='posting_user' value='{{ food_listing.user.user_id }}'>
-		<input type='hidden' name='food_listing' value='{{ food_listing.food_id }}'>
-		<textarea name='message' rows='10' cols='50'>Hi {{ food_listing.user.fname }},
+<div class="outmostBox" id="foodInfoBox">
+	<div class="row">
+		<div class="container" id="foodInfo">
+			<div class="col-sm-8">
+			<center><h3>Listing for: {{ food_listing.title }}</h3></center>
+			<br>
+			<div class="row">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-10">
+					<p><b>Description:</b> {{ food_listing.description }}</p>
+				</div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-10">
+					<p><b>Allergens:</b> {% if food_listing.allergen.eggs %}
+										<img class="allergen img-circle" src="/static/images/eggs.png" alt="eggs" title="eggs">
+									{% endif %}
+									{% if food_listing.allergen.wheat %}
+										<img class="allergen img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat"></span>
+									{% endif %}
+									{% if food_listing.allergen.dairy %}
+										<img class="allergen img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy">
+									{% endif %}
+									{% if food_listing.allergen.peanuts %}
+										<img class="allergen img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts">
+									{% endif %}
+									{% if food_listing.allergen.soy %}
+										<img class="allergen img-circle" src="/static/images/soy.png" alt="soy" title="soy">
+									{% endif %}
+									{% if food_listing.allergen.treenuts %}
+										<img class="allergen img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts">
+									{% endif %}
+									{% if food_listing.allergen.fish %}
+										<img class="allergen img-circle" src="/static/images/fish.png" alt="fish" title="fish">
+									{% endif %}
+									{% if food_listing.allergen.shellfish %}
+										<img class="allergen img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish">
+									{% endif %}
+					</p>
+				</div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-1"></div>
+					<div class="col-sm-10">
+						<p><b>Posting user:</b> {{ food_listing.user.fname }} {{ food_listing.user.lname }} <img class="img-circle" src="//graph.facebook.com/{{ food_listing.user.fb_id }}/picture" alt="Facebook profile picture"></p>
+					</div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-1"></div>
+					<div class="col-sm-10">
+					<p><b>Interested?</b> Send {{ food_listing.user.fname }} a message:</p>
+					</div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-1"></div>
+					<div class="col-sm-10">
+						<p><i>Don't forget to include your preferred method of contact!!</i></p>
+					</div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-1"></div>
+					<div class="col-sm-10">
+						<div class="row">
+						<form action='/send_message', method='post'>
+						<input type='hidden' name='posting_user' value='{{ food_listing.user.user_id }}'>
+						<input type='hidden' name='food_listing' value='{{ food_listing.food_id }}'>
+						<textarea id="interestedMessage" class="form-control col-sm-6" name='message' rows='10' cols='40'>Hi {{ food_listing.user.fname }},
+
 I'm interesting in your {{ food_listing.title }}.
 Please contact me at {{ user.email }}.
+
 Thanks!
+
 - {{ user.fname }}
-		</textarea>
-		<br>
-		<input type='submit' value='Send Message'>
-	</form>
+						</textarea>
+						</div>
+						<div class="row">
+						<button id="imInterested" class="interestedButton col-sm-2 col-sm-offset-8 btn btn-sm" type='submit'>Send Message</button>
+						</form>
+						</div>
+					</div>
+				<div class="col-sm-1"></div>
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}

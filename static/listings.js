@@ -3,7 +3,7 @@ function loadMap(evt){
 	$("#tableButton").removeAttr('autofocus');
 	$("#mapButton").attr('autofocus');
 	$("#mapButton").addClass('active');
-	$("#listingsTable").css("display", "none");
+	$("#listingsContainer").css("display", "none");
 	$("#listingsMap").css("display", "block");
 }
 $("#mapButton").on('click', loadMap);
