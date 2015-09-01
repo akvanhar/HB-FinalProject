@@ -9,7 +9,7 @@ Contact: avanhardenberg@gmail.com
 
 Having a baby is a full time job, and making them a wide variety of healthy, nutritious food is a lot of work! *Make Less Mush* is a full-stack web application that endeavors to make this job easier by providing a social-media based food sharing/messaging service. Using the Facebook Graph API, Twilio API and Google Maps API, users can choose their food-sharing experience. They can personalize it by logging in with Facebook and viewing their friends postings, they can view a map of posts to see what's in their local vicinity, and they can choose to receive text messages when someone sends them a message about their mush.
 
-![Home screen image](link to image here)
+![Home screen image](/static/images/HomeScreen.png)
 ![Map of Mush](link to map image)
 ![Messaging](link to messaging)
 
