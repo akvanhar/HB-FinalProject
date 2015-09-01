@@ -13,12 +13,12 @@
 <div id="myListings" class="container">
 	<div class="row">
 		<div id="myListingsHeader">
-			<h2>Listings for {{ user.fname }} {{ user.lname }}</h2>
+			<center><h3>{{ user.fname }}'s Mush</h3></center>
 		</div>
 		{% if user_listings %}
 			<table id="myListingsTable" class="table table-condensed table-hover">
 				<thead>
-					<tr>Active listings</tr>
+					<tr><h4 id="activeListings">Active listings</h4></tr>
 					<tr>
 						<th>Date posted</th>
 						<th>Title</th>
@@ -30,8 +30,6 @@
 						<tr>
 							<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
 							<td>{{ food.title }}</td>
-							<td>{{ food.description }}</td>
-							</td>
 					        <td>{{ food.description }} 
             					{% if food.allergen.eggs %}
             						<img class="allergen img-circle" src="/static/images/eggs.png" alt="eggs" title="eggs">
@@ -67,7 +65,7 @@
 			</table>
 			<table class="table table-condensed table-hover">
 				<thead>
-					<tr>Deactivated listings</tr>
+					<tr><h4 id="activeListings">Deactivated listings</h4></tr>
 					<tr>
 						<th>Date posted</th>
 						<th>Title</th>

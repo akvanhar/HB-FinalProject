@@ -185,3 +185,7 @@ h3 {
 #tableButton {
 	margin-left: 25px;
 }
+
+#activeListings {
+	font-weight: 700;
+}
