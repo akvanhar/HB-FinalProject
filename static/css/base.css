@@ -64,7 +64,8 @@ body {
 }
 
 #mapHeading,
-#listingsHeader {
+#listingsContainer,
+#listingsTable{
     margin-top: -35px
 }
 
@@ -128,7 +129,8 @@ h3 {
 	padding-bottom: 15px;
 }
 
-#listingsTable {
+#listingsTable,
+#userListingsTable {
 	margin-top: 10px;
 }
 
@@ -165,7 +167,8 @@ h3 {
 }
 
 #submitButton,
-#viewButton {
+#viewButton,
+.interestedButton {
 	width: 150px;
 	background-color: #F32658;
 	color: white;
@@ -197,4 +200,6 @@ h3 {
 .messageSent {
 	vertical-align: middle;
 }
+
+
 

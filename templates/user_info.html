@@ -1,59 +1,65 @@
 {% extends 'base.html' %}
 {% block title %}Send Message{% endblock %}
 {% block content %}
-<h3>{{ this_user.fname }} {{ this_user.lname }}'s Mush Listings</h3>
 
-<table class="table table-condensed table-hover">
-	<thead>
-		<tr>
-			<th>Date posted</th>
-			<th>Title</th>
-			<th>Description</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for food in food_listings %}
-			<tr>
-				<td>{{ food.post_date.strftime("%b %d, %Y") }}</td>
-				<td><a href="/listings/{{ food.food_id }}">
-                    {{ food.title }}
-                	</a>
-                </td>
-				<td>{{ food.description }} 
-					{% if food.allergen.eggs %}
-						<img class="allergen img-circle" src="/static/images/eggs.png" alt="eggs" title="eggs">
-					{% endif %}
-					{% if food.allergen.wheat %}
-						<img class="allergen img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat"></span>
-					{% endif %}
-					{% if food.allergen.dairy %}
-						<img class="allergen img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy">
-					{% endif %}
-					{% if food.allergen.peanuts %}
-						<img class="allergen img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts">
-					{% endif %}
-					{% if food.allergen.soy %}
-						<img class="allergen img-circle" src="/static/images/soy.png" alt="soy" title="soy">
-					{% endif %}
-					{% if food.allergen.treenuts %}
-						<img class="allergen img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts">
-					{% endif %}
-					{% if food.allergen.fish %}
-						<img class="allergen img-circle" src="/static/images/fish.png" alt="fish" title="fish">
-					{% endif %}
-					{% if food.allergen.shellfish %}
-						<img class="allergen img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish">
-					{% endif %}
-					</td>
-				<td><a href="/listings/{{ food.food_id }}">
-					<button>I'm interested!</button>
-					</a>
-				</td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
-
-
+<div id="userListingsContainer" class="container">
+	<div class="container-fluid">
+		<div id="userListingsHeader">
+			<center><h3>{{ this_user.fname }} {{ this_user.lname }}'s Mush Listings</h3></center>
+		</div>
+		<table id="userListingsTable" class="table table-condensed table-hover">
+			<thead>
+				<tr>
+					<th class="col-sm-1">Date posted</th>
+					<th class="col-sm-3">Title</th>
+					<th class="col-sm-6">Description</th>
+					<th class="col-sm-1"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for food in food_listings %}
+					<div class="row">
+						<tr>
+							<td class="col-sm-1">{{ food.post_date.strftime("%b %d, %Y") }}</td>
+							<td class="col-sm-3"><a href="/listings/{{ food.food_id }}">
+			                    {{ food.title }}
+			                	</a>
+			                </td>
+							<td class="col-sm-4">{{ food.description }} 
+								{% if food.allergen.eggs %}
+									<img class="allergen img-circle" src="/static/images/eggs.png" alt="eggs" title="eggs">
+								{% endif %}
+								{% if food.allergen.wheat %}
+									<img class="allergen img-circle" src="/static/images/wheat.png" alt="wheat" title="wheat"></span>
+								{% endif %}
+								{% if food.allergen.dairy %}
+									<img class="allergen img-circle" src="/static/images/dairy.png" alt="dairy" title="dairy">
+								{% endif %}
+								{% if food.allergen.peanuts %}
+									<img class="allergen img-circle" src="/static/images/peanuts.png" alt="peanuts" title="peanuts">
+								{% endif %}
+								{% if food.allergen.soy %}
+									<img class="allergen img-circle" src="/static/images/soy.png" alt="soy" title="soy">
+								{% endif %}
+								{% if food.allergen.treenuts %}
+									<img class="allergen img-circle" src="/static/images/treenuts.png" alt="treenuts" title="treenuts">
+								{% endif %}
+								{% if food.allergen.fish %}
+									<img class="allergen img-circle" src="/static/images/fish.png" alt="fish" title="fish">
+								{% endif %}
+								{% if food.allergen.shellfish %}
+									<img class="allergen img-circle" src="/static/images/shellfish.png" alt="shellfish" title="shellfish">
+								{% endif %}
+								</td>
+								<td class="col-sm-1"><a href="/listings/{{ food.food_id }}">
+									<button class="interestedButton btn btn-md">I'm interested!</button>
+								</a>
+							</td>
+						</tr>
+					</div>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
 {% endblock %}

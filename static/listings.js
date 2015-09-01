@@ -13,7 +13,7 @@ function loadTable(evt){
 	$("#mapButton").removeAttr('autofocus');
 	$("#tableButton").attr('autofocus');
 	$("#tableButton").addClass('active');
-	$("#listingsTable").css("display", "block");
+	$("#listingsContainer").css("display", "block");
 	$("#listingsMap").css("display", "none");
 }
 $("#tableButton").on('click', loadTable);
