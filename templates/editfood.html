@@ -2,7 +2,7 @@
 {% block title %}Edit Your Mush - {% endblock %}
 {% block content %}
 
-<h2>Listing for: {{ food_listing.title }}</h3>
+<h3>Listing for: {{ food_listing.title }}</h3>
 <form action='/updatelisting' method='post'>
 	<input type='hidden' name='food_id' value='{{ food_listing.food_id }}'>
 	<input type='hidden' name='allergen_id' value='{{ food_listing.allergen_id }}'>
