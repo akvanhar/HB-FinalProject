@@ -189,3 +189,12 @@ h3 {
 #activeListings {
 	font-weight: 700;
 }
+
+#messageSent {
+	background-color: rgba(150, 185, 217, 0.4);
+}
+
+.messageSent {
+	vertical-align: middle;
+}
+
