@@ -105,7 +105,7 @@ Location is shared via HTML5 Geolocation. These locations are stored in the data
 
 ##### Plans for Make Less Mush 2.0
 
-* Postgres for the database
+* Postgresql for the database
 * Ability to search listings
 * Allow a user to view their sent messages
 * Host Make Less Mush on Heroku

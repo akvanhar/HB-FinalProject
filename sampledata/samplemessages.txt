@@ -1,42 +1,42 @@
-1|2|I would like your mush.
-1|3|I would like your mush.
-1|4|I would like your mush.
-1|5|I would like your mush.
-1|6|I would like your mush.
-1|7|I would like your mush.
-2|1|I would like your mush.
-2|3|I would like your mush.
+1|2|This sounds delicious! Let's meet up and swap. Look at my listings and tell me what you'd be interested in.
+1|3|I'd love to have some of this mush. Want to get together for a play date and swap food?
+1|4|Hi Alyson, I'm interested in your Peas And Carrots. Please contact me at peter@peter.com. Thanks! -Peter
+1|5|I would like your mush, please.
+1|6|Hey Alyson! Your chicken curry sounds FANTASTIC. Can I have some? Call me! - Kim
+1|7|Hi Alyson, I would like some banana smoothie. Good luck to Thomas if he gets some! It sounds so good I might eat it myself. - Sara
+2|1|This sounds delicious! Let's meet up and swap. Look at my listings and tell me what you'd be interested in. - Peter
+2|3|I'd love to have some of this mush. Want to get together for a play date and swap food?
 2|4|I would like your mush.
 2|5|I would like your mush.
 2|6|I would like your mush.
 2|7|I would like your mush.
 3|2|I would like your mush.
-3|1|I would like your mush.
+3|1|I'd love to have some of this mush. Want to get together for a play date and swap food? - B.
 3|4|I would like your mush.
 3|5|I would like your mush.
 3|6|I would like your mush.
 3|7|I would like your mush.
 4|2|I would like your mush.
 4|3|I would like your mush.
-4|1|I would like your mush.
+4|1|Hi Alyson, I'm interested in your Peas And Carrots. Please contact me at peter@peter.com. Thanks! -Chloe
 4|5|I would like your mush.
 4|6|I would like your mush.
 4|7|I would like your mush.
 5|2|I would like your mush.
 5|3|I would like your mush.
 5|4|I would like your mush.
-5|1|I would like your mush.
+5|1|I would like your mush, please. - Davina
 5|6|I would like your mush.
 5|7|I would like your mush.
 6|2|I would like your mush.
 6|3|I would like your mush.
 6|4|I would like your mush.
 6|5|I would like your mush.
-6|1|I would like your mush.
+6|1|Hey Alyson! Your chicken curry sounds FANTASTIC. Can I have some? Call me! - Ellen
 6|7|I would like your mush.
 7|2|I would like your mush.
 7|3|I would like your mush.
 7|4|I would like your mush.
 7|5|I would like your mush.
 7|6|I would like your mush.
-7|1|I would like your mush.
+7|1|Hi Alyson, I would like some banana smoothie. Good luck to Thomas if he gets some! It sounds so good I might eat it myself. - Aly
