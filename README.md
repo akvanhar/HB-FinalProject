@@ -75,8 +75,6 @@ Both the delete button and the read/unread buttons update the badge in the heade
 
 ![Messaging](https://raw.githubusercontent.com/akvanhar/HB-FinalProject/master/static/images/messages.png)
 
-![Reply To Messages](https://raw.githubusercontent.com/akvanhar/HB-FinalProject/master/static/images/replyToMessage.png)
-
 *Make Less Mush* was built by Alyson van Hardenberg over the course of 3 and half weeks as part of the Hackbright Academy Summer 2015 fellowship.
 
 ##### Technology:
