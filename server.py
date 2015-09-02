@@ -595,7 +595,7 @@ def toggle_read():
 
 if __name__ == "__main__":
     # Set debug to true to have the toolbar extension run.
-    app.debug = True
+    app.debug = False
 
     connect_to_db(app)
 
