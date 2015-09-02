@@ -102,3 +102,10 @@ The server passes the queried database information to the browser using Jinja te
 The front-end is composed of Twitter Bootstrap, html forms, JavaScript, Facebook Graph API, custom CSS, jQuery UI elements and Google Maps API. 
 Messaging interactivity is created with a combination of JavaScript, jQuery and AJAX.
 Location is shared via HTML5 Geolocation. These locations are stored in the database and later are passed to the Google Maps API to load markers with InfoWindows on the listings map.
+
+##### Plans for Make Less Mush 2.0
+
+* Postgres for the database
+* Ability to search listings
+* Allow a user to view their sent messages
+* Host Make Less Mush on Heroku
