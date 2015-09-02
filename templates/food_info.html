@@ -5,12 +5,12 @@
 	<div class="row">
 		<div class="container" id="foodInfo">
 			<div class="col-sm-8">
-			<center><h3>Listing for: {{ food_listing.title }}</h3></center>
+			<center><h3>{{ food_listing.title }}</h3></center>
 			<br>
 			<div class="row">
 				<div class="col-sm-1"></div>
 				<div class="col-sm-10">
-					<p><b>Description:</b> {{ food_listing.description }}</p>
+					<p>{{ food_listing.description }}</p>
 				</div>
 				<div class="col-sm-1"></div>
 			</div>
@@ -75,7 +75,7 @@
 						<input type='hidden' name='food_listing' value='{{ food_listing.food_id }}'>
 						<textarea id="interestedMessage" class="form-control col-sm-6" name='message' rows='10' cols='40'>Hi {{ food_listing.user.fname }},
 
-I'm interesting in your {{ food_listing.title }}.
+I'm interested in your {{ food_listing.title }}.
 Please contact me at {{ user.email }}.
 
 Thanks!
