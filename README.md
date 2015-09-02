@@ -10,17 +10,33 @@ Contact: avanhardenberg@gmail.com
 Having a baby is a full time job, and making them a wide variety of healthy, nutritious food is a lot of work! *Make Less Mush* is a full-stack web application that endeavors to make this job easier by providing a social-media based food sharing/messaging service. Using the Facebook Graph API, Twilio API and Google Maps API, users can choose their food-sharing experience. They can personalize it by logging in with Facebook and viewing their friends postings, they can view a map of posts to see what's in their local vicinity, and they can choose to receive text messages when someone sends them a message about their mush.
 
 ###Table of Contents
-*[Home Page](#homepage)
+-[Home Page](#homepage)
+-[All Listings](#listings)
 
 
 ## <a name="homepage"></a>Home Page
+
 On the home page, a user can fill out the form to post a listing for mush.  They can opt-in to receive text messages by entering a phone number into the apropriate field. When another user sends them a message about their post, the server calls the Twilio API and sends them a message.
+
 The user can also opt in to share their location. This uses HTML 5 Geolocate to get their current location. As this can take a few seconds, until the location loads, a loading message is displayed and the submit button is disabled using jQuery, Ajax and JavaScript.
+
 Also on the home page, a user can view 5 listings. These listings are obtained by querying the Sqlite database with filters to select first one listing from each of the user's Facebook friends, and then the rest of the listings in descending posting-date order. The list is then limited to only 5 listings.
+
 On the bottom right hand side of the home page, a user can see thumbnails of their Facebook friends who are Make Less Mush users. If the user does not currently have anybody in this list, a message is displayed instead.
 
 ![Home screen image](https://raw.githubusercontent.com/akvanhar/HB-FinalProject/master/static/images/HomeScreen.png)
+
+## <a name="listings"></a>All Listings
+
+On the listings page, a user can toggle between the map view and a table view.  
+
+The map is created by passing locations from the database to the Google Maps API using JSON.  JavaScript is used to create markers and Info Windows for each active listing.
+
 ![Map of Mush](https://raw.githubusercontent.com/akvanhar/HB-FinalProject/master/static/images/map.png)
+
+The table is created by passing information to the html directly using jinja templating. The listings are filtered so that most recent listings come first, with the user's Facebook friends' listings at the top of the page. Allergen icons are shown if the posting user selected specific allergen checkboxes.  A tool tip appears if the user hovers the icon with their mouse.  The posting user's Facebook profile picture is displayed if they signed into Make Less Mush with Facebook.
+
+![Table of Listings](https://raw.githubusercontent.com/akvanhar/HB-FinalProject/master/static/images/listingsTable.png)
 ![Messaging](https://raw.githubusercontent.com/akvanhar/HB-FinalProject/master/static/images/messages.png)
 ![Reply To Messages](https://raw.githubusercontent.com/akvanhar/HB-FinalProject/master/static/images/replyToMessage.png)
 
