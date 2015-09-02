@@ -62,5 +62,5 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # load_users()
-    load_listings()
-    # load_messages()
+    # load_listings()
+    load_messages()

@@ -533,9 +533,9 @@ def send_message():
     if phone_number:
         phone_number = "+1"+phone_number
         send_text(phone_number,
-                  "Hi, %s! Someone's interested in your post\
-                  on Make Less Mush! Sign in and check your\
-                  messages!" % (poster_name))
+                  ("Hi, %s! Someone's interested in your post"+
+                  "on Make Less Mush! Sign in and check your"+
+                  "messages!") % (poster_name))
 
     flash('Your message has been sent.')
 
