@@ -85,7 +85,6 @@ def home():
             # combine listings so that the friends listings come first
             this_users_listings = friends_listings + other_listings
             short_list = this_users_listings[:5]
-            print "short_list", short_list
         else:
             short_list = Food.query.filter_by(active=1
                                               ).order_by(desc('post_date')
@@ -223,12 +222,10 @@ def signup_portal():
     fname = titlecase(fname)
     lname = request.form.get('lname')
     lname = titlecase(lname)
-    print email, password, fname, lname
     User.add_user(email, fname, lname, password)
 
     # automatically sign in user after account creation
     user = User.query.filter_by(email=email, password=password).first()
-    print user
     user_id = user.user_id
     session['user_id'] = user_id
     flash('Account successfully created. Welcome to Make Less Mush!')
@@ -533,9 +530,9 @@ def send_message():
     if phone_number:
         phone_number = "+1"+phone_number
         send_text(phone_number,
-                  ("Hi, %s! Someone's interested in your post"+
-                  "on Make Less Mush! Sign in and check your"+
-                  "messages!") % (poster_name))
+                  ("Hi, %s! Someone's interested in your post " +
+                   "on Make Less Mush! Sign in and check your " +
+                   "messages!") % (poster_name))
 
     flash('Your message has been sent.')
 
