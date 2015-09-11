@@ -25,7 +25,8 @@ from helper import get_user, get_new_messages, check_login, get_messages
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar:
-app.secret_key = os.environ['FLASK_SECRET_KEY']
+app.config['SECRET_KEY'] = os.environ['FLASK_SECRET_KEY']
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///mush"
 google_api = os.environ['GOOGLE_MAPS_API_KEY']
 
 # Set this in order to raise Jinja errors.
@@ -602,4 +603,4 @@ if __name__ == "__main__":
     # Use the debug toolbar.
     # DebugToolbarExtension(app)
 
-    app.run(host="0.0.0.0", port=PORT)
+    app.run(host='0.0.0.0', port=PORT)
