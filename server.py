@@ -590,13 +590,15 @@ def toggle_read():
 
 ###############################################################################
 
+PORT = int(os.environ.get("PORT", 5000))
+
 if __name__ == "__main__":
     # Set debug to true to have the toolbar extension run.
-    app.debug = True
+    app.debug = False
 
     connect_to_db(app)
 
     # Use the debug toolbar.
     # DebugToolbarExtension(app)
 
-    app.run()
+    app.run(host="0.0.0.0", port=PORT)
