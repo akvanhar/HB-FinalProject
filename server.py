@@ -62,7 +62,7 @@ def home():
             # get all their friend's listings
             friends_listings = []
             for friend in friend_ids:
-                listing = Food.query.filter_by(active=1
+                listing = Food.query.filter_by(active=True
                                                ).filter(
                                                Food.user_id == friend
                                                ).order_by(desc('post_date')
@@ -76,7 +76,7 @@ def home():
             user_id = session['user_id']
 
             # get all the other active listings, leaving out friend and user listings
-            other_listings = Food.query.filter_by(active=1
+            other_listings = Food.query.filter_by(active=True
                                                   ).filter(
                                                   (~Food.user_id.in_(friend_ids)),
                                                   (~(Food.user_id == user_id))
@@ -86,7 +86,7 @@ def home():
             this_users_listings = friends_listings + other_listings
             short_list = this_users_listings[:5]
         else:
-            short_list = Food.query.filter_by(active=1
+            short_list = Food.query.filter_by(active=True
                                               ).order_by(desc('post_date')
                                                          ).limit(5).all()
             friends_fb_ids = None
@@ -328,7 +328,7 @@ def listings():
             friend_ids = [friend.friend_id for friend in user_friends]
 
             # get all their friend's listings
-            friends_listings = Food.query.filter_by(active=1
+            friends_listings = Food.query.filter_by(active=True
                                                     ).filter(
                                                     Food.user_id.in_(friend_ids)
                                                     ).order_by(
@@ -339,7 +339,7 @@ def listings():
             friends_food_ids = [food.food_id for food in friends_listings]
 
             # get all the other active listings
-            other_listings = Food.query.filter_by(active=1
+            other_listings = Food.query.filter_by(active=True
                                                   ).filter(~Food.food_id.in_(
                                                    friends_food_ids)
                                                    ).order_by(desc('post_date')
@@ -349,7 +349,7 @@ def listings():
             foods = friends_listings + other_listings
 
         else:
-            foods = Food.query.filter_by(active=1).order_by(desc
+            foods = Food.query.filter_by(active=True).order_by(desc
                                                             ('post_date'
                                                              )).all()
 
@@ -393,10 +393,10 @@ def user_listings():
         user_id = session['user_id']
         question = Food.query
         user_listings = question.filter(Food.user_id == user_id,
-                                        Food.active == 1
+                                        Food.active == True
                                         ).order_by(desc('post_date')).all()
         old_listings = question.filter(Food.user_id == user_id,
-                                       Food.active == 0
+                                       Food.active == False
                                        ).order_by(desc('post_date')).all()
 
         return render_template('mylistings.html',
@@ -445,9 +445,9 @@ def update_listing():
     shared_with_lname = request.form.get('shared_with_lname')
 
     if deactivate:
-        active = 0
+        active = False
     else:
-        active = 1
+        active = True
 
     this_allergen = Allergen.query.get(allergen_id)
     this_allergen.update_allergen(allergen_id, allergen_list)
@@ -495,9 +495,9 @@ def messages():
         user = get_user()
         new_messages = get_new_messages(session['user_id'])
 
-        unread_messages = get_messages(session['user_id'], 0)
+        unread_messages = get_messages(session['user_id'], False)
 
-        read_messages = get_messages(session['user_id'], 1)
+        read_messages = get_messages(session['user_id'], True)
 
         all_messages = unread_messages + read_messages
 
@@ -592,7 +592,7 @@ def toggle_read():
 
 if __name__ == "__main__":
     # Set debug to true to have the toolbar extension run.
-    app.debug = False
+    app.debug = True
 
     connect_to_db(app)
 

@@ -13,9 +13,12 @@ def load_users():
     user_file = open('sampledata/sampleusers.txt')
 
     for line in user_file:
-        email, password, fname, lname, fbid = line.split("|")
-        fbid = int(fbid)
-        User.add_user(email, fname, lname, password, fbid)
+        user_id, email, password, fname, lname, fb_id = line.split("|")
+        fb_id = int(fb_id)
+        user_id = int(user_id)
+        if password == "":
+            password = None
+        User.add_user(user_id, email, fname, lname, password, fb_id)
 
 
 def load_listings():
@@ -63,4 +66,4 @@ if __name__ == "__main__":
 
     # load_users()
     load_listings()
-    load_messages()
+    # load_messages()

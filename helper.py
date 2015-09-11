@@ -24,7 +24,7 @@ def get_new_messages(user_id):
     # gets a new_message count from db
 
     new_messages = Message.query.filter_by(receiver_id=user_id,
-                                           read_status=0).count()
+                                           read_status=False).count()
     return new_messages
 
 

@@ -27,10 +27,11 @@ class User(db.Model):
         return "<User user_id: %s email: %s>" % (self.user_id, self.email)
 
     @classmethod
-    def add_user(cls, email, fname, lname, password=None, fb_id=None):
+    def add_user(cls, user_id, email, fname, lname, password=None, fb_id=None):
         """Insert a new user into the users table"""
 
-        user = cls(email=email,
+        user = cls(user_id=user_id,
+                   email=email,
                    password=password,
                    fname=fname,
                    lname=lname,
@@ -97,7 +98,7 @@ class Food(db.Model):
     post_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
     active = db.Column(db.Boolean,
                        nullable=False,
-                       default=1)  # 1 indicates that the item is active
+                       default=True)  # 1 indicates that the item is active
     shared_with = db.Column(db.String, nullable=False)
     phone_number = db.Column(db.String, nullable=True)
     location_id = db.Column(db.Integer,
@@ -173,19 +174,19 @@ class Food(db.Model):
 
 class Allergen(db.Model):
     # Allergens for a specific food listing.
-    # All are boolean values. 0 is not present.
+    # All are boolean values. False/0 is not present.
 
     __tablename__ = 'allergens'
 
     allergen_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    eggs = db.Column(db.Boolean, default=0, nullable=False)
-    dairy = db.Column(db.Boolean, default=0, nullable=False)
-    wheat = db.Column(db.Boolean, default=0, nullable=False)
-    peanuts = db.Column(db.Boolean, default=0, nullable=False)
-    treenuts = db.Column(db.Boolean, default=0, nullable=False)
-    soy = db.Column(db.Boolean, default=0, nullable=False)
-    fish = db.Column(db.Boolean, default=0, nullable=False)
-    shellfish = db.Column(db.Boolean, default=0, nullable=False)
+    eggs = db.Column(db.Boolean, default=False, nullable=False)
+    dairy = db.Column(db.Boolean, default=False, nullable=False)
+    wheat = db.Column(db.Boolean, default=False, nullable=False)
+    peanuts = db.Column(db.Boolean, default=False, nullable=False)
+    treenuts = db.Column(db.Boolean, default=False, nullable=False)
+    soy = db.Column(db.Boolean, default=False, nullable=False)
+    fish = db.Column(db.Boolean, default=False, nullable=False)
+    shellfish = db.Column(db.Boolean, default=False, nullable=False)
 
     def __repr__(self):
         # A helpful representation of the Allergens
@@ -197,37 +198,37 @@ class Allergen(db.Model):
         # Takes a list of specified allergens, inserts a new allergen listing
         # into the allergens table, returns an allergens obejct
         if "eggs" in allergen_list:
-                eggs = 1
+                eggs = True
         else:
-            eggs = 0
+            eggs = False
         if "dairy" in allergen_list:
-                dairy = 1
+                dairy = True
         else:
-            dairy = 0
+            dairy = False
         if "wheat" in allergen_list:
-                wheat = 1
+                wheat = True
         else:
-            wheat = 0
+            wheat = False
         if "peanuts" in allergen_list:
-                peanuts = 1
+                peanuts = True
         else:
-            peanuts = 0
+            peanuts = False
         if "soy" in allergen_list:
-                soy = 1
+                soy = True
         else:
-            soy = 0
+            soy = False
         if "treenuts" in allergen_list:
-                treenuts = 1
+                treenuts = True
         else:
-            treenuts = 0
+            treenuts = False
         if "fish" in allergen_list:
-                fish = 1
+                fish = True
         else:
-            fish = 0
+            fish = False
         if "shellfish" in allergen_list:
-                shellfish = 1
+                shellfish = True
         else:
-            shellfish = 0
+            shellfish = False
 
         allergen = cls(eggs=eggs,
                        dairy=dairy,
@@ -246,37 +247,37 @@ class Allergen(db.Model):
         # updates an allergen
 
         if "eggs" in allergen_list:
-            eggs = 1
+            eggs = True
         else:
-            eggs = 0
+            eggs = False
         if "dairy" in allergen_list:
-            dairy = 1
+            dairy = True
         else:
-            dairy = 0
+            dairy = False
         if "wheat" in allergen_list:
-            wheat = 1
+            wheat = True
         else:
-            wheat = 0
+            wheat = False
         if "peanuts" in allergen_list:
-            peanuts = 1
+            peanuts = True
         else:
-            peanuts = 0
+            peanuts = False
         if "soy" in allergen_list:
-            soy = 1
+            soy = True
         else:
-            soy = 0
+            soy = False
         if "treenuts" in allergen_list:
-            treenuts = 1
+            treenuts = True
         else:
-            treenuts = 0
+            treenuts = False
         if "fish" in allergen_list:
-            fish = 1
+            fish = True
         else:
-            fish = 0
+            fish = False
         if "shellfish" in allergen_list:
-            shellfish = 1
+            shellfish = True
         else:
-            shellfish = 0
+            shellfish = False
 
         this_allergen = Allergen.query.get(allergen_id)
         this_allergen.eggs = eggs
@@ -305,7 +306,7 @@ class Message(db.Model):
     receiver_id = db.Column(db.Integer, nullable=False)
     message_sent = db.Column(db.Text, nullable=False)
     read_status = db.Column(db.Boolean,
-                            default=0,
+                            default=False,
                             nullable=False)  # 0 = not read.
     datetime_sent = db.Column(db.DateTime,
                               nullable=False,
@@ -340,10 +341,10 @@ class Message(db.Model):
         db.session.commit()
 
     def toggle_read(self):
-        if self.read_status == 0:
-            self.read_status = 1
+        if self.read_status == False:
+            self.read_status = True
         else:
-            self.read_status = 0
+            self.read_status = False
 
         db.session.commit()
 
@@ -354,8 +355,8 @@ class Location(db.Model):
     __tablename__ = 'locations'
 
     location_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    latitude = db.Column(db.Integer, nullable=False)
-    longitude = db.Column(db.Integer, nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         # A helpful representation of the location
@@ -367,6 +368,8 @@ class Location(db.Model):
     @classmethod
     def add_location(cls, lat, lng):
         # Insert a new location into the locations table
+        lat = float(lat)
+        lng = float(lng)
 
         location = cls(latitude=lat,
                        longitude=lng)
@@ -377,6 +380,8 @@ class Location(db.Model):
 
     def update_location(self, lat, lng):
         # update a location
+        lat = float(lat)
+        lng = float(lng)
 
         self.lat = lat
         self.lng = lng
@@ -390,7 +395,7 @@ def connect_to_db(app):
     # Connect the database to the Flask app.
 
     # Configure to use our SQLite database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mush.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///mush'
     db.app = app
     db.init_app(app)
 
