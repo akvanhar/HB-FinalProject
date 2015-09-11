@@ -25,9 +25,11 @@ from helper import get_user, get_new_messages, check_login, get_messages
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar:
-app.config['SECRET_KEY'] = os.environ['FLASK_SECRET_KEY']
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///mush"
+
+
 google_api = os.environ['GOOGLE_MAPS_API_KEY']
+
+app.config['SECRET_KEY'] = os.environ['FLASK_SECRET_KEY']
 
 # Set this in order to raise Jinja errors.
 app.jinja_env.undefined = StrictUndefined
@@ -600,7 +602,12 @@ if __name__ == "__main__":
 
     connect_to_db(app)
 
-    # Use the debug toolbar.
-    # DebugToolbarExtension(app)
+    # Connect our application to our database
+    db.init_app(app)
+
+    # Create the tables we need from our models (if they already
+    # exist, nothing will happen here, so it's fine to do this each
+    # time on startup)
+    db.create_all(app=app)
 
     app.run(host='0.0.0.0', port=PORT)
