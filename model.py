@@ -1,4 +1,5 @@
 # Models and database functions for Make Less Mush
+import os
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -390,11 +391,14 @@ class Location(db.Model):
 ##############################################################################
 # Helper functions
 
+DATABASE_URL = os.environ.get("DATABASE_URL",
+                              "postgresql:///mush")
+
 def connect_to_db(app):
     # Connect the database to the Flask app.
 
     # Configure to use our SQLite database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///mush'
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
     db.app = app
     db.init_app(app)
 
