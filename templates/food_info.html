@@ -48,7 +48,7 @@
 			<div class="row">
 				<div class="col-sm-1"></div>
 					<div class="col-sm-10">
-						{% if food.user.fb_id %}
+						{% if food_listing.user.fb_id %}
 						<p><b>Posting user:</b> {{ food_listing.user.fname }} {{ food_listing.user.lname }} <img class="img-circle" src="//graph.facebook.com/{{ food_listing.user.fb_id }}/picture" alt="Facebook profile picture"></p>
 						{% else %}
 						<p><b>Posting user:</b> {{ food_listing.user.fname }} {{ food_listing.user.lname }} <i class="img-circle fa fa-smile-o fa-4x"></i></p>
