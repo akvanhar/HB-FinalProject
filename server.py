@@ -293,7 +293,7 @@ def postlisting():
 def display_listings():
     # Query database for posts active listings.
     # Return listings as a JSON object.
-
+    # FIXTHIS: return onlly active listings
     location_results = Location.query.all()
 
     if not location_results:
