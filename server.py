@@ -294,8 +294,7 @@ def display_listings():
     # Query database for posts active listings.
     # Return listings as a JSON object.
 
-    # FIX THIS. RETURN ONLY ACTIVE LISTINGS
-    location_results = Location.query.all()
+    location_results = Location.query.filter_by(active=True).all()
 
     if not location_results:
         # FIXTHIS: return an error message
