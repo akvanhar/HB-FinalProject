@@ -34,6 +34,10 @@ app.config['SECRET_KEY'] = os.environ['FLASK_SECRET_KEY']
 # Set this in order to raise Jinja errors.
 app.jinja_env.undefined = StrictUndefined
 
+# def authenticator
+#     @authenticator ||= Koala::Facebook::OAuth.new(ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_SECRET"], url("/auth/facebook/callback"))
+# end
+
 
 @app.route('/')
 def spalsh():
