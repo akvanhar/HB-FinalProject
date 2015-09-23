@@ -26,7 +26,7 @@ Also on the home page, a user can view 5 listings. These listings are obtained b
 
 On the bottom right hand side of the home page, a user can see thumbnails of their Facebook friends who are Make Less Mush users. If the user does not currently have anybody in this list, a message is displayed instead.
 
-![Home screen image](https://raw.githubusercontent.com/akvanhar/HB-FinalProject/master/static/images/HomeScreen.png)
+![Home screen image](https://raw.githubusercontent.com/akvanhar/MakeLessMush/master/static/images/home.png)
 
 
 ## <a name="listings"></a>All Listings
