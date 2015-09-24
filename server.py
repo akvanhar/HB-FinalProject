@@ -24,19 +24,12 @@ from helper import get_user, get_new_messages, check_login, get_messages
 
 app = Flask(__name__)
 
-# Required to use Flask sessions and the debug toolbar:
-
-
 google_api = os.environ['GOOGLE_MAPS_API_KEY']
 
 app.config['SECRET_KEY'] = os.environ['FLASK_SECRET_KEY']
 
 # Set this in order to raise Jinja errors.
 app.jinja_env.undefined = StrictUndefined
-
-# def authenticator
-#     @authenticator ||= Koala::Facebook::OAuth.new(ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_SECRET"], url("/auth/facebook/callback"))
-# end
 
 
 @app.route('/')
@@ -82,12 +75,14 @@ def home():
 
             user_id = session['user_id']
 
-            # get all the other active listings, leaving out friend and user listings
+            # get all the other active listings,
+            # leaving out friend and user listings
             other_listings = Food.query.filter_by(active=True
                                                   ).filter(
                                                   (~Food.user_id.in_(friend_ids)),
                                                   (~(Food.user_id == user_id))
-                                                  ).order_by(desc('post_date')).all()
+                                                  ).order_by(desc('post_date')
+                                                             ).all()
 
             # combine listings so that the friends listings come first
             this_users_listings = friends_listings + other_listings
@@ -356,8 +351,8 @@ def listings():
 
         else:
             foods = Food.query.filter_by(active=True).order_by(desc
-                                                            ('post_date'
-                                                             )).all()
+                                                               ('post_date')
+                                                               ).all()
 
         API_KEY = google_api
 
@@ -608,9 +603,8 @@ if __name__ == "__main__":
     # Connect our application to our database
     db.init_app(app)
 
-    # Create the tables we need from our models (if they already
-    # exist, nothing will happen here, so it's fine to do this each
-    # time on startup)
+    # Create the tables needed from our model.py (if they already
+    # exist, nothing will happen here)
     db.create_all(app=app)
 
     app.run(host='0.0.0.0', port=PORT)
